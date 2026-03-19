@@ -1,4 +1,4 @@
-package com.example.neuroteacher.ui.theme
+package ru.itis.neuroteacher.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.neuroteacher
+package ru.itis.neuroteacher
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

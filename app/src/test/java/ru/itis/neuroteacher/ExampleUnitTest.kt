@@ -1,4 +1,4 @@
-package com.example.neuroteacher
+package ru.itis.neuroteacher
 
 import org.junit.Test
 
