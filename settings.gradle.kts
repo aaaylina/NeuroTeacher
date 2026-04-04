@@ -20,5 +20,18 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "NeuroTeacher"
+
 include(":app")
- 
+
+// Core modules
+include(":core:data")
+include(":core:network")
+include(":core:domain")
+include(":core:utils")
+include(":core:db")
+
+// Feature modules
+include(":feature:auth")
+include(":feature:test-creation")
+include(":feature:test-taking")
+include(":feature:home")
