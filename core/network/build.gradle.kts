@@ -30,10 +30,12 @@ kotlin {
 dependencies {
 
     implementation(project(":core:utils"))
+    implementation(project(":core:build-config:api"))
 
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)
     ksp(libs.hilt.compiler)
+    implementation(libs.javax.inject)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
