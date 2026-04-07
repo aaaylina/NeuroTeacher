@@ -9,5 +9,3 @@ data class GeneratedTestDto(
     @SerializedName("questions")
     val questions: List<QuestionDto>
 )
-
-

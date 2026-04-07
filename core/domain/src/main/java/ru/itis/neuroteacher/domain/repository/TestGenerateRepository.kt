@@ -3,7 +3,8 @@ package ru.itis.neuroteacher.domain.repository
 import ru.itis.neuroteacher.domain.model.Test
 
 interface TestGenerationRepository {
-    suspend fun generateTest(text: String,
-                             questionCount: Int = 5
+    suspend fun generateTest(
+        text: String,
+        questionCount: Int
     ): Result<Test>
 }
