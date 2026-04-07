@@ -4,4 +4,3 @@ data class Test(
     val title: String,
     val questions: List<Question>
 )
-
