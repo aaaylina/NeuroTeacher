@@ -31,7 +31,7 @@ include(":core:utils")
 include(":core:db")
 
 // Feature modules
-include(":feature:auth")
 include(":feature:test-creation")
 include(":feature:test-taking")
 include(":feature:home")
+include(":feature:auth")

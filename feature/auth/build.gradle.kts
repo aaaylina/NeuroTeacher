@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -52,6 +53,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
 
 }
