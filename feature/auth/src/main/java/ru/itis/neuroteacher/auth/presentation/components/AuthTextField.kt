@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -15,11 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ru.itis.neuroteacher.auth.R
+import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
 
 @Composable
 fun AuthTextField(
@@ -35,14 +33,14 @@ fun AuthTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: String? = null,
+    visualTransformation: VisualTransformation = PasswordVisualTransformation()
 ) {
     Column(modifier = modifier) {
         Text(
             text = label,
-            fontSize = 14.sp,
-            color = colorResource(id = R.color.text_label),
-            modifier = Modifier.fillMaxWidth()
+            style = AuthTheme.typography.label,
+            color = AuthTheme.colors.textLabel
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -53,15 +51,15 @@ fun AuthTextField(
             placeholder = {
                 Text(
                     text = placeholder,
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.text_hint)
+                    style = AuthTheme.typography.placeholder,
+                    color = AuthTheme.colors.textHint
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = leadingIcon,
                     contentDescription = null,
-                    tint = colorResource(id = R.color.text_hint)
+                    tint = AuthTheme.colors.textHint
                 )
             },
             trailingIcon = trailingIcon?.let {
@@ -70,9 +68,9 @@ fun AuthTextField(
                         imageVector = it,
                         contentDescription = null,
                         tint = if (onTrailingIconClick != null)
-                            colorResource(id = R.color.primary)
+                            AuthTheme.colors.primary
                         else
-                            colorResource(id = R.color.text_hint),
+                            AuthTheme.colors.textHint,
                         modifier = if (onTrailingIconClick != null)
                             Modifier.clickable { onTrailingIconClick() }
                         else Modifier
@@ -83,22 +81,22 @@ fun AuthTextField(
             singleLine = singleLine,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
+            visualTransformation = visualTransformation,
             isError = isError,
-            shape = RoundedCornerShape(dimensionResource(id = R.dimen.input_field_corner_radius)),
+            shape = AuthTheme.shapes.inputCorner,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = colorResource(id = R.color.border_focused),
-                unfocusedBorderColor = colorResource(id = R.color.border_default),
-                cursorColor = colorResource(id = R.color.primary),
-                errorBorderColor = colorResource(id = R.color.border_error)
+                focusedBorderColor = AuthTheme.colors.borderFocused,
+                unfocusedBorderColor = AuthTheme.colors.borderDefault,
+                cursorColor = AuthTheme.colors.primary,
+                errorBorderColor = AuthTheme.colors.borderError
             )
         )
 
         if (errorMessage != null) {
             Text(
                 text = errorMessage,
-                color = colorResource(id = R.color.error),
-                fontSize = 12.sp,
-                modifier = Modifier.fillMaxWidth()
+                style = AuthTheme.typography.error,
+                color = AuthTheme.colors.error
             )
         }
     }

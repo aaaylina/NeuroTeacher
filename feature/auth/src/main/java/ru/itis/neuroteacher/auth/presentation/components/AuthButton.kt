@@ -3,7 +3,6 @@ package ru.itis.neuroteacher.auth.presentation.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -11,11 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ru.itis.neuroteacher.auth.R
+import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
 
 @Composable
 fun AuthButton(
@@ -29,15 +25,15 @@ fun AuthButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(dimensionResource(id = R.dimen.button_height)),
+            .height(50.dp),
         enabled = enabled && !isLoading,
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.button_corner_radius)),
+        shape = AuthTheme.shapes.buttonCorner,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (enabled)
-                colorResource(id = R.color.primary)
+                AuthTheme.colors.primary
             else
-                colorResource(id = R.color.disabled),
-            disabledContainerColor = colorResource(id = R.color.disabled)
+                AuthTheme.colors.disabled,
+            disabledContainerColor = AuthTheme.colors.disabled
         )
     ) {
         if (isLoading) {
@@ -49,8 +45,9 @@ fun AuthButton(
         } else {
             Text(
                 text = text,
-                fontSize = 16.sp,
-                color = if (enabled) Color.White else colorResource(id = R.color.text_hint)
+                style = AuthTheme.typography.button.copy(
+                    color = if (enabled) Color.White else AuthTheme.colors.textHint
+                )
             )
         }
     }

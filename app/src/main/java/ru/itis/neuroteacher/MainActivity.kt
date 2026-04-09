@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import ru.itis.neuroteacher.auth.navigation.AuthRoute
 import ru.itis.neuroteacher.auth.navigation.authNavGraph
+import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
 import ru.itis.neuroteacher.ui.theme.NeuroTeacherTheme
 
 

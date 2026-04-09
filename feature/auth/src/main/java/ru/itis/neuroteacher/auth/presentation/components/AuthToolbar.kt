@@ -9,12 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.sp
-import ru.itis.neuroteacher.auth.R
+import androidx.compose.ui.unit.dp
+import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
 
 @Composable
 fun AuthToolbar(
@@ -26,20 +23,20 @@ fun AuthToolbar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = dimensionResource(id = R.dimen.spacing_md)),
-        horizontalArrangement = Arrangement.Center,
+            .padding(top = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = primaryText,
-            fontSize = 14.sp,
-            color = colorResource(id = R.color.text_secondary)
+            style = AuthTheme.typography.subtitle
         )
         Text(
-            text = " $secondaryText",
-            fontSize = 14.sp,
-            color = colorResource(id = R.color.primary),
-            style = TextStyle(textDecoration = TextDecoration.Underline),
+            text = secondaryText,
+            style = AuthTheme.typography.subtitle.copy(
+                color = AuthTheme.colors.primary,
+                textDecoration = TextDecoration.Underline
+            ),
             modifier = Modifier.clickable { onSecondaryClick() }
         )
     }

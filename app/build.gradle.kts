@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.hilt)
-//    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,10 +34,10 @@ dependencies {
     implementation(project(":core:utils"))
     implementation(project(":feature:auth"))
 
-//    implementation(libs.hilt.android)
-//    implementation(libs.core.ktx)
-//    ksp(libs.hilt.compiler)
-//    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    implementation(libs.core.ktx)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.x.lifecycle.runtime.ktx)
     implementation(libs.x.activity.compose)

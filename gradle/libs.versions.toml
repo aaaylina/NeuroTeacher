@@ -52,7 +52,7 @@ espressoCore = "3.7.0"
 coreKtxVersion = "1.18.0"
 
 # Serialization
-kotlin-serialization = "2.3.10"
+kotlinx-serialization = "1.6.3"
 
 
 [libraries]
@@ -114,6 +114,10 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxV
 # Material Icons
 compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+# Serialization
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
