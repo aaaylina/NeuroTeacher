@@ -3,11 +3,31 @@ import com.google.gson.annotations.SerializedName
 
 
 data class OpenRouterRequest(
-    val model: String = "",
-    val messages: List<Message>,
-    val temperature: Double = 0.7
+    @SerializedName("model")
+    val model: String,
+
+    @SerializedName("messages")
+    val messages: List<ChatMessage>,
+
+    @SerializedName("temperature")
+    val temperature: Double,
+
+    @SerializedName("max_tokens")
+    val maxTokens: Int,
+
+    @SerializedName("response_format")
+    val responseFormat: ResponseFormat?
 )
 
-data class Message(
+data class ChatMessage(
+    @SerializedName("role")
+    val role: String,
+
+    @SerializedName("content")
     val content: String
+)
+
+data class ResponseFormat(
+    @SerializedName("type")
+    val type: String
 )

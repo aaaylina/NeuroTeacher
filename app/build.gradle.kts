@@ -44,6 +44,10 @@ dependencies {
     implementation(project(":feature:test-creation"))
     implementation(project(":feature:test-taking"))
 
+    implementation(project(path = ":core:build-config:api"))
+    implementation(project(path = ":core:build-config:impl"))
+    implementation(project(path = ":core:network"))
+
     // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.x.lifecycle.runtime.ktx)
