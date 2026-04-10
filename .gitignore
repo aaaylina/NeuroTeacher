@@ -129,4 +129,4 @@ test_apk/
 .gradle/
 build/
 
-google-services.json
+app/google-services.json
