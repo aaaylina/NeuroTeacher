@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun AuthButton(
@@ -27,13 +27,13 @@ fun AuthButton(
             .fillMaxWidth()
             .height(50.dp),
         enabled = enabled && !isLoading,
-        shape = AuthTheme.shapes.buttonCorner,
+        shape = AppTheme.shapes.buttonCorner,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (enabled)
-                AuthTheme.colors.primary
+                AppTheme.colors.primary
             else
-                AuthTheme.colors.disabled,
-            disabledContainerColor = AuthTheme.colors.disabled
+                AppTheme.colors.disabled,
+            disabledContainerColor = AppTheme.colors.disabled
         )
     ) {
         if (isLoading) {
@@ -45,8 +45,8 @@ fun AuthButton(
         } else {
             Text(
                 text = text,
-                style = AuthTheme.typography.button.copy(
-                    color = if (enabled) Color.White else AuthTheme.colors.textHint
+                style = AppTheme.typography.button.copy(
+                    color = if (enabled) Color.White else AppTheme.colors.textHint
                 )
             )
         }

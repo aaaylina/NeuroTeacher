@@ -1,6 +1,4 @@
 package ru.itis.neuroteacher.network.model.request
-import com.google.gson.annotations.SerializedName
-
 
 data class OpenRouterRequest(
     val model: String = "",

@@ -40,7 +40,7 @@ import ru.itis.neuroteacher.auth.R
 import ru.itis.neuroteacher.auth.presentation.components.AuthButton
 import ru.itis.neuroteacher.auth.presentation.components.AuthTextField
 import ru.itis.neuroteacher.auth.presentation.components.AuthToolbar
-import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
+import ru.itis.neuroteacher.ui.theme.AppTheme
 import ru.itis.neuroteacher.auth.utils.AuthConstants
 
 @Composable
@@ -48,7 +48,7 @@ fun RegisterScreen(
     onNavigateToLogin: () -> Unit,
     onRegisterSuccess: () -> Unit
 ) {
-    AuthTheme {
+    AppTheme {
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
@@ -56,14 +56,16 @@ fun RegisterScreen(
         var confirmPasswordVisible by remember { mutableStateOf(false) }
         var isLoading by remember { mutableStateOf(false) }
 
-        val isFormValid = email.isNotBlank() && password.length >= AuthConstants.MIN_PASSWORD_LENGTH
+        val isFormValid = email.isNotBlank() &&
+                password.length >= AuthConstants.MIN_PASSWORD_LENGTH &&
+                password == confirmPassword
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
-                        colors = AuthTheme.colors.backgroundGradient
+                        colors = AppTheme.colors.backgroundGradient
                     )
                 )
                 .padding(dimensionResource(id = R.dimen.spacing_lg)),
@@ -72,8 +74,8 @@ fun RegisterScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(AuthTheme.shapes.cardCorner)
-                    .background(AuthTheme.colors.cardBackground)
+                    .clip(AppTheme.shapes.cardCorner)
+                    .background(AppTheme.colors.cardBackground)
                     .padding(dimensionResource(id = R.dimen.card_padding))
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -81,8 +83,8 @@ fun RegisterScreen(
                 Box(
                     modifier = Modifier
                         .size(dimensionResource(id = R.dimen.logo_container_size))
-                        .clip(AuthTheme.shapes.inputCorner)
-                        .background(AuthTheme.colors.backgroundLight),
+                        .clip(AppTheme.shapes.inputCorner)
+                        .background(AppTheme.colors.backgroundLight),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -97,14 +99,14 @@ fun RegisterScreen(
 
                 Text(
                     text = stringResource(id = R.string.register_title),
-                    style = AuthTheme.typography.title
+                    style = AppTheme.typography.title
                 )
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_sm)))
 
                 Text(
                     text = stringResource(id = R.string.register_subtitle),
-                    style = AuthTheme.typography.subtitle
+                    style = AppTheme.typography.subtitle
                 )
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_xl)))

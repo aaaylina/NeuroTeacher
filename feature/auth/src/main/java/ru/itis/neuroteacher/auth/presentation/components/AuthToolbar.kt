@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun AuthToolbar(
@@ -29,12 +29,12 @@ fun AuthToolbar(
     ) {
         Text(
             text = primaryText,
-            style = AuthTheme.typography.subtitle
+            style = AppTheme.typography.subtitle
         )
         Text(
             text = secondaryText,
-            style = AuthTheme.typography.subtitle.copy(
-                color = AuthTheme.colors.primary,
+            style = AppTheme.typography.subtitle.copy(
+                color = AppTheme.colors.primary,
                 textDecoration = TextDecoration.Underline
             ),
             modifier = Modifier.clickable { onSecondaryClick() }

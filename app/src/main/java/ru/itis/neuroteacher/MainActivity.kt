@@ -3,39 +3,31 @@ package ru.itis.neuroteacher
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ru.itis.neuroteacher.auth.navigation.authNavGraph
 import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
-import ru.itis.neuroteacher.ui.theme.NeuroTeacherTheme
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NeuroTeacherTheme {
+            AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
 
                     NavHost(
                         navController = navController,
-                        startDestination = AuthRoute.Login  // <-- Начальный экран!
+                        startDestination = AuthRoute.Login
                     ) {
-                        // Подключаем граф авторизации
                         authNavGraph(
                             navController = navController,
                             onNavigateToMain = {
-                                // Переход на главный экран
                             }
                         )
                     }

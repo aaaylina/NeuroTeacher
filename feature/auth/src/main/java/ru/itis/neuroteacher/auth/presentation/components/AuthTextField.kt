@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import ru.itis.neuroteacher.auth.ui.theme.AuthTheme
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun AuthTextField(
@@ -39,8 +39,8 @@ fun AuthTextField(
     Column(modifier = modifier) {
         Text(
             text = label,
-            style = AuthTheme.typography.label,
-            color = AuthTheme.colors.textLabel
+            style = AppTheme.typography.label,
+            color = AppTheme.colors.textLabel
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -51,15 +51,15 @@ fun AuthTextField(
             placeholder = {
                 Text(
                     text = placeholder,
-                    style = AuthTheme.typography.placeholder,
-                    color = AuthTheme.colors.textHint
+                    style = AppTheme.typography.placeholder,
+                    color = AppTheme.colors.textHint
                 )
             },
             leadingIcon = {
                 Icon(
                     imageVector = leadingIcon,
                     contentDescription = null,
-                    tint = AuthTheme.colors.textHint
+                    tint = AppTheme.colors.textHint
                 )
             },
             trailingIcon = trailingIcon?.let {
@@ -68,9 +68,9 @@ fun AuthTextField(
                         imageVector = it,
                         contentDescription = null,
                         tint = if (onTrailingIconClick != null)
-                            AuthTheme.colors.primary
+                            AppTheme.colors.primary
                         else
-                            AuthTheme.colors.textHint,
+                            AppTheme.colors.textHint,
                         modifier = if (onTrailingIconClick != null)
                             Modifier.clickable { onTrailingIconClick() }
                         else Modifier
@@ -83,20 +83,20 @@ fun AuthTextField(
             keyboardActions = keyboardActions,
             visualTransformation = visualTransformation,
             isError = isError,
-            shape = AuthTheme.shapes.inputCorner,
+            shape = AppTheme.shapes.inputCorner,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = AuthTheme.colors.borderFocused,
-                unfocusedBorderColor = AuthTheme.colors.borderDefault,
-                cursorColor = AuthTheme.colors.primary,
-                errorBorderColor = AuthTheme.colors.borderError
+                focusedBorderColor = AppTheme.colors.borderFocused,
+                unfocusedBorderColor = AppTheme.colors.borderDefault,
+                cursorColor = AppTheme.colors.primary,
+                errorBorderColor = AppTheme.colors.borderError
             )
         )
 
         if (errorMessage != null) {
             Text(
                 text = errorMessage,
-                style = AuthTheme.typography.error,
-                color = AuthTheme.colors.error
+                style = AppTheme.typography.error,
+                color = AppTheme.colors.error
             )
         }
     }

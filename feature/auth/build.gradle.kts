@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
+    implementation(project(":core:ui"))
 
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)
