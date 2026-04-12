@@ -1,5 +1,6 @@
 package ru.itis.neuroteacher.auth.domain.usecase
 
+import ru.itis.neuroteacher.auth.domain.model.User
 import ru.itis.neuroteacher.auth.domain.repository.AuthRepository
 import ru.itis.neuroteacher.auth.utils.validation.EmailValidator
 import ru.itis.neuroteacher.auth.utils.validation.PasswordValidator
@@ -14,7 +15,7 @@ internal class SignUpUseCaseImpl @Inject constructor(
         email: String,
         password: String,
         confirmPassword: String
-    ): Result<Unit> {
+    ): Result<User> {
         val emailResult = EmailValidator.validate(email)
         if (emailResult is ValidationResult.Error) {
             return Result.failure(Exception(emailResult.message))

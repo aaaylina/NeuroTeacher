@@ -1,5 +1,6 @@
 package ru.itis.neuroteacher.auth.domain.usecase
 
+import ru.itis.neuroteacher.auth.domain.model.User
 import ru.itis.neuroteacher.auth.domain.repository.AuthRepository
 import ru.itis.neuroteacher.auth.utils.validation.EmailValidator
 import ru.itis.neuroteacher.auth.utils.validation.PasswordValidator
@@ -10,7 +11,7 @@ internal class SignInUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository
 ) : SignInUseCase{
 
-    override suspend operator fun invoke(email: String, password: String): Result<Unit> {
+    override suspend operator fun invoke(email: String, password: String): Result<User> {
         val emailResult = EmailValidator.validate(email)
         if (emailResult is ValidationResult.Error) {
             return Result.failure(Exception(emailResult.message))

@@ -4,33 +4,42 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
+import ru.itis.neuroteacher.auth.data.mapper.UserMapper
+import ru.itis.neuroteacher.auth.domain.model.User
 import ru.itis.neuroteacher.auth.domain.repository.AuthErrorHandler
 import ru.itis.neuroteacher.auth.domain.repository.AuthRepository
 import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages
 import javax.inject.Inject
 
 internal class AuthRepositoryImpl @Inject constructor(
-    private val errorHandler: AuthErrorHandler
+    private val errorHandler: AuthErrorHandler,
+    private val userMapper: UserMapper
 ) : AuthRepository {
 
     private val auth: FirebaseAuth = Firebase.auth
 
-    override suspend fun signIn(email: String, password: String): Result<Unit> {
+    override suspend fun signIn(email: String, password: String): Result<User> {
         return runCatching {
             auth.signInWithEmailAndPassword(email, password).await()
         }.fold(
-            onSuccess = { Result.success(Unit)},
+            onSuccess = {result ->
+                val firebaseUser = result.user ?: throw Exception("User is null")
+                val entity = userMapper.toEntity(firebaseUser)
+                Result.success(userMapper.toDomain(entity))},
             onFailure = { e ->
                 Result.failure(Exception(errorHandler.handle(e)))
             }
         )
     }
 
-    override suspend fun signUp(email: String, password: String): Result<Unit> {
+    override suspend fun signUp(email: String, password: String): Result<User> {
         return runCatching {
             auth.createUserWithEmailAndPassword(email, password).await()
         }.fold(
-            onSuccess = { Result.success(Unit) },
+            onSuccess = { result ->
+                val firebaseUser = result.user ?: throw Exception("User is null")
+                val entity = userMapper.toEntity(firebaseUser)
+                Result.success(userMapper.toDomain(entity)) },
             onFailure = { e ->
                 Result.failure(Exception(errorHandler.handle(e)))
             }
@@ -52,8 +61,10 @@ internal class AuthRepositoryImpl @Inject constructor(
         return auth.currentUser != null
     }
 
-    override fun getCurrentUserId(): String? {
-        return auth.currentUser?.uid
+    override fun getCurrentUserId(): User? {
+        val firebaseUser = auth.currentUser ?: return null
+        val entity = userMapper.toEntity(firebaseUser)
+        return userMapper.toDomain(entity)
     }
 
 }

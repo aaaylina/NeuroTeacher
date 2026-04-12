@@ -1,42 +1,48 @@
 package ru.itis.neuroteacher.network.model.response
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class OpenRouterResponse(
-    @SerializedName("id")
+    @SerialName("id")
     val id: String,
 
-    @SerializedName("choices")
+    @SerialName("choices")
     val choices: List<Choice>,
 
-    @SerializedName("usage")
+    @SerialName("usage")
     val usage: Usage?,
 
-    @SerializedName("model")
+    @SerialName("model")
     val model: String
 ){
+    @Serializable
     data class Choice(
-        @SerializedName("message")
+        @SerialName("message")
         val message: ResponseMessage,
 
-        @SerializedName("finish_reason")
+        @SerialName("finish_reason")
         val finishReason: String?
     )
+    @Serializable
     data class ResponseMessage(
-        @SerializedName("role")
+        @SerialName("role")
         val role: String,
 
-        @SerializedName("content")
+        @SerialName("content")
         val content: String?
     )
+
+    @Serializable
     data class Usage(
-        @SerializedName("prompt_tokens")
+        @SerialName("prompt_tokens")
         val promptTokens: Int,
 
-        @SerializedName("completion_tokens")
+        @SerialName("completion_tokens")
         val completionTokens: Int,
 
-        @SerializedName("total_tokens")
+        @SerialName("total_tokens")
         val totalTokens: Int
     )
 }
