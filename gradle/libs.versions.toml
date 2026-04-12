@@ -49,7 +49,7 @@ espressoCore = "3.7.0"
 coreKtxVersion = "1.18.0"
 
 # Serialization
-kotlinx-serialization = "1.6.3"
+kotlinx-serialization = "1.10.0"
 
 
 [libraries]
