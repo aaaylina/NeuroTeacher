@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.domain.repository
+package ru.itis.neuroteacher.auth.domain.repository
 
 interface AuthRepository {
     suspend fun signIn(email: String, password: String): Result<Unit>

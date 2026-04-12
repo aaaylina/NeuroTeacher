@@ -1,10 +1,10 @@
-package ru.itis.neuroteacher.utils.validation
+package ru.itis.neuroteacher.auth.utils.validation
 
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.PASSWORD_CONFIRM_EMPTY
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.PASSWORD_EMPTY
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.PASSWORD_MIN
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.PASSWORD_MISMATCH
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.SYMBOLS
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.PASSWORD_CONFIRM_EMPTY
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.PASSWORD_EMPTY
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.PASSWORD_MIN
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.PASSWORD_MISMATCH
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.SYMBOLS
 
 object PasswordValidator {
 

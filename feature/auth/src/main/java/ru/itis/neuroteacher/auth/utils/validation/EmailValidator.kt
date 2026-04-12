@@ -1,8 +1,8 @@
-package ru.itis.neuroteacher.utils.validation
+package ru.itis.neuroteacher.auth.utils.validation
 
 import android.util.Patterns
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.EMAIL_EMPTY
-import ru.itis.neuroteacher.utils.constants.ErrorMessages.EMAIL_INVALID
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.EMAIL_EMPTY
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages.EMAIL_INVALID
 
 object EmailValidator {
 

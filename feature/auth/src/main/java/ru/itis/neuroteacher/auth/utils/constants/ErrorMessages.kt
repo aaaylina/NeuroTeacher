@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.utils.constants
+package ru.itis.neuroteacher.auth.utils.constants
 
 object ErrorMessages {
     const val EMAIL_EMPTY = "Email не может быть пустым"

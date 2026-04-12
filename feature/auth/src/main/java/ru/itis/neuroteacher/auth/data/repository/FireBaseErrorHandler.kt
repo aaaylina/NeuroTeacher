@@ -1,17 +1,17 @@
-package ru.itis.neuroteacher.data.error
+package ru.itis.neuroteacher.auth.data.repository
 
 import com.google.firebase.auth.FirebaseAuthException
-import ru.itis.neuroteacher.domain.repository.AuthErrorHandler
-import ru.itis.neuroteacher.utils.constants.ErrorMessages
-import ru.itis.neuroteacher.utils.constants.FirebaseErrorCodes
+import ru.itis.neuroteacher.auth.domain.repository.AuthErrorHandler
+import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages
+import ru.itis.neuroteacher.auth.utils.constants.FirebaseErrorCodes
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FireBaseErrorHandler @Inject constructor() : AuthErrorHandler {
+internal class FireBaseErrorHandler @Inject constructor() : AuthErrorHandler {
 
-    override fun handle(exception: Exception): String {
+    override fun handle(exception: Throwable): String {
         return when (exception) {
             is UnknownHostException -> ErrorMessages.NETWORK_ERROR
             is FirebaseAuthException -> when (exception.errorCode) {

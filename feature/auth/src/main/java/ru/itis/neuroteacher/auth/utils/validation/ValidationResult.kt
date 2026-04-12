@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.utils.validation
+package ru.itis.neuroteacher.auth.utils.validation
 
 sealed class ValidationResult {
     object Success : ValidationResult()
