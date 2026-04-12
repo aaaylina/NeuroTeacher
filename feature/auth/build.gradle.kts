@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.itis.neuroteacher.data"
+    namespace = "ru.itis.neuroteacher.auth"
     compileSdk = 36
 
     defaultConfig {
