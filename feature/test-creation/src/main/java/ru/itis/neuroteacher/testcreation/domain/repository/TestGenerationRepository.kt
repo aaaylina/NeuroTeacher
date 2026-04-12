@@ -1,6 +1,6 @@
-package ru.itis.neuroteacher.domain.repository
+package ru.itis.neuroteacher.testcreation.domain.repository
 
-import ru.itis.neuroteacher.domain.model.Test
+import ru.itis.neuroteacher.testcreation.domain.model.Test
 
 interface TestGenerationRepository {
     suspend fun generateTest(
