@@ -45,7 +45,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
 
-    //implementation(project(":feature:auth")) TODO
+    implementation(project(":feature:auth"))
     implementation(project(":feature:home"))
     implementation(project(":feature:test-creation"))
     implementation(project(":feature:test-taking"))
