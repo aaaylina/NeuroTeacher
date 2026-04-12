@@ -6,9 +6,7 @@ import ru.itis.neuroteacher.auth.utils.constants.ErrorMessages
 import ru.itis.neuroteacher.auth.utils.constants.FirebaseErrorCodes
 import java.net.UnknownHostException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 internal class FireBaseErrorHandler @Inject constructor() : AuthErrorHandler {
 
     override fun handle(exception: Throwable): String {
