@@ -32,15 +32,13 @@ internal abstract class TestCreationModule {
     abstract fun bindGenerateTestUseCase(
         impl: GenerateTestUseCaseImpl
     ): GenerateTestUseCase
-}
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal object TestCreationDataModule {
+    companion object {
+        @Provides
+        fun provideTestPromptBuilder(): TestPromptBuilder = TestPromptBuilder()
 
-    @Provides
-    fun provideTestPromptBuilder(): TestPromptBuilder = TestPromptBuilder()
+        @Provides
+        fun provideTestMapper(): TestMapper = TestMapper()
+    }
 
-    @Provides
-    fun provideTestMapper(): TestMapper = TestMapper()
 }

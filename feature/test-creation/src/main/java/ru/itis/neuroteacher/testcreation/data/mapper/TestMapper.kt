@@ -13,32 +13,32 @@ internal class TestMapper @Inject constructor() {
     fun toDataModel(dto: GeneratedTestDto): TestDataModel {
         return TestDataModel(
             title = dto.title,
-            questions = dto.questions.map { toDataModel(it) }
+            questions = dto.questions.map { it.toDataModel() }
         )
     }
 
-    private fun toDataModel(dto: QuestionDto): QuestionDataModel {
+    private fun QuestionDto.toDataModel(): QuestionDataModel {
         return QuestionDataModel(
-            text = dto.question,
-            options = dto.options,
-            correctIndex = dto.correct,
-            explanation = dto.explanation
+            text = this.question,
+            options = this.options,
+            correctIndex = this.correct,
+            explanation = this.explanation
         )
     }
 
     fun toDomain(dataModel: TestDataModel): Test {
         return Test(
             title = dataModel.title,
-            questions = dataModel.questions.map { toDomain(it) }
+            questions = dataModel.questions.map { it.toDomain() }
         )
     }
 
-    private fun toDomain(dataModel: QuestionDataModel): Question {
+    private fun QuestionDataModel.toDomain(): Question {
         return Question(
-            text = dataModel.text,
-            options = dataModel.options,
-            correctIndex = dataModel.correctIndex,
-            explanation = dataModel.explanation
+            text = this.text,
+            options = this.options,
+            correctIndex = this.correctIndex,
+            explanation = this.explanation
         )
     }
 }

@@ -12,10 +12,13 @@ internal class TestGenerationRepositoryImpl  @Inject constructor(
 ) : TestGenerationRepository{
 
     override suspend fun generateTest(text: String, questionCount: Int): Result<Test> {
-        return remoteDataSource.generateTest(text, questionCount).fold(
-            onSuccess = { dto ->
-                val dataModel = mapper.toDataModel(dto)
-                Result.success(mapper.toDomain(dataModel))
+        return runCatching {
+            val dto = remoteDataSource.generateTest(text, questionCount).getOrThrow()
+            val dataModel = mapper.toDataModel(dto)
+            mapper.toDomain(dataModel)
+        }.fold(
+            onSuccess = {
+                Result.success(it)
             },
             onFailure = { e ->
                 Result.failure(Exception("Test generation failed: ${e.message}"))
