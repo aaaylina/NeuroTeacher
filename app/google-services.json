@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "912162350322",
+    "project_id": "aiquizlet",
+    "storage_bucket": "aiquizlet.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912162350322:android:617b1f23b8a1238f015c6b",
+        "android_client_info": {
+          "package_name": "com.aiquizlet.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEohp7YQIDj8MWVok1k_T9_DuWS5vFKCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912162350322:android:3c54d9c926293ff2015c6b",
+        "android_client_info": {
+          "package_name": "ru.itis.neuroteacher"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEohp7YQIDj8MWVok1k_T9_DuWS5vFKCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

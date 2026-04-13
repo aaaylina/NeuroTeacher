@@ -128,3 +128,5 @@ test_apk/
 # Настройки результат сборки (не обходится)
 .gradle/
 build/
+
+app/google-services.json

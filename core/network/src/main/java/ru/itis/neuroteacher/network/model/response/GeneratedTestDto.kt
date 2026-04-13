@@ -1,11 +1,13 @@
 package ru.itis.neuroteacher.network.model.response
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GeneratedTestDto(
-    @SerializedName("title")
+    @SerialName("title")
     val title: String,
 
-    @SerializedName("questions")
+    @SerialName("questions")
     val questions: List<QuestionDto>
 )

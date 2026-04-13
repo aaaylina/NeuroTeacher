@@ -19,6 +19,8 @@ android {
 }
 
 dependencies {
+    implementation(project(path = ":core:utils"))
+
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)
     ksp(libs.hilt.compiler)

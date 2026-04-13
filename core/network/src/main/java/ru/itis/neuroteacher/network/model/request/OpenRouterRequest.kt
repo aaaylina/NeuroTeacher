@@ -1,33 +1,36 @@
 package ru.itis.neuroteacher.network.model.request
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class OpenRouterRequest(
-    @SerializedName("model")
+    @SerialName("model")
     val model: String,
 
-    @SerializedName("messages")
+    @SerialName("messages")
     val messages: List<ChatMessage>,
 
-    @SerializedName("temperature")
+    @SerialName("temperature")
     val temperature: Double,
 
-    @SerializedName("max_tokens")
+    @SerialName("max_tokens")
     val maxTokens: Int,
 
-    @SerializedName("response_format")
+    @SerialName("response_format")
     val responseFormat: ResponseFormat?
 )
 
+@Serializable
 data class ChatMessage(
-    @SerializedName("role")
+    @SerialName("role")
     val role: String,
 
-    @SerializedName("content")
+    @SerialName("content")
     val content: String
 )
 
+@Serializable
 data class ResponseFormat(
-    @SerializedName("type")
+    @SerialName("type")
     val type: String
 )
