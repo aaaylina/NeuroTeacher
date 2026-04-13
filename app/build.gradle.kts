@@ -33,6 +33,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
     implementation(project(":core:ui"))
 
     implementation(libs.hilt.android)
