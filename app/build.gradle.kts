@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -32,13 +33,27 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
+    
+    implementation(project(path = ":core:build-config:api"))
+    implementation(project(path = ":core:build-config:impl"))
+    implementation(project(path = ":core:network"))
+    implementation(project(path = ":core:domain"))
+    implementation(platform(libs.firebase.bom))
+    
     implementation(project(":feature:auth"))
     implementation(project(":core:ui"))
+    
+    
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)
     ksp(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
+
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.x.lifecycle.runtime.ktx)
     implementation(libs.x.activity.compose)

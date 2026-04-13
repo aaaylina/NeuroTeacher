@@ -2,6 +2,8 @@
 agp = "9.0.1"
 kotlin = "2.3.10"
 ksp = "2.3.5"
+firebase = "4.4.4"
+firebaseBom = "34.11.0"
 
 # AndroidX
 coreKtx = "1.17.0"
@@ -30,6 +32,9 @@ room = "2.7.2"
 
 # Coroutines
 coroutines = "1.10.2"
+
+# Serialization
+retrofit2-kotlinx-serialization-converter = "1.0.0"
 
 # Coil
 coil = "2.7.0"
@@ -79,10 +84,6 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
 
-# Tests
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 # OkHttp
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
@@ -108,8 +109,16 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxV
 compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
+# Firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+
 # Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+retrofit-converter-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinx-serialization-converter" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -117,6 +126,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradle-secrets" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "firebase" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

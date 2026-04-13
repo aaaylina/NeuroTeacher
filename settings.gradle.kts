@@ -35,4 +35,8 @@ include(":core:ui")
 include(":feature:test-creation")
 include(":feature:test-taking")
 include(":feature:home")
+
+
+include(":core:build-config:api")
+include(":core:build-config:impl")
 include(":feature:auth")
