@@ -34,6 +34,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:network"))
     implementation(project(":core:utils"))
+    implementation(project(":core:ui"))
 
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
@@ -59,5 +60,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
 
 }
