@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
+    implementation(project(":core:ui"))
 
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)
@@ -45,6 +46,8 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons.core)
+    implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.foundation)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.core)
