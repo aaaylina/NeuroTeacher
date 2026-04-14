@@ -13,6 +13,10 @@ import ru.itis.neuroteacher.auth.navigation.authNavGraph
 import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
 import ru.itis.neuroteacher.home.navigation.homeNavGraph
 import ru.itis.neuroteacher.home.navigation.model.HomeRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
+import ru.itis.neuroteacher.testcreation.navigation.testNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.textInputNavGraph
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 
@@ -40,9 +44,25 @@ class MainActivity : ComponentActivity() {
 
                         homeNavGraph(
                             onNavigateToCamera = { /* TODO */ },
-                            onNavigateToText = { /* TODO */ },
+                            onNavigateToText = {
+                                navController.navigate(TextInputRoute)
+                            },
                             onNavigateToHistory = { /* TODO */ },
                             onNavigateToProfile = { /* TODO */ }
+                        )
+
+                        textInputNavGraph(
+                            onNavigateBack = { navController.popBackStack() },
+                            onNavigateToTest = { testTitle, questionsJson ->
+                                navController.navigate(TestRoute(testTitle, questionsJson))
+                            }
+                        )
+
+                        testNavGraph(
+                            onNavigateBack = { navController.popBackStack() },
+                            onTestCompleted = { resultJson ->
+                                // TODO: навигация на экран результатов
+                            }
                         )
                     }
                 }
