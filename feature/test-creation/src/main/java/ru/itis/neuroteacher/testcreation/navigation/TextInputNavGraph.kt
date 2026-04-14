@@ -7,12 +7,12 @@ import ru.itis.neuroteacher.testcreation.presentation.textinput.TextInputScreen
 
 fun NavGraphBuilder.textInputNavGraph(
     onNavigateBack: () -> Unit,
-    onGenerateTest: (String, Int) -> Unit
+    onNavigateToTest: (String, String) -> Unit
 ) {
     composable<TextInputRoute> {
         TextInputScreen(
             onNavigateBack = onNavigateBack,
-            onGenerateTest = onGenerateTest
+            onNavigateToTest = onNavigateToTest
         )
     }
 }

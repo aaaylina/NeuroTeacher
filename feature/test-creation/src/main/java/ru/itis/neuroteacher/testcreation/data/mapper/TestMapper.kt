@@ -8,7 +8,7 @@ import ru.itis.neuroteacher.testcreation.domain.model.Question
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import javax.inject.Inject
 
-internal class TestMapper @Inject constructor() {
+class TestMapper @Inject constructor() {
 
     fun toDataModel(dto: GeneratedTestDto): TestDataModel {
         return TestDataModel(
