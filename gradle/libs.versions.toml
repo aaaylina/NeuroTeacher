@@ -34,6 +34,10 @@ room = "2.7.2"
 coroutines = "1.10.2"
 
 # Serialization
+<<<<<<< AN-45
+kotlinx-serialization = "1.10.0"
+=======
+>>>>>>> develop
 retrofit2-kotlinx-serialization-converter = "1.0.0"
 
 # Coil
@@ -45,7 +49,6 @@ javax-inject = "1"
 # Hilt
 hilt = "2.59.2"
 
-gradle-secrets = "2.0.1"
 
 # Tests
 junit = "4.13.2"
