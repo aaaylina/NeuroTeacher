@@ -29,6 +29,7 @@ include(":core:network")
 include(":core:domain")
 include(":core:utils")
 include(":core:db")
+include(":core:ui")
 
 // Feature modules
 include(":feature:test-creation")

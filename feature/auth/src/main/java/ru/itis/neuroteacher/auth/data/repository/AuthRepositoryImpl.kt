@@ -20,12 +20,14 @@ internal class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun signIn(email: String, password: String): Result<User> {
         return runCatching {
-            auth.signInWithEmailAndPassword(email, password).await()
+            val result = auth.signInWithEmailAndPassword(email, password).await()
+            val firebaseUser = result.user ?: throw Exception("User is null")
+            val entity = userMapper.toEntity(firebaseUser)
+            userMapper.toDomain(entity)
         }.fold(
-            onSuccess = {result ->
-                val firebaseUser = result.user ?: throw Exception("User is null")
-                val entity = userMapper.toEntity(firebaseUser)
-                Result.success(userMapper.toDomain(entity))},
+            onSuccess = { user ->
+                Result.success(user)
+            },
             onFailure = { e ->
                 Result.failure(Exception(errorHandler.handle(e)))
             }
@@ -34,12 +36,14 @@ internal class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun signUp(email: String, password: String): Result<User> {
         return runCatching {
-            auth.createUserWithEmailAndPassword(email, password).await()
+            val result = auth.createUserWithEmailAndPassword(email, password).await()
+            val firebaseUser = result.user ?: throw Exception("User is null")
+            val entity = userMapper.toEntity(firebaseUser)
+            userMapper.toDomain(entity)
         }.fold(
-            onSuccess = { result ->
-                val firebaseUser = result.user ?: throw Exception("User is null")
-                val entity = userMapper.toEntity(firebaseUser)
-                Result.success(userMapper.toDomain(entity)) },
+            onSuccess = { user ->
+                Result.success(user)
+            },
             onFailure = { e ->
                 Result.failure(Exception(errorHandler.handle(e)))
             }
