@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import ru.itis.neuroteacher.ui.theme.AppTheme
@@ -34,7 +33,7 @@ fun AuthTextField(
     singleLine: Boolean = true,
     isError: Boolean = false,
     errorMessage: String? = null,
-    visualTransformation: VisualTransformation = PasswordVisualTransformation()
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = modifier) {
         Text(
