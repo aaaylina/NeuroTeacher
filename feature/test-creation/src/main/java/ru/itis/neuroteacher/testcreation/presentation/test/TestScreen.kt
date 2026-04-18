@@ -7,16 +7,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.serialization.json.Json
 import ru.itis.neuroteacher.testcreation.presentation.test.components.*
 import ru.itis.neuroteacher.ui.theme.AppTheme
+import ru.itis.neuroteacher.testcreation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TestScreen(
+internal fun TestScreen(
     testTitle: String,
     questionsJson: String,
     onNavigateBack: () -> Unit,
@@ -25,7 +25,6 @@ fun TestScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scope = rememberCoroutineScope()
-    val colors = AppTheme.colors
 
     Scaffold(
         topBar = {
@@ -34,7 +33,7 @@ fun TestScreen(
                 onNavigateBack = onNavigateBack
             )
         },
-        containerColor = Color(0xFFF5F5F7)
+        containerColor = AppTheme.colors.backgroundLight
     ) { padding ->
         if (uiState.isLoading) {
             Box(
@@ -44,7 +43,7 @@ fun TestScreen(
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
-                    color = colors.primary
+                    color = AppTheme.colors.primary
                 )
             }
             return@Scaffold
@@ -59,7 +58,7 @@ fun TestScreen(
             ) {
                 Text(
                     text = error,
-                    color = Color.Red
+                    color = AppTheme.colors.error
                 )
             }
             return@Scaffold
@@ -78,7 +77,7 @@ fun TestScreen(
                 totalQuestions = uiState.questions.size
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
             QuestionCard(
                 question = currentQuestion,
@@ -91,26 +90,26 @@ fun TestScreen(
                 ExplanationCard(explanation = currentQuestion.explanation)
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(horizontal = AppTheme.dimensions.spacingLg),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingMd)
             ) {
                 if (uiState.currentQuestionIndex > 0) {
                     OutlinedButton(
                         onClick = { /* TODO: предыдущий вопрос */ },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            containerColor = Color.White,
-                            contentColor = Color.Black
+                            containerColor = AppTheme.colors.cardBackground,
+                            contentColor = AppTheme.colors.textPrimary
                         ),
-                        shape = MaterialTheme.shapes.medium,
+                        shape = AppTheme.shapes.buttonCorner,
                         enabled = false
                     ) {
-                        Text("Назад")
+                        Text(stringResource(R.string.test_button_previous))
                     }
                 }
 
@@ -126,27 +125,28 @@ fun TestScreen(
                     },
                     modifier = Modifier
                         .weight(if (uiState.currentQuestionIndex > 0) 1.5f else 1f)
-                        .height(50.dp),
+                        .height(AppTheme.dimensions.buttonHeight),
                     enabled = uiState.selectedOptionIndex != null,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (uiState.selectedOptionIndex != null)
-                            colors.primary
+                            AppTheme.colors.primary
                         else
-                            Color.LightGray
+                            AppTheme.colors.disabled,
+                        disabledContainerColor = AppTheme.colors.disabled
                     ),
-                    shape = MaterialTheme.shapes.medium
+                    shape = AppTheme.shapes.buttonCorner
                 ) {
                     Text(
                         text = if (uiState.currentQuestionIndex < uiState.questions.size - 1)
-                            "Далее"
+                            stringResource(R.string.test_button_next)
                         else
-                            "Завершить",
+                            stringResource(R.string.test_button_finish),
                         style = AppTheme.typography.button
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
         }
     }
 }

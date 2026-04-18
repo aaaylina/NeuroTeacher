@@ -4,33 +4,33 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import ru.itis.neuroteacher.ui.theme.AppTheme
+import ru.itis.neuroteacher.testcreation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextInputTopBar(
+internal fun TextInputTopBar(
     onNavigateBack: () -> Unit
 ) {
     TopAppBar(
         title = {
             Text(
-                text = "Enter text",
-                style = AppTheme.typography.title.copy(fontSize = 20.sp)
+                text = stringResource(R.string.text_input_title),
+                style = AppTheme.typography.title.copy(fontSize = AppTheme.dimensions.fontSizeTopBarTitle)
             )
         },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
+                    contentDescription = stringResource(R.string.cd_back),
+                    tint = AppTheme.colors.textPrimary
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White
+            containerColor = AppTheme.colors.cardBackground
         )
     )
 }

@@ -1,7 +1,6 @@
 package ru.itis.neuroteacher.testcreation.presentation.test.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
@@ -11,50 +10,58 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import ru.itis.neuroteacher.ui.theme.AppTheme
+import ru.itis.neuroteacher.testcreation.R
 
 @Composable
-fun ExplanationCard(explanation: String?) {
+internal fun ExplanationCard(explanation: String?) {
     if (explanation.isNullOrEmpty()) return
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE7F3FF)),
-        shape = RoundedCornerShape(16.dp)
+            .padding(
+                horizontal = AppTheme.dimensions.spacingLg,
+                vertical = AppTheme.dimensions.spacingSm
+            ),
+        colors = CardDefaults.cardColors(
+            containerColor = AppTheme.colors.explanationBackground
+        ),
+        shape = AppTheme.shapes.cardCorner
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(AppTheme.dimensions.spacingLg),
             verticalAlignment = Alignment.Top
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Info",
+                contentDescription = stringResource(R.string.cd_info),
                 tint = AppTheme.colors.primary,
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(AppTheme.dimensions.iconSizeSmall)
                     .align(Alignment.CenterVertically)
             )
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingMd))
 
             Column {
                 Text(
-                    text = "Объяснение:",
-                    style = AppTheme.typography.cardTitle.copy(fontSize = 14.sp),
-                    color = Color.Black
+                    text = stringResource(R.string.explanation_label),
+                    style = AppTheme.typography.cardTitle.copy(
+                        fontSize = AppTheme.dimensions.explanationTitleSize
+                    ),
+                    color = AppTheme.colors.textPrimary
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXxxs))
 
                 Text(
                     text = explanation,
-                    style = AppTheme.typography.cardSubtitle.copy(fontSize = 13.sp),
-                    color = Color(0xFF495057)
+                    style = AppTheme.typography.cardSubtitle.copy(
+                        fontSize = AppTheme.dimensions.explanationTextSize
+                    ),
+                    color = AppTheme.colors.explanationText
                 )
             }
         }

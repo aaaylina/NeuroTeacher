@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common -->
+    <string name="common_back">Назад</string>
+    <string name="common_next">Далее</string>
+    <string name="common_finish">Завершить</string>
+    <string name="common_paste">Вставить</string>
+    <string name="common_generate">Сгенерировать</string>
+    <string name="common_generating">Генерация…</string>
+    <string name="common_error_generation">Ошибка генерации</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back">Назад</string>
+    <string name="cd_info">Информация</string>
+    <string name="cd_correct">Правильный ответ</string>
+    <string name="cd_paste">Вставить из буфера</string>
+    <string name="cd_generate">Сгенерировать тест</string>
+
+    <!-- Test Creation -->
+
+    <!-- TextInputScreen -->
+    <string name="text_input_title">Ввод текста</string>
+    <string name="text_input_placeholder">Вставьте текст лекции, конспекта или учебника…</string>
+    <string name="text_input_min_length_hint">Минимальная рекомендуемая длина — %d символов</string>
+    <string name="text_input_char_counter">%1$d / %2$d символов</string>
+    <string name="text_input_question_count_label">Количество вопросов</string>
+
+    <!-- TestTopBar -->
+    <string name="test_title_default">Тест</string>
+
+    <!-- TestProgressBar -->
+    <string name="test_progress_label">Вопрос %1$d из %2$d</string>
+
+    <!-- ExplanationCard -->
+    <string name="explanation_label">Объяснение:</string>
+
+    <!-- TestScreen buttons -->
+    <string name="test_button_previous">Назад</string>
+    <string name="test_button_next">Далее</string>
+    <string name="test_button_finish">Завершить</string>
+</resources>

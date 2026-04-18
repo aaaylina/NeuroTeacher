@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
@@ -12,14 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import ru.itis.neuroteacher.testcreation.domain.model.Question
 import ru.itis.neuroteacher.ui.theme.AppTheme
+import ru.itis.neuroteacher.testcreation.R
 
 @Composable
-fun QuestionCard(
+internal fun QuestionCard(
     question: Question,
     selectedOptionIndex: Int?,
     onOptionSelected: (Int) -> Unit,
@@ -28,53 +27,57 @@ fun QuestionCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(24.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .padding(AppTheme.dimensions.spacingLg),
+        colors = CardDefaults.cardColors(
+            containerColor = AppTheme.colors.cardBackground
+        ),
+        shape = AppTheme.shapes.cardCorner,
+        elevation = CardDefaults.cardElevation(defaultElevation = AppTheme.dimensions.spacingXxxs)
     ) {
         Column(
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(AppTheme.dimensions.spacingXl)
         ) {
             Text(
                 text = question.text,
-                style = AppTheme.typography.cardTitle.copy(fontSize = 18.sp),
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 20.dp)
+                style = AppTheme.typography.cardTitle.copy(
+                    fontSize = AppTheme.dimensions.questionTextSize
+                ),
+                color = AppTheme.colors.textPrimary,
+                modifier = Modifier.padding(bottom = AppTheme.dimensions.spacingXl)
             )
 
             question.options.forEachIndexed { index, option ->
                 val isSelected = selectedOptionIndex == index
                 val isCorrect = index == question.correctIndex
-                val showResult = isSelected && isEnabled.not()
+                val showResult = isSelected && !isEnabled
 
                 val backgroundColor = when {
-                    showResult && isCorrect -> Color(0xFFD4EDD4)
-                    showResult && !isCorrect -> Color(0xFFF8D7DA)
-                    isSelected -> Color(0xFFF0F2F5)
-                    else -> Color.White
+                    showResult && isCorrect -> AppTheme.colors.successBackground
+                    showResult && !isCorrect -> AppTheme.colors.errorBackground
+                    isSelected -> AppTheme.colors.backgroundLight
+                    else -> AppTheme.colors.cardBackground
                 }
 
                 val borderColor = when {
-                    showResult && isCorrect -> Color(0xFF28A745)
-                    showResult && !isCorrect -> Color(0xFFDC3545)
+                    showResult && isCorrect -> AppTheme.colors.successBorder
+                    showResult && !isCorrect -> AppTheme.colors.errorBorder
                     isSelected -> AppTheme.colors.primary
-                    else -> Color(0xFFDEE2E6)
+                    else -> AppTheme.colors.borderDefault
                 }
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 6.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .padding(vertical = AppTheme.dimensions.spacingXxxs)
+                        .clip(AppTheme.shapes.inputCorner)
                         .background(backgroundColor)
                         .border(
                             width = 1.5.dp,
                             color = borderColor,
-                            shape = RoundedCornerShape(12.dp)
+                            shape = AppTheme.shapes.inputCorner
                         )
                         .clickable(enabled = isEnabled) { onOptionSelected(index) }
-                        .padding(16.dp)
+                        .padding(AppTheme.dimensions.spacingLg)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -83,17 +86,22 @@ fun QuestionCard(
                     ) {
                         Text(
                             text = option,
-                            style = AppTheme.typography.cardSubtitle.copy(fontSize = 15.sp),
-                            color = if (showResult && !isCorrect) Color.Gray else Color.Black,
+                            style = AppTheme.typography.cardSubtitle.copy(
+                                fontSize = AppTheme.dimensions.optionTextSize
+                            ),
+                            color = if (showResult && !isCorrect)
+                                AppTheme.colors.textSecondary
+                            else
+                                AppTheme.colors.textPrimary,
                             modifier = Modifier.weight(1f)
                         )
 
                         if (showResult && isCorrect) {
                             Icon(
                                 imageVector = Icons.Filled.CheckCircle,
-                                contentDescription = "Correct",
-                                tint = Color(0xFF28A745),
-                                modifier = Modifier.size(24.dp)
+                                contentDescription = stringResource(R.string.cd_correct),
+                                tint = AppTheme.colors.successBorder,
+                                modifier = Modifier.size(AppTheme.dimensions.iconSizeMedium)
                             )
                         }
                     }
