@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import ru.itis.neuroteacher.ui.theme.AppTheme
+import androidx.compose.ui.unit.sp
 import ru.itis.neuroteacher.testcreation.R
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 internal fun ExplanationCard(explanation: String?) {
@@ -22,8 +24,8 @@ internal fun ExplanationCard(explanation: String?) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = AppTheme.dimensions.spacingLg,
-                vertical = AppTheme.dimensions.spacingSm
+                horizontal = dimensionResource(R.dimen.spacing_lg),
+                vertical = dimensionResource(R.dimen.spacing_sm)
             ),
         colors = CardDefaults.cardColors(
             containerColor = AppTheme.colors.explanationBackground
@@ -31,7 +33,7 @@ internal fun ExplanationCard(explanation: String?) {
         shape = AppTheme.shapes.cardCorner
     ) {
         Row(
-            modifier = Modifier.padding(AppTheme.dimensions.spacingLg),
+            modifier = Modifier.padding(dimensionResource(R.dimen.spacing_lg)),
             verticalAlignment = Alignment.Top
         ) {
             Icon(
@@ -39,27 +41,27 @@ internal fun ExplanationCard(explanation: String?) {
                 contentDescription = stringResource(R.string.cd_info),
                 tint = AppTheme.colors.primary,
                 modifier = Modifier
-                    .size(AppTheme.dimensions.iconSizeSmall)
+                    .size(dimensionResource(R.dimen.icon_size_small))
                     .align(Alignment.CenterVertically)
             )
 
-            Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingMd))
+            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.spacing_md)))
 
             Column {
                 Text(
                     text = stringResource(R.string.explanation_label),
                     style = AppTheme.typography.cardTitle.copy(
-                        fontSize = AppTheme.dimensions.explanationTitleSize
+                        fontSize = dimensionResource(R.dimen.font_size_explanation_title).value.sp
                     ),
                     color = AppTheme.colors.textPrimary
                 )
 
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXxxs))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_xxxs)))
 
                 Text(
                     text = explanation,
                     style = AppTheme.typography.cardSubtitle.copy(
-                        fontSize = AppTheme.dimensions.explanationTextSize
+                        fontSize = dimensionResource(R.dimen.font_size_explanation_text).value.sp
                     ),
                     color = AppTheme.colors.explanationText
                 )

@@ -9,9 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import ru.itis.neuroteacher.ui.theme.AppTheme
+import androidx.compose.ui.unit.sp
 import ru.itis.neuroteacher.testcreation.R
+import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 internal fun TestProgressBar(
@@ -23,23 +25,23 @@ internal fun TestProgressBar(
     Text(
         text = stringResource(R.string.test_progress_label, currentQuestion, totalQuestions),
         style = AppTheme.typography.subtitle.copy(
-            fontSize = AppTheme.dimensions.fontSizeHelper
+            fontSize = dimensionResource(R.dimen.font_size_helper).value.sp
         ),
         color = AppTheme.colors.textSecondary,
-        modifier = Modifier.padding(horizontal = AppTheme.dimensions.spacingLg)
+        modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.spacing_lg))
     )
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = AppTheme.dimensions.spacingLg)
-            .height(AppTheme.dimensions.progressHeight)
+            .padding(horizontal = dimensionResource(R.dimen.spacing_lg))
+            .height(dimensionResource(R.dimen.progress_height))
             .background(AppTheme.colors.progressBarTrack)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(progress)
-                .height(AppTheme.dimensions.progressHeight)
+                .height(dimensionResource(R.dimen.progress_height))
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = AppTheme.colors.backgroundGradient

@@ -6,8 +6,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -64,36 +62,6 @@ data class AppShapes(
     val buttonCorner: androidx.compose.foundation.shape.RoundedCornerShape,
     val cardCorner: androidx.compose.foundation.shape.RoundedCornerShape,
     val iconRound: androidx.compose.foundation.shape.RoundedCornerShape
-)
-
-@Immutable
-data class AppDimensions(
-    val questionButtonWidth: Dp,
-    val questionButtonHeight: Dp,
-    val topBarTitleSize: TextUnit,
-    val iconSizeSmall: Dp,
-    val iconSizeMedium: Dp,
-    val radiusSmall: Dp,
-    val radiusMedium: Dp,
-    val radiusLarge: Dp,
-    val spacingXs: Dp,
-    val spacingSm: Dp,
-    val spacingMd: Dp,
-    val spacingLg: Dp,
-    val spacingXl: Dp,
-    val spacingXxxs: Dp,
-    val textFieldMinHeight: Dp,
-    val progressHeight: Dp,
-    val buttonHeight: Dp,
-    val fontSizeHelper: TextUnit,
-    val fontSizeButton: TextUnit,
-    val fontSizeCardTitle: TextUnit,
-    val fontSizeTopBarTitle: TextUnit,
-    val questionTextSize: TextUnit,
-    val optionTextSize: TextUnit,
-    val explanationTitleSize: TextUnit,
-    val explanationTextSize: TextUnit,
-    val topBarTitleTestSize: TextUnit
 )
 
 val LocalAppColors = staticCompositionLocalOf {
@@ -153,37 +121,6 @@ val LocalAppShapes = staticCompositionLocalOf {
     )
 }
 
-val LocalAppDimensions = staticCompositionLocalOf {
-    AppDimensions(
-        questionButtonWidth = 0.dp,
-        questionButtonHeight = 0.dp,
-        topBarTitleSize = TextUnit.Unspecified,
-        iconSizeSmall = 0.dp,
-        iconSizeMedium = 0.dp,
-        radiusSmall = 0.dp,
-        radiusMedium = 0.dp,
-        radiusLarge = 0.dp,
-        spacingXs = 0.dp,
-        spacingSm = 0.dp,
-        spacingMd = 0.dp,
-        spacingLg = 0.dp,
-        spacingXl = 0.dp,
-        spacingXxxs = 0.dp,
-        textFieldMinHeight = 0.dp,
-        progressHeight = 0.dp,
-        buttonHeight = 0.dp,
-        fontSizeHelper = TextUnit.Unspecified,
-        fontSizeButton = TextUnit.Unspecified,
-        fontSizeCardTitle = TextUnit.Unspecified,
-        fontSizeTopBarTitle = TextUnit.Unspecified,
-        questionTextSize = TextUnit.Unspecified,
-        optionTextSize = TextUnit.Unspecified,
-        explanationTitleSize = TextUnit.Unspecified,
-        explanationTextSize = TextUnit.Unspecified,
-        topBarTitleTestSize = TextUnit.Unspecified
-    )
-}
-
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
     val colors = AppColors(
@@ -238,40 +175,10 @@ fun AppTheme(content: @Composable () -> Unit) {
         iconRound = androidx.compose.foundation.shape.CircleShape
     )
 
-    val dimensions = AppDimensions(
-        questionButtonWidth = 64.dp,
-        questionButtonHeight = 48.dp,
-        topBarTitleSize = 20.sp,
-        iconSizeSmall = 20.dp,
-        iconSizeMedium = 24.dp,
-        radiusSmall = 12.dp,
-        radiusMedium = 16.dp,
-        radiusLarge = 24.dp,
-        spacingXs = 4.dp,
-        spacingSm = 8.dp,
-        spacingMd = 12.dp,
-        spacingLg = 16.dp,
-        spacingXl = 24.dp,
-        spacingXxxs = 4.dp,
-        textFieldMinHeight = 300.dp,
-        progressHeight = 4.dp,
-        buttonHeight = 50.dp,
-        fontSizeHelper = 12.sp,
-        fontSizeButton = 16.sp,
-        fontSizeCardTitle = 16.sp,
-        fontSizeTopBarTitle = 20.sp,
-        questionTextSize = 18.sp,
-        optionTextSize = 15.sp,
-        explanationTitleSize = 14.sp,
-        explanationTextSize = 13.sp,
-        topBarTitleTestSize = 18.sp
-    )
-
     androidx.compose.runtime.CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTypography provides typography,
-        LocalAppShapes provides shapes,
-        LocalAppDimensions provides dimensions
+        LocalAppShapes provides shapes
     ) {
         content()
     }
@@ -286,7 +193,4 @@ object AppTheme {
 
     val shapes: AppShapes
         @Composable get() = LocalAppShapes.current
-
-    val dimensions: AppDimensions
-        @Composable get() = LocalAppDimensions.current
 }
