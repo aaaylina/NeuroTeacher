@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.mlkit.text.recognition)
 
 }
