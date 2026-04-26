@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.db.dao
+package ru.itis.neuroteacher.testtaking.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -7,8 +7,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import ru.itis.neuroteacher.db.model.TestEntity
-import ru.itis.neuroteacher.db.model.TestResultEntity
+import ru.itis.neuroteacher.testtaking.data.db.model.TestEntity
+import ru.itis.neuroteacher.testtaking.data.db.model.TestResultEntity
 
 @Dao
 interface TestDao {
@@ -17,7 +17,7 @@ interface TestDao {
     suspend fun insertTest(test: TestEntity): Long
 
     @Query("select * from tests where id = :testId")
-    suspend fun getTestById(testId: String): TestEntity?
+    suspend fun getTestById(testId: Long): TestEntity?
 
     @Query("select * from tests order by dateCreated desc")
     fun getAllTestsFlow(): Flow<List<TestEntity>>
@@ -26,22 +26,22 @@ interface TestDao {
     fun searchTestsFlow(query: String): Flow<List<TestEntity>>
 
     @Query("delete from tests where id = :testId")
-    suspend fun deleteTest(testId: String)
+    suspend fun deleteTest(testId: Long)
 
     @Query("delete from tests")
     suspend fun deleteAllTests()
 
     @Update
-    fun updateTest(test: TestEntity)
+    suspend fun updateTest(test: TestEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertResult(result: TestResultEntity): Long
 
     @Query("SELECT * FROM test_results WHERE testId = :testId ORDER BY dateCompleted DESC LIMIT 1")
-    suspend fun getLatestResultForTest(testId: String): TestResultEntity?
+    suspend fun getLatestResultForTest(testId: Long): TestResultEntity?
 
     @Query("SELECT * FROM test_results WHERE testId = :testId")
-    fun getResultsForTestFlow(testId: String): Flow<List<TestResultEntity>>
+    fun getResultsForTestFlow(testId: Long): Flow<List<TestResultEntity>>
 
     @Query("SELECT * FROM test_results ORDER BY dateCompleted DESC")
     fun getAllResultsFlow(): Flow<List<TestResultEntity>>

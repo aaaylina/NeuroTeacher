@@ -3,7 +3,7 @@ package ru.itis.neuroteacher.db.converter
 import androidx.room.TypeConverter
 import java.util.Date
 
-class Converters {
+class DateConverters {
 
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
@@ -15,13 +15,4 @@ class Converters {
         return date?.time
     }
 
-    @TypeConverter
-    fun fromSourceType(sourceType: SourceType): String {
-        return sourceType.name
-    }
-
-    @TypeConverter
-    fun toSourceType(value: String): SourceType {
-        return SourceType.valueOf(value)
-    }
 }

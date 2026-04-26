@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":feature:auth"))
     implementation(project(":feature:home"))
     implementation(project(":feature:test-creation"))
+    implementation(project(":feature:test-taking"))
     implementation(project(":core:ui"))
     
     

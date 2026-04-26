@@ -1,22 +1,20 @@
-package ru.itis.neuroteacher.db.repository
+package ru.itis.neuroteacher.testtaking.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.itis.neuroteacher.db.dao.TestDao
-import ru.itis.neuroteacher.db.model.TestEntity
-import ru.itis.neuroteacher.db.model.TestResultEntity
+import ru.itis.neuroteacher.testtaking.data.db.dao.TestDao
+import ru.itis.neuroteacher.testtaking.data.db.model.TestEntity
+import ru.itis.neuroteacher.testtaking.data.db.model.TestResultEntity
+import ru.itis.neuroteacher.testtaking.domain.model.TestStatistics
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class TestLocalRepositoryImpl @Inject constructor(
     private val testDao: TestDao
 ) : TestLocalRepository {
-
     override suspend fun saveTest(test: TestEntity): Long {
         return testDao.insertTest(test)
     }
 
-    override suspend fun getTestById(testId: String): TestEntity? {
+    override suspend fun getTestById(testId: Long): TestEntity? {
         return testDao.getTestById(testId)
     }
 
@@ -28,7 +26,7 @@ class TestLocalRepositoryImpl @Inject constructor(
         return testDao.searchTestsFlow(query)
     }
 
-    override suspend fun deleteTest(testId: String) {
+    override suspend fun deleteTest(testId: Long) {
         testDao.deleteTest(testId)
     }
 
@@ -40,11 +38,11 @@ class TestLocalRepositoryImpl @Inject constructor(
         return testDao.insertResult(result)
     }
 
-    override suspend fun getLatestResult(testId: String): TestResultEntity? {
+    override suspend fun getLatestResult(testId: Long): TestResultEntity? {
         return testDao.getLatestResultForTest(testId)
     }
 
-    override fun getResultsForTest(testId: String): Flow<List<TestResultEntity>> {
+    override fun getResultsForTest(testId: Long): Flow<List<TestResultEntity>> {
         return testDao.getResultsForTestFlow(testId)
     }
 
@@ -52,12 +50,12 @@ class TestLocalRepositoryImpl @Inject constructor(
         testDao.saveTestWithResult(test, result)
     }
 
-    override suspend fun getStatistics(): UserStatistics {
-        return UserStatistics(
+    override suspend fun getStatistics(): TestStatistics {
+        return TestStatistics(
             totalTests = testDao.getTotalTestsCount(),
             completedTests = testDao.getTotalCompletedTestsCount(),
-            averageScore = testDao.getAverageScore() ?: 0f,
-            bestScore = testDao.getBestScore() ?: 0f
+            averageScore = testDao.getAverageScore(),
+            bestScore = testDao.getBestScore()
         )
     }
 }

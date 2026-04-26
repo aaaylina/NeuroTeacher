@@ -1,22 +1,22 @@
-package ru.itis.neuroteacher.db.model
+package ru.itis.neuroteacher.testtaking.data.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import ru.itis.neuroteacher.db.converter.Converters
+import ru.itis.neuroteacher.testtaking.data.db.converter.TestConverters
 import java.util.Date
 
 @Entity(tableName = "tests")
-@TypeConverters(Converters::class)
+@TypeConverters(TestConverters::class)
 data class TestEntity(
-    @PrimaryKey
-    val id: String = java.util.UUID.randomUUID().toString(),
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val title: String,
     val dateCreated: Date = Date(),
     val sourceType: SourceType,
     val questionsJson: String,
     val totalQuestions: Int,
-    val resultId: String? = null
+    val resultId: Long? = null
 )
 
 enum class SourceType {
