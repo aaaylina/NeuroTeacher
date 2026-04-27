@@ -11,8 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.res.dimensionResource
-import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
@@ -23,8 +21,8 @@ internal fun QuestionCountButton(
 ) {
     Box(
         modifier = Modifier
-            .width(dimensionResource(R.dimen.question_button_width))
-            .height(dimensionResource(R.dimen.question_button_height))
+            .width(AppTheme.dimensions.questionButtonWidth)
+            .height(AppTheme.dimensions.questionButtonHeight)
             .clip(AppTheme.shapes.cardCorner)
             .background(
                 brush = if (isSelected) {

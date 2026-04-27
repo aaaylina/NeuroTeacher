@@ -9,8 +9,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
@@ -25,7 +23,7 @@ fun AuthButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(50.dp),
+            .height(AppTheme.dimensions.buttonHeight),
         enabled = enabled && !isLoading,
         shape = AppTheme.shapes.buttonCorner,
         colors = ButtonDefaults.buttonColors(
@@ -38,15 +36,15 @@ fun AuthButton(
     ) {
         if (isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(24.dp),
-                color = Color.White,
-                strokeWidth = 2.dp
+                modifier = Modifier.size(AppTheme.dimensions.iconSizeMedium),
+                color = AppTheme.colors.white,
+                strokeWidth = AppTheme.dimensions.borderThickness
             )
         } else {
             Text(
                 text = text,
                 style = AppTheme.typography.button.copy(
-                    color = if (enabled) Color.White else AppTheme.colors.textHint
+                    color = if (enabled) AppTheme.colors.white else AppTheme.colors.textHint
                 )
             )
         }

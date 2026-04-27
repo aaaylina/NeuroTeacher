@@ -4,9 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
 import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
@@ -20,7 +18,7 @@ internal fun TextInputTopBar(
             Text(
                 text = stringResource(R.string.text_input_title),
                 style = AppTheme.typography.title.copy(
-                    fontSize = dimensionResource(R.dimen.font_size_top_bar_title).value.sp
+                    fontSize = AppTheme.dimensions.fontSizeTopBarTitle
                 )
             )
         },

@@ -12,11 +12,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.testcreation.R
@@ -73,7 +71,7 @@ internal fun TextInputScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(dimensionResource(R.dimen.spacing_lg)),
+                .padding(AppTheme.dimensions.spacingLg),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Card(
@@ -84,7 +82,7 @@ internal fun TextInputScreen(
                 shape = AppTheme.shapes.cardCorner
             ) {
                 Column(
-                    modifier = Modifier.padding(dimensionResource(R.dimen.spacing_lg))
+                    modifier = Modifier.padding(AppTheme.dimensions.spacingLg)
                 ) {
                     TextField(
                         value = text,
@@ -99,7 +97,7 @@ internal fun TextInputScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = dimensionResource(R.dimen.text_field_min_height)),
+                            .heightIn(min = AppTheme.dimensions.textFieldMinHeight),
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
                             unfocusedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -115,14 +113,14 @@ internal fun TextInputScreen(
                     Text(
                         text = stringResource(R.string.text_input_min_length_hint, TestGenerationConstants.MIN_TEXT_LENGTH),
                         style = AppTheme.typography.placeholder.copy(
-                            fontSize = dimensionResource(R.dimen.font_size_helper).value.sp
+                            fontSize = AppTheme.dimensions.fontSizeHelper
                         ),
                         color = AppTheme.colors.textHint
                     )
                 }
             }
 
-            Spacer(Modifier.height(dimensionResource(R.dimen.spacing_lg)))
+            Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -132,7 +130,7 @@ internal fun TextInputScreen(
                 shape = AppTheme.shapes.cardCorner
             ) {
                 Column(
-                    modifier = Modifier.padding(dimensionResource(R.dimen.spacing_lg))
+                    modifier = Modifier.padding(AppTheme.dimensions.spacingLg)
                 ) {
                     Text(
                         text = stringResource(R.string.text_input_question_count_label),
@@ -140,11 +138,11 @@ internal fun TextInputScreen(
                         color = AppTheme.colors.textPrimary
                     )
 
-                    Spacer(Modifier.height(dimensionResource(R.dimen.spacing_md)))
+                    Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.spacing_sm))
+                        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingSm)
                     ) {
                         TestGenerationConstants.QUESTION_COUNT_OPTIONS.forEach { count ->
                             QuestionCountButton(
@@ -157,12 +155,12 @@ internal fun TextInputScreen(
                 }
             }
 
-            Spacer(Modifier.height(dimensionResource(R.dimen.spacing_lg)))
+            Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
             Text(
                 text = stringResource(R.string.text_input_char_counter, text.length, TestGenerationConstants.MAX_TEXT_LENGTH),
                 style = AppTheme.typography.placeholder.copy(
-                    fontSize = dimensionResource(R.dimen.font_size_helper).value.sp
+                    fontSize = AppTheme.dimensions.fontSizeHelper
                 ),
                 color = if (text.length < TestGenerationConstants.MIN_TEXT_LENGTH) {
                     AppTheme.colors.textHint
@@ -171,11 +169,11 @@ internal fun TextInputScreen(
                 }
             )
 
-            Spacer(Modifier.height(dimensionResource(R.dimen.spacing_lg)))
+            Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.spacing_md)),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingMd),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedButton(
@@ -195,9 +193,9 @@ internal fun TextInputScreen(
                     Icon(
                         imageVector = Icons.Filled.ContentPaste,
                         contentDescription = stringResource(R.string.cd_paste),
-                        modifier = Modifier.size(dimensionResource(R.dimen.icon_size_small))
+                        modifier = Modifier.size(AppTheme.dimensions.iconSizeSmall)
                     )
-                    Spacer(Modifier.width(dimensionResource(R.dimen.spacing_sm)))
+                    Spacer(Modifier.width(AppTheme.dimensions.spacingSm))
                     Text(
                         stringResource(R.string.common_paste),
                         style = AppTheme.typography.button.copy(color = AppTheme.colors.textPrimary)
@@ -220,19 +218,19 @@ internal fun TextInputScreen(
                 ) {
                     if (uiState.isLoading) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(dimensionResource(R.dimen.icon_size_small)),
+                            modifier = Modifier.size(AppTheme.dimensions.iconSizeSmall),
                             color = AppTheme.colors.textPrimary.copy(alpha = 1f),
                             strokeWidth = 2.dp
                         )
-                        Spacer(Modifier.width(dimensionResource(R.dimen.spacing_sm)))
+                        Spacer(Modifier.width(AppTheme.dimensions.spacingSm))
                         Text(stringResource(R.string.common_generating), style = AppTheme.typography.button)
                     } else {
                         Icon(
                             imageVector = Icons.Filled.AutoAwesome,
                             contentDescription = stringResource(R.string.cd_generate),
-                            modifier = Modifier.size(dimensionResource(R.dimen.icon_size_small))
+                            modifier = Modifier.size(AppTheme.dimensions.iconSizeSmall)
                         )
-                        Spacer(Modifier.width(dimensionResource(R.dimen.spacing_sm)))
+                        Spacer(Modifier.width(AppTheme.dimensions.spacingSm))
                         Text(stringResource(R.string.common_generate), style = AppTheme.typography.button)
                     }
                 }

@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.serialization.json.Json
@@ -78,7 +77,7 @@ internal fun TestScreen(
                 totalQuestions = uiState.questions.size
             )
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_xl)))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
             QuestionCard(
                 question = currentQuestion,
@@ -91,13 +90,13 @@ internal fun TestScreen(
                 ExplanationCard(explanation = currentQuestion.explanation)
             }
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_xl)))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.spacing_lg)),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.spacing_md))
+                    .padding(horizontal = AppTheme.dimensions.spacingLg),
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingMd)
             ) {
                 if (uiState.currentQuestionIndex > 0) {
                     OutlinedButton(
@@ -126,7 +125,7 @@ internal fun TestScreen(
                     },
                     modifier = Modifier
                         .weight(if (uiState.currentQuestionIndex > 0) 1.5f else 1f)
-                        .height(dimensionResource(R.dimen.button_height)),
+                        .height(AppTheme.dimensions.buttonHeight),
                     enabled = uiState.selectedOptionIndex != null,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (uiState.selectedOptionIndex != null)
@@ -147,7 +146,7 @@ internal fun TestScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacing_xl)))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
         }
     }
 }

@@ -4,10 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
 import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
@@ -22,7 +20,7 @@ internal fun TestTopBar(
             Text(
                 text = testTitle,
                 style = AppTheme.typography.title.copy(
-                    fontSize = dimensionResource(R.dimen.font_size_top_bar_title_test).value.sp
+                    fontSize = AppTheme.dimensions.fontSizeTopBarTitleTest
                 ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
