@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.itis.neuroteacher.auth.R
+import ru.itis.neuroteacher.auth.navigation.AuthRouter
 import ru.itis.neuroteacher.auth.presentation.components.AuthButton
 import ru.itis.neuroteacher.auth.presentation.components.AuthTextField
 import ru.itis.neuroteacher.auth.presentation.components.AuthToolbar
@@ -47,8 +48,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun LoginScreen(
-    onNavigateToRegister: () -> Unit,
-    onLoginSuccess: () -> Unit,
+    router: AuthRouter,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -143,7 +143,7 @@ fun LoginScreen(
                 AuthButton(
                     text = stringResource(id = R.string.login_button),
                     onClick = {
-                        viewModel.onLoginClick(onLoginSuccess)
+                        viewModel.onLoginClick { router.navigateToMain() }
                     },
                     enabled = uiState.email.isNotBlank() && uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH,
                     isLoading = uiState.isLoading
@@ -152,7 +152,7 @@ fun LoginScreen(
                 AuthToolbar(
                     primaryText = stringResource(id = R.string.login_no_account),
                     secondaryText = stringResource(id = R.string.login_register_link),
-                    onSecondaryClick = onNavigateToRegister
+                    onSecondaryClick = { router.navigateToRegister() }
                 )
             }
             SnackbarHost(

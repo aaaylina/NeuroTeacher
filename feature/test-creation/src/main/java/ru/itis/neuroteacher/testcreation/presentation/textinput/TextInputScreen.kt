@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.testcreation.R
+import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.testcreation.presentation.textinput.components.QuestionCountButton
 import ru.itis.neuroteacher.testcreation.presentation.textinput.components.TextInputTopBar
 import ru.itis.neuroteacher.testcreation.utils.constants.TestGenerationConstants
@@ -25,8 +26,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 internal fun TextInputScreen(
-    onNavigateBack: () -> Unit,
-    onNavigateToTest: (String, String) -> Unit,
+    router: TestCreationRouter,
     viewModel: TextInputViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -45,7 +45,7 @@ internal fun TextInputScreen(
     LaunchedEffect(navEvent) {
         when (val event = navEvent) {
             is TextInputNavigationEvent.NavigateToTest -> {
-                onNavigateToTest(event.title, event.questionsJson)
+                router.navigateToTest(event.title, event.questionsJson)
                 viewModel.onEventConsumed()
             }
             is TextInputNavigationEvent.ShowError -> {
@@ -62,7 +62,7 @@ internal fun TextInputScreen(
     }
 
     Scaffold(
-        topBar = { TextInputTopBar(onNavigateBack = onNavigateBack) },
+        topBar = { TextInputTopBar(onNavigateBack = { router.navigateUp() }) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         containerColor = AppTheme.colors.backgroundLight
     ) { padding ->

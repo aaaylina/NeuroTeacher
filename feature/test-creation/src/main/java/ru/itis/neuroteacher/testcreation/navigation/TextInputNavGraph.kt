@@ -5,14 +5,8 @@ import androidx.navigation.compose.composable
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
 import ru.itis.neuroteacher.testcreation.presentation.textinput.TextInputScreen
 
-fun NavGraphBuilder.textInputNavGraph(
-    onNavigateBack: () -> Unit,
-    onNavigateToTest: (String, String) -> Unit
-) {
+fun NavGraphBuilder.textInputNavGraph(router: TestCreationRouter) {
     composable<TextInputRoute> {
-        TextInputScreen(
-            onNavigateBack = onNavigateBack,
-            onNavigateToTest = onNavigateToTest
-        )
+        TextInputScreen(router = router)
     }
 }

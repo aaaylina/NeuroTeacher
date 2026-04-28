@@ -15,15 +15,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 
 @Composable
 fun HomeScreen(
-    onCameraClick: () -> Unit,
-    onTextClick: () -> Unit,
-    onHistoryClick: () -> Unit,
-    onProfileClick: () -> Unit,
+    router: HomeRouter
 ) {
     val colors = AppTheme.colors
     val typography = AppTheme.typography
@@ -79,7 +77,7 @@ fun HomeScreen(
                         )
                         .clip(shapes.cardCorner)
                         .background(colors.cardBackground)
-                        .clickable(onClick = onCameraClick),
+                        .clickable { router.navigateToCamera() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -135,7 +133,7 @@ fun HomeScreen(
                         )
                         .clip(shapes.cardCorner)
                         .background(colors.cardBackground)
-                        .clickable(onClick = onTextClick),
+                        .clickable { router.navigateToText() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
