@@ -27,6 +27,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 @Composable
 internal fun TextInputScreen(
     router: TestCreationRouter,
+    testCache: ru.itis.neuroteacher.testcreation.data.TestCache,
     viewModel: TextInputViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -45,7 +46,8 @@ internal fun TextInputScreen(
     LaunchedEffect(navEvent) {
         when (val event = navEvent) {
             is TextInputNavigationEvent.NavigateToTest -> {
-                router.navigateToTest(event.title, event.questionsJson)
+                val testId = testCache.save(event.test)
+                router.navigateToTest(testId)
                 viewModel.onEventConsumed()
             }
             is TextInputNavigationEvent.ShowError -> {

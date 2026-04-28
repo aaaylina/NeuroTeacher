@@ -58,8 +58,8 @@ class TestCreationRouterImpl(
         navController.navigateUp()
     }
 
-    override fun navigateToTest(testTitle: String, questionsJson: String) {
-        navController.navigate(TestRoute(testTitle, questionsJson))
+    override fun navigateToTest(testId: String) {
+        navController.navigate(TestRoute(testId))
     }
 
     override fun navigateToResults(resultJson: String) {

@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import ru.itis.neuroteacher.testcreation.data.mapper.TestMapper
-import ru.itis.neuroteacher.testcreation.data.model.TestDataModel
+import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.domain.model.Question
 import javax.inject.Inject
 
@@ -25,38 +23,25 @@ data class TestUiState(
 
 @HiltViewModel
 class TestViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    private val json: Json,
-    private val mapper: TestMapper
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TestUiState())
     val uiState: StateFlow<TestUiState> = _uiState.asStateFlow()
-
     private var _questions: List<Question> = emptyList()
     private var _testTitle: String = ""
-
-    init {
-        val questionsJson = savedStateHandle.get<String>("questionsJson")
-        val title = savedStateHandle.get<String>("testTitle") ?: "Тест"
-
-        if (!questionsJson.isNullOrEmpty()) {
-            parseTest(questionsJson, title)
-        }
-    }
-
-    private fun parseTest(jsonString: String, title: String) {
-        runCatching {
-            val dataModel = json.decodeFromString<TestDataModel>(jsonString)
-            val test = mapper.toDomain(dataModel)
-            _testTitle = test.title
-            _questions = test.questions
-            _uiState.value = _uiState.value.copy(
-                testTitle = title,
-                questions = _questions
-            )
-        }.onFailure { e ->
-            _uiState.value = _uiState.value.copy(error = e.message)
+    fun loadTestFromCache(cache: TestCache) {
+        val testId = savedStateHandle.get<String>("testId")
+        if (testId != null) {
+            val test = cache.get(testId)
+            if (test != null) {
+                _uiState.value = _uiState.value.copy(
+                    testTitle = test.title,
+                    questions = test.questions
+                )
+            } else {
+                _uiState.value = _uiState.value.copy(error = "Тест не найден в кеше")
+            }
         }
     }
 

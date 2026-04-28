@@ -9,28 +9,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.serialization.json.Json
 import ru.itis.neuroteacher.testcreation.R
+import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.testcreation.presentation.test.components.*
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TestScreen(
-    testTitle: String,
-    questionsJson: String,
-    onNavigateBack: () -> Unit,
-    onTestCompleted: (String) -> Unit,
+    router: TestCreationRouter,
+    testCache: ru.itis.neuroteacher.testcreation.data.TestCache,
     viewModel: TestViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        if (uiState.questions.isEmpty()) {
+            viewModel.loadTestFromCache(testCache)
+        }
+    }
 
     Scaffold(
         topBar = {
             TestTopBar(
-                testTitle = testTitle,
-                onNavigateBack = onNavigateBack
+                testTitle = uiState.testTitle,
+                onNavigateBack = { router.navigateUp() }
             )
         },
         containerColor = AppTheme.colors.backgroundLight
@@ -119,8 +122,8 @@ internal fun TestScreen(
                             viewModel.nextQuestion()
                         } else {
                             val result = viewModel.finishTest()
-                            val resultJson = Json.encodeToString(result)
-                            onTestCompleted(resultJson)
+                            // TODO: Реализовать экран результатов и навигацию
+                            router.navigateUp()
                         }
                     },
                     modifier = Modifier

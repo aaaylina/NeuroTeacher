@@ -6,14 +6,20 @@ import androidx.navigation.toRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
 import ru.itis.neuroteacher.testcreation.presentation.test.TestScreen
 
-fun NavGraphBuilder.testNavGraph(router: TestCreationRouter) {
+fun NavGraphBuilder.testNavGraph(
+    router: TestCreationRouter,
+) {
     composable<TestRoute> { backStackEntry ->
         val route = backStackEntry.toRoute<TestRoute>()
+
+        val cacheViewModel = androidx.hilt.navigation.compose.hiltViewModel<
+                ru.itis.neuroteacher.testcreation.presentation.TestCacheViewModel
+                >(backStackEntry)
+
         TestScreen(
-            testTitle = route.testTitle,
-            questionsJson = route.questionsJson,
-            onNavigateBack = { router.navigateUp() },
-            onTestCompleted = { resultJson -> router.navigateToResults(resultJson) }
+            router = router,
+            testCache = cacheViewModel.cache,
+            viewModel = androidx.hilt.navigation.compose.hiltViewModel()
         )
     }
 }
