@@ -35,6 +35,9 @@ class TestViewModel @Inject constructor(
         if (testId != null) {
             val test = cache.get(testId)
             if (test != null) {
+                _testTitle = test.title
+                _questions = test.questions
+
                 _uiState.value = _uiState.value.copy(
                     testTitle = test.title,
                     questions = test.questions
@@ -42,6 +45,8 @@ class TestViewModel @Inject constructor(
             } else {
                 _uiState.value = _uiState.value.copy(error = "Тест не найден в кеше")
             }
+        } else {
+            _uiState.value = _uiState.value.copy(error = "testId не передан")
         }
     }
 
