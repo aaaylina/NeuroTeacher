@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.testcreation.presentation.test.components.*
@@ -18,7 +19,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 @Composable
 internal fun TestScreen(
     router: TestCreationRouter,
-    testCache: ru.itis.neuroteacher.testcreation.data.TestCache,
+    testCache: TestCache,
     viewModel: TestViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()

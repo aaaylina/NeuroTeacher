@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
+import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.presentation.textinput.components.QuestionCountButton
 import ru.itis.neuroteacher.testcreation.presentation.textinput.components.TextInputTopBar
 import ru.itis.neuroteacher.testcreation.utils.constants.TestGenerationConstants
@@ -27,7 +28,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 @Composable
 internal fun TextInputScreen(
     router: TestCreationRouter,
-    testCache: ru.itis.neuroteacher.testcreation.data.TestCache,
+    testCache: TestCache,
     viewModel: TextInputViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
