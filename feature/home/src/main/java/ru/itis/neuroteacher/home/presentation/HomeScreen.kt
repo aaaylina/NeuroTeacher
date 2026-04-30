@@ -14,18 +14,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 
 @Composable
 fun HomeScreen(
-    onCameraClick: () -> Unit,
-    onTextClick: () -> Unit,
-    onHistoryClick: () -> Unit,
-    onProfileClick: () -> Unit,
+    router: HomeRouter
 ) {
     val colors = AppTheme.colors
     val typography = AppTheme.typography
@@ -54,10 +50,10 @@ fun HomeScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(dimensionResource(id = R.dimen.header_height))
+                        .height(AppTheme.dimensions.headerHeight)
                         .padding(
-                            horizontal = dimensionResource(id = R.dimen.padding_horizontal),
-                            vertical = dimensionResource(id = R.dimen.padding_horizontal)
+                            horizontal = AppTheme.dimensions.paddingHorizontal,
+                            vertical = AppTheme.dimensions.paddingHorizontal
                         ),
                     contentAlignment = Alignment.CenterStart
                 ) {
@@ -67,32 +63,31 @@ fun HomeScreen(
                     )
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
-
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
                 Box(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .height(dimensionResource(id = R.dimen.container_camera_height))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .height(AppTheme.dimensions.containerCameraHeight)
                         .shadow(
-                            elevation = dimensionResource(id = R.dimen.shadow_elevation),
+                            elevation = AppTheme.dimensions.shadowElevation,
                             shape = shapes.cardCorner,
                             ambientColor = colors.shadowColor,
                             spotColor = colors.shadowColor
                         )
                         .clip(shapes.cardCorner)
                         .background(colors.cardBackground)
-                        .clickable(onClick = onCameraClick),
+                        .clickable { router.navigateToCamera() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_card))
+                        modifier = Modifier.padding(AppTheme.dimensions.cardPadding)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(dimensionResource(id = R.dimen.icon_size))
+                                .size(AppTheme.dimensions.iconSize)
                                 .clip(shapes.iconRound)
                                 .background(
                                     brush = Brush.linearGradient(
@@ -103,98 +98,97 @@ fun HomeScreen(
                         ) {
                             Text(
                                 text = "📷", //пока так сделала хардкодом эмодзи, потом заменю их на иконки
-                                fontSize = dimensionResource(id = R.dimen.icon_emoji_size).value.sp
+                                fontSize = AppTheme.dimensions.iconEmojiSize
                             )
                         }
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                         Text(
                             text = stringResource(id = R.string.home_camera_title),
                             style = typography.cardTitle
                         )
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_xs)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_camera_subtitle),
                             style = typography.cardSubtitle,
-                            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                            modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_sm)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingSm))
 
                 Box(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .height(dimensionResource(id = R.dimen.container_text_height))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .height(AppTheme.dimensions.containerTextHeight)
                         .shadow(
-                            elevation = dimensionResource(id = R.dimen.shadow_elevation),
+                            elevation = AppTheme.dimensions.shadowElevation,
                             shape = shapes.cardCorner,
                             ambientColor = colors.shadowColor,
                             spotColor = colors.shadowColor
                         )
                         .clip(shapes.cardCorner)
                         .background(colors.cardBackground)
-                        .clickable(onClick = onTextClick),
+                        .clickable { router.navigateToText() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_card))
+                        modifier = Modifier.padding(AppTheme.dimensions.cardPadding)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(dimensionResource(id = R.dimen.icon_size))
+                                .size(AppTheme.dimensions.iconSize)
                                 .clip(shapes.iconRound)
                                 .background(colors.backgroundLight),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = "📝", // тут аналогично
-                                fontSize = dimensionResource(id = R.dimen.icon_emoji_size).value.sp
+                                fontSize = AppTheme.dimensions.iconEmojiSize
                             )
                         }
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                         Text(
                             text = stringResource(id = R.string.home_text_title),
                             style = typography.cardTitle
                         )
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_xs)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_text_subtitle),
                             style = typography.cardSubtitle,
-                            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                            modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
                 Column(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_recent_title),
                         style = typography.sectionTitle
                     )
 
-                    Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
-
+                    Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(dimensionResource(id = R.dimen.empty_state_height))
+                            .height(AppTheme.dimensions.emptyStateHeight)
                             .clip(shapes.cardCorner)
                             .background(colors.cardBackground),
                         contentAlignment = Alignment.Center
@@ -204,18 +198,18 @@ fun HomeScreen(
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(dimensionResource(id = R.dimen.icon_empty_size))
+                                    .size(AppTheme.dimensions.iconEmptySize)
                                     .clip(shapes.iconRound)
                                     .background(colors.backgroundLight),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
                                     text = "📚", // тут аналогично
-                                    fontSize = dimensionResource(id = R.dimen.icon_emoji_size_large).value.sp
+                                    fontSize = AppTheme.dimensions.iconEmojiSizeLarge
                                 )
                             }
 
-                            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                            Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                             Text(
                                 text = stringResource(id = R.string.home_empty_state),
@@ -226,7 +220,7 @@ fun HomeScreen(
 
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
             }
         }
     }

@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
@@ -42,7 +41,7 @@ fun AuthTextField(
             color = AppTheme.colors.textLabel
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXs))
 
         OutlinedTextField(
             value = value,

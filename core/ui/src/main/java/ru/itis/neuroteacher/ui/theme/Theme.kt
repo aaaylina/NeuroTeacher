@@ -6,6 +6,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -25,13 +27,22 @@ data class AppColors(
     val error: Color,
     val disabled: Color,
     val backgroundGradient: List<Color>,
-
     val backgroundGradientMain: List<Color>,
     val iconGradientStart: Color,
     val iconGradientEnd: Color,
     val shadowColor: Color,
     val bottomBarBorder: Color,
-    val textOnWhite: Color
+    val textOnWhite: Color,
+    val successBackground: Color,
+    val errorBackground: Color,
+    val successBorder: Color,
+    val errorBorder: Color,
+    val explanationBackground: Color,
+    val explanationText: Color,
+    val progressBarTrack: Color,
+    val white: Color,
+    val cardSubtitleColor: Color,
+    val textOnCard: Color,
 )
 
 @Immutable
@@ -42,7 +53,6 @@ data class AppTypography(
     val label: TextStyle,
     val placeholder: TextStyle,
     val error: TextStyle,
-
     val welcomeText: TextStyle,
     val cardTitle: TextStyle,
     val cardSubtitle: TextStyle,
@@ -54,34 +64,131 @@ data class AppTypography(
 data class AppShapes(
     val inputCorner: androidx.compose.foundation.shape.RoundedCornerShape,
     val buttonCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-
     val cardCorner: androidx.compose.foundation.shape.RoundedCornerShape,
     val iconRound: androidx.compose.foundation.shape.RoundedCornerShape
 )
 
+@Immutable
+data class AppDimensions(
+    val spacingXxxs: Dp,
+    val spacingXs: Dp,
+    val spacingSm: Dp,
+    val spacingMd: Dp,
+    val spacingLg: Dp,
+    val spacingXl: Dp,
+
+    val buttonHeight: Dp,
+    val progressHeight: Dp,
+    val textFieldMinHeight: Dp,
+    val questionButtonWidth: Dp,
+    val questionButtonHeight: Dp,
+
+    val iconSizeSmall: Dp,
+    val iconSizeMedium: Dp,
+    val iconSize: Dp,
+    val iconEmptySize: Dp,
+    val iconEmojiSize: TextUnit,
+    val iconEmojiSizeLarge: TextUnit,
+
+    val headerHeight: Dp,
+    val containerWidth: Dp,
+    val containerCameraHeight: Dp,
+    val containerTextHeight: Dp,
+    val emptyStateHeight: Dp,
+    val shadowElevation: Dp,
+    val cardPadding: Dp,
+    val paddingHorizontal: Dp,
+    val logoContainerSize: Dp,
+    val logoSize: Dp,
+
+    val borderThickness: Dp,
+
+    val fontSizeHelper: TextUnit,
+    val fontSizeButton: TextUnit,
+    val fontSizeCardTitle: TextUnit,
+    val fontSizeTopBarTitle: TextUnit,
+    val fontSizeQuestionText: TextUnit,
+    val fontSizeOptionText: TextUnit,
+    val fontSizeExplanationTitle: TextUnit,
+    val fontSizeExplanationText: TextUnit,
+    val fontSizeTopBarTitleTest: TextUnit,
+)
+
+val LocalAppDimensions = staticCompositionLocalOf {
+    AppDimensions(
+        spacingXxxs = 4.dp, spacingXs = 8.dp, spacingSm = 12.dp,
+        spacingMd = 16.dp, spacingLg = 24.dp, spacingXl = 32.dp,
+
+        buttonHeight = 50.dp, progressHeight = 4.dp, textFieldMinHeight = 300.dp,
+        questionButtonWidth = 64.dp, questionButtonHeight = 48.dp,
+
+        iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
+        iconSize = 80.dp, iconEmptySize = 96.dp,
+        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+
+        headerHeight = 96.dp, containerWidth = 345.dp,
+        containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
+        emptyStateHeight = 200.dp, shadowElevation = 8.dp,
+        cardPadding = 32.dp, paddingHorizontal = 24.dp,
+        logoContainerSize = 80.dp, logoSize = 60.dp,
+
+        borderThickness = 1.5.dp,
+
+        fontSizeHelper = 12.sp, fontSizeButton = 16.sp,
+        fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
+        fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
+        fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
+        fontSizeTopBarTitleTest = 18.sp
+    )
+}
+
 val LocalAppColors = staticCompositionLocalOf {
     AppColors(
-        primary = Color.Unspecified, primaryVariant = Color.Unspecified,
-        backgroundLight = Color.Unspecified, cardBackground = Color.Unspecified,
-        textPrimary = Color.Unspecified, textSecondary = Color.Unspecified,
-        textHint = Color.Unspecified, textLabel = Color.Unspecified,
-        borderDefault = Color.Unspecified, borderFocused = Color.Unspecified,
-        borderError = Color.Unspecified, error = Color.Unspecified,
-        disabled = Color.Unspecified, backgroundGradient = emptyList(),
+        primary = Color.Unspecified,
+        primaryVariant = Color.Unspecified,
+        backgroundLight = Color.Unspecified,
+        cardBackground = Color.Unspecified,
+        textPrimary = Color.Unspecified,
+        textSecondary = Color.Unspecified,
+        textHint = Color.Unspecified,
+        textLabel = Color.Unspecified,
+        borderDefault = Color.Unspecified,
+        borderFocused = Color.Unspecified,
+        borderError = Color.Unspecified,
+        error = Color.Unspecified,
+        disabled = Color.Unspecified,
+        backgroundGradient = emptyList(),
         backgroundGradientMain = emptyList(),
-        iconGradientStart = Color.Unspecified, iconGradientEnd = Color.Unspecified,
-        shadowColor = Color.Unspecified, bottomBarBorder = Color.Unspecified,
-        textOnWhite = Color.Unspecified
+        iconGradientStart = Color.Unspecified,
+        iconGradientEnd = Color.Unspecified,
+        shadowColor = Color.Unspecified,
+        bottomBarBorder = Color.Unspecified,
+        textOnWhite = Color.Unspecified,
+        successBackground = Color.Unspecified,
+        errorBackground = Color.Unspecified,
+        successBorder = Color.Unspecified,
+        errorBorder = Color.Unspecified,
+        explanationBackground = Color.Unspecified,
+        explanationText = Color.Unspecified,
+        progressBarTrack = Color.Unspecified,
+        white = Color.Unspecified,
+        cardSubtitleColor = Color.Unspecified,
+        textOnCard = Color.Unspecified
     )
 }
 
 val LocalAppTypography = staticCompositionLocalOf {
     AppTypography(
-        title = TextStyle.Default, subtitle = TextStyle.Default,
-        button = TextStyle.Default, label = TextStyle.Default,
-        placeholder = TextStyle.Default, error = TextStyle.Default,
-        welcomeText = TextStyle.Default, cardTitle = TextStyle.Default,
-        cardSubtitle = TextStyle.Default, sectionTitle = TextStyle.Default,
+        title = TextStyle.Default,
+        subtitle = TextStyle.Default,
+        button = TextStyle.Default,
+        label = TextStyle.Default,
+        placeholder = TextStyle.Default,
+        error = TextStyle.Default,
+        welcomeText = TextStyle.Default,
+        cardTitle = TextStyle.Default,
+        cardSubtitle = TextStyle.Default,
+        sectionTitle = TextStyle.Default,
         emptyStateText = TextStyle.Default
     )
 }
@@ -98,31 +205,36 @@ val LocalAppShapes = staticCompositionLocalOf {
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
     val colors = AppColors(
-        primary = Color(0xFF4A6CF7),
-        primaryVariant = Color(0xFF8B5CF6),
-        backgroundLight = Color(0xFFEFF6FF),
-        cardBackground = Color(0xFFFFFFFF),
-        textPrimary = Color(0xFF000000),
-        textSecondary = Color(0xFF6B7280),
-        textHint = Color(0xFF9CA3AF),
-        textLabel = Color(0xFF374151),
-        borderDefault = Color(0xFFE5E7EB),
-        borderFocused = Color(0xFF4A6CF7),
-        borderError = Color(0xFFEF4444),
-        error = Color(0xFFEF4444),
-        disabled = Color(0xFFD1D5DB),
-        backgroundGradient = listOf(Color(0xFF4A6CF7), Color(0xFF8B5CF6)),
-
-        backgroundGradientMain = listOf(
-            Color(0xFF155DFC),
-            Color(0xFF9810FA),
-            Color(0xFF8200DB)
-        ),
-        iconGradientStart = Color(0xFF2B7FFF),
-        iconGradientEnd = Color(0xFF9810FA),
-        shadowColor = Color(0x1A000000),
-        bottomBarBorder = Color(0x14000000),
-        textOnWhite = Color(0xFF101828)
+        primary = Primary,
+        primaryVariant = PrimaryVariant,
+        backgroundLight = BackgroundLight,
+        cardBackground = CardBackground,
+        textPrimary = TextPrimary,
+        textSecondary = TextSecondary,
+        textHint = TextHint,
+        textLabel = TextLabel,
+        borderDefault = BorderDefault,
+        borderFocused = BorderFocused,
+        borderError = BorderError,
+        error = Error,
+        disabled = Disabled,
+        backgroundGradient = BackgroundGradient,
+        backgroundGradientMain = BackgroundGradientMain,
+        iconGradientStart = IconGradientStart,
+        iconGradientEnd = IconGradientEnd,
+        shadowColor = ShadowColor,
+        bottomBarBorder = BottomBarBorder,
+        textOnWhite = TextOnWhite,
+        successBackground = SuccessBackground,
+        errorBackground = ErrorBackground,
+        successBorder = SuccessBorder,
+        errorBorder = ErrorBorder,
+        explanationBackground = ExplanationBackground,
+        explanationText = ExplanationText,
+        progressBarTrack = ProgressBarTrack,
+        white = Color.White,
+        cardSubtitleColor = Color(0xFF4A5565),
+        textOnCard = Color(0xFF101828)
     )
 
     val typography = AppTypography(
@@ -132,46 +244,51 @@ fun AppTheme(content: @Composable () -> Unit) {
         label = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colors.textLabel),
         placeholder = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colors.textHint),
         error = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, color = colors.error),
-
-        welcomeText = TextStyle(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.White
-        ),
-        cardTitle = TextStyle(
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
-            color = colors.textOnWhite
-        ),
-        cardSubtitle = TextStyle(
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color(0xFF4A5565)
-        ),
-        sectionTitle = TextStyle(
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.White
-        ),
-        emptyStateText = TextStyle(
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
-            color = colors.textOnWhite
-        )
+        welcomeText = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
+        cardTitle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
+        cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Color(0xFF4A5565)),
+        sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
+        emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite)
     )
 
     val shapes = AppShapes(
         inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
         iconRound = androidx.compose.foundation.shape.CircleShape
+    )
+
+    val dimensions = AppDimensions(
+        spacingXxxs = 4.dp, spacingXs = 8.dp, spacingSm = 12.dp,
+        spacingMd = 16.dp, spacingLg = 24.dp, spacingXl = 32.dp,
+
+        buttonHeight = 50.dp, progressHeight = 4.dp, textFieldMinHeight = 300.dp,
+        questionButtonWidth = 64.dp, questionButtonHeight = 48.dp,
+
+        iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
+        iconSize = 80.dp, iconEmptySize = 96.dp,
+        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+
+        headerHeight = 96.dp, containerWidth = 345.dp,
+        containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
+        emptyStateHeight = 200.dp, shadowElevation = 8.dp,
+        cardPadding = 32.dp, paddingHorizontal = 24.dp,
+        logoContainerSize = 80.dp, logoSize = 60.dp,
+
+        borderThickness = 1.5.dp,
+
+        fontSizeHelper = 12.sp, fontSizeButton = 16.sp,
+        fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
+        fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
+        fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
+        fontSizeTopBarTitleTest = 18.sp
     )
 
     androidx.compose.runtime.CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTypography provides typography,
-        LocalAppShapes provides shapes
+        LocalAppShapes provides shapes,
+        LocalAppDimensions provides dimensions
     ) {
         content()
     }
@@ -179,14 +296,14 @@ fun AppTheme(content: @Composable () -> Unit) {
 
 object AppTheme {
     val colors: AppColors
-        @Composable
-        get() = LocalAppColors.current
+        @Composable get() = LocalAppColors.current
 
     val typography: AppTypography
-        @Composable
-        get() = LocalAppTypography.current
+        @Composable get() = LocalAppTypography.current
 
     val shapes: AppShapes
-        @Composable
-        get() = LocalAppShapes.current
+        @Composable get() = LocalAppShapes.current
+
+    val dimensions: AppDimensions
+        @Composable get() = LocalAppDimensions.current
 }

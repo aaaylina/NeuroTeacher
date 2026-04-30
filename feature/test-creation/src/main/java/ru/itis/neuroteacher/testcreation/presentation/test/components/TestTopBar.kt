@@ -4,14 +4,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
+import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TestTopBar(
+internal fun TestTopBar(
     testTitle: String,
     onNavigateBack: () -> Unit
 ) {
@@ -19,7 +19,9 @@ fun TestTopBar(
         title = {
             Text(
                 text = testTitle,
-                style = AppTheme.typography.title.copy(fontSize = 18.sp),
+                style = AppTheme.typography.title.copy(
+                    fontSize = AppTheme.dimensions.fontSizeTopBarTitleTest
+                ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -28,13 +30,13 @@ fun TestTopBar(
             IconButton(onClick = onNavigateBack) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
+                    contentDescription = stringResource(R.string.cd_back),
+                    tint = AppTheme.colors.textPrimary
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White
+            containerColor = AppTheme.colors.cardBackground
         )
     )
 }

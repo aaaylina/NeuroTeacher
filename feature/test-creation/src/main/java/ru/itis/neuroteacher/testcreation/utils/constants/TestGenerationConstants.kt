@@ -9,4 +9,8 @@ object TestGenerationConstants {
 
     const val ROLE_SYSTEM = "system"
     const val ROLE_USER = "user"
+
+    const val MIN_TEXT_LENGTH = 50
+    const val MAX_TEXT_LENGTH = 5000
+    val QUESTION_COUNT_OPTIONS = listOf(5, 10, 15, 20)
 }

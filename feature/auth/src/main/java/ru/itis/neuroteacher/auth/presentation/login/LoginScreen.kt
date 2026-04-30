@@ -32,7 +32,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +39,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.itis.neuroteacher.auth.R
+import ru.itis.neuroteacher.auth.navigation.AuthRouter
 import ru.itis.neuroteacher.auth.presentation.components.AuthButton
 import ru.itis.neuroteacher.auth.presentation.components.AuthTextField
 import ru.itis.neuroteacher.auth.presentation.components.AuthToolbar
@@ -48,8 +48,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun LoginScreen(
-    onNavigateToRegister: () -> Unit,
-    onLoginSuccess: () -> Unit,
+    router: AuthRouter,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -72,7 +71,7 @@ fun LoginScreen(
                         colors = AppTheme.colors.backgroundGradient
                     )
                 )
-                .padding(dimensionResource(id = R.dimen.spacing_lg)),
+                .padding(AppTheme.dimensions.spacingLg),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -80,13 +79,13 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .clip(AppTheme.shapes.cardCorner)
                     .background(AppTheme.colors.cardBackground)
-                    .padding(dimensionResource(id = R.dimen.card_padding))
+                    .padding(AppTheme.dimensions.cardPadding)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.logo_container_size))
+                        .size(AppTheme.dimensions.logoContainerSize)
                         .clip(AppTheme.shapes.inputCorner)
                         .background(AppTheme.colors.backgroundLight),
                     contentAlignment = Alignment.Center
@@ -95,25 +94,25 @@ fun LoginScreen(
                         imageVector = ImageVector.vectorResource(id = R.drawable.logotype2),
                         contentDescription = stringResource(id = R.string.logo_description),
                         tint = Color.Unspecified,
-                        modifier = Modifier.size(dimensionResource(id = R.dimen.logo_size))
+                        modifier = Modifier.size(AppTheme.dimensions.logoSize)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
 
                 Text(
                     text = stringResource(id = R.string.login_welcome),
                     style = AppTheme.typography.title
                 )
 
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_sm)))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
 
                 Text(
                     text = stringResource(id = R.string.login_subtitle),
                     style = AppTheme.typography.subtitle
                 )
 
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_xl)))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
                 AuthTextField(
                     value = uiState.email,
@@ -125,7 +124,7 @@ fun LoginScreen(
 
                 )
 
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
 
                 AuthTextField(
                     value = uiState.password,
@@ -139,12 +138,12 @@ fun LoginScreen(
                     visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
                 )
 
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_xl)))
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
 
                 AuthButton(
                     text = stringResource(id = R.string.login_button),
                     onClick = {
-                        viewModel.onLoginClick(onLoginSuccess)
+                        viewModel.onLoginClick { router.navigateToMain() }
                     },
                     enabled = uiState.email.isNotBlank() && uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH,
                     isLoading = uiState.isLoading
@@ -153,7 +152,7 @@ fun LoginScreen(
                 AuthToolbar(
                     primaryText = stringResource(id = R.string.login_no_account),
                     secondaryText = stringResource(id = R.string.login_register_link),
-                    onSecondaryClick = onNavigateToRegister
+                    onSecondaryClick = { router.navigateToRegister() }
                 )
             }
             SnackbarHost(
