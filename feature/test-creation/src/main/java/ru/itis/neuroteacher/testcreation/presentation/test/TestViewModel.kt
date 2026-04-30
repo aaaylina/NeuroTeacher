@@ -11,6 +11,8 @@ import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.domain.model.Question
 import javax.inject.Inject
 
+private const val TEST_ID_KEY = "testId"
+
 data class TestUiState(
     val currentQuestionIndex: Int = 0,
     val selectedOptionIndex: Int? = null,
@@ -31,7 +33,7 @@ class TestViewModel @Inject constructor(
     private var _questions: List<Question> = emptyList()
     private var _testTitle: String = ""
     fun loadTestFromCache(cache: TestCache) {
-        val testId = savedStateHandle.get<String>("testId")
+        val testId = savedStateHandle.get<String>(TEST_ID_KEY)
         if (testId != null) {
             val test = cache.get(testId)
             if (test != null) {
