@@ -1,7 +1,7 @@
-package ru.itis.neuroteacher.testtaking.data.db.converter
+package ru.itis.neuroteacher.testcreation.data.db.converter
 
 import androidx.room.TypeConverter
-import ru.itis.neuroteacher.testtaking.data.db.model.SourceType
+import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 
 class TestConverters {
     @TypeConverter

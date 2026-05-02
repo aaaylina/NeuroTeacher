@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.testtaking.di
+package ru.itis.neuroteacher.testcreation.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.itis.neuroteacher.testtaking.data.db.TestTakingDatabase
-import ru.itis.neuroteacher.testtaking.data.db.dao.TestDao
+import ru.itis.neuroteacher.testcreation.data.db.TestTakingDatabase
+import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
 import javax.inject.Singleton
 
 @Module

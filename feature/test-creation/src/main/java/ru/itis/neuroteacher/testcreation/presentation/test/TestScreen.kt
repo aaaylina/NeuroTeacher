@@ -1,18 +1,39 @@
 package ru.itis.neuroteacher.testcreation.presentation.test
 
-import androidx.compose.foundation.layout.*
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.R
+import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
-import ru.itis.neuroteacher.testcreation.presentation.test.components.*
+import ru.itis.neuroteacher.testcreation.presentation.test.components.ExplanationCard
+import ru.itis.neuroteacher.testcreation.presentation.test.components.QuestionCard
+import ru.itis.neuroteacher.testcreation.presentation.test.components.TestProgressBar
+import ru.itis.neuroteacher.testcreation.presentation.test.components.TestTopBar
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,13 +41,23 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 internal fun TestScreen(
     router: TestCreationRouter,
     testCache: TestCache,
+    testId: Long? = null,
+    isRetry: Boolean = false,
     viewModel: TestViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val savedTestId by viewModel.savedTestId.collectAsState()
 
     LaunchedEffect(Unit) {
-        if (uiState.questions.isEmpty()) {
-            viewModel.loadTestFromCache(testCache)
+        if (isRetry && testId != null) {
+            viewModel.loadTestFromDatabase(testId)
+        } else {
+            if (uiState.questions.isEmpty()) {
+                viewModel.loadTestFromCache(testCache)
+            }
+            viewModel.setOnTestReadyCallback { id ->
+                Log.d("TestScreen", "Test ready with ID: $id")
+            }
         }
     }
 
@@ -104,14 +135,16 @@ internal fun TestScreen(
             ) {
                 if (uiState.currentQuestionIndex > 0) {
                     OutlinedButton(
-                        onClick = { /* TODO: предыдущий вопрос */ },
+                        onClick = {
+                            viewModel.previousQuestion()
+                        },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.outlinedButtonColors(
                             containerColor = AppTheme.colors.cardBackground,
                             contentColor = AppTheme.colors.textPrimary
                         ),
                         shape = AppTheme.shapes.buttonCorner,
-                        enabled = false
+                        enabled = true
                     ) {
                         Text(stringResource(R.string.test_button_previous))
                     }
@@ -122,9 +155,12 @@ internal fun TestScreen(
                         if (uiState.currentQuestionIndex < uiState.questions.size - 1) {
                             viewModel.nextQuestion()
                         } else {
-                            val result = viewModel.finishTest()
-                            // TODO: Реализовать экран результатов и навигацию
-                            router.navigateUp()
+                            viewModel.finishTest { resultId ->
+                                router.navigateToResults(
+                                    testId = savedTestId,
+                                    resultId = resultId
+                                )
+                            }
                         }
                     },
                     modifier = Modifier

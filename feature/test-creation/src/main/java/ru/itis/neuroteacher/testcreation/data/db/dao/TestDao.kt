@@ -1,14 +1,13 @@
-package ru.itis.neuroteacher.testtaking.data.db.dao
+package ru.itis.neuroteacher.testcreation.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import ru.itis.neuroteacher.testtaking.data.db.model.TestEntity
-import ru.itis.neuroteacher.testtaking.data.db.model.TestResultEntity
+import ru.itis.neuroteacher.testcreation.data.db.model.TestEntity
+import ru.itis.neuroteacher.testcreation.data.db.model.TestResultEntity
 
 @Dao
 interface TestDao {
@@ -18,6 +17,9 @@ interface TestDao {
 
     @Query("select * from tests where id = :testId")
     suspend fun getTestById(testId: Long): TestEntity?
+
+    @Query("SELECT * FROM tests ORDER BY dateCreated DESC")
+    suspend fun getAllTests(): List<TestEntity>
 
     @Query("select * from tests order by dateCreated desc")
     fun getAllTestsFlow(): Flow<List<TestEntity>>
@@ -46,13 +48,6 @@ interface TestDao {
     @Query("SELECT * FROM test_results ORDER BY dateCompleted DESC")
     fun getAllResultsFlow(): Flow<List<TestResultEntity>>
 
-    @Transaction
-    suspend fun saveTestWithResult(test: TestEntity, result: TestResultEntity){
-        val testId = insertTest(test)
-        val resultId = insertResult(result)
-        updateTest(test.copy(resultId = result.id))
-    }
-
     @Query("SELECT COUNT(*) FROM tests")
     suspend fun getTotalTestsCount(): Int
 
@@ -64,5 +59,14 @@ interface TestDao {
 
     @Query("SELECT MAX(scorePercentage) FROM test_results")
     suspend fun getBestScore(): Float?
+
+    @Query("SELECT * FROM test_results WHERE id = :resultId")
+    suspend fun getResultById(resultId: Long): TestResultEntity?
+
+    @Query("SELECT * FROM test_results WHERE testId = :testId ORDER BY dateCompleted DESC")
+    suspend fun getResultsByTestId(testId: Long): List<TestResultEntity>
+
+    @Query("SELECT * FROM test_results WHERE testId = :testId ORDER BY dateCompleted DESC")
+    fun getResultsByTestIdFlow(testId: Long): Flow<List<TestResultEntity>>
 
 }

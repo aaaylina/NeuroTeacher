@@ -1,4 +1,4 @@
-package ru.itis.neuroteacher.testtaking.domain.model
+package ru.itis.neuroteacher.testcreation.domain.model
 
 data class TestStatistics(
     val totalTests: Int,

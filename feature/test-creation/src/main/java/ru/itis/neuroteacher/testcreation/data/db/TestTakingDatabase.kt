@@ -1,13 +1,14 @@
-package ru.itis.neuroteacher.testtaking.data.db
+package ru.itis.neuroteacher.testcreation.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.itis.neuroteacher.db.converter.DateConverters
-import ru.itis.neuroteacher.testtaking.data.db.converter.TestConverters
-import ru.itis.neuroteacher.testtaking.data.db.dao.TestDao
-import ru.itis.neuroteacher.testtaking.data.db.model.TestEntity
-import ru.itis.neuroteacher.testtaking.data.db.model.TestResultEntity
+import ru.itis.neuroteacher.testcreation.data.db.converter.TestConverters
+import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
+import ru.itis.neuroteacher.testcreation.data.db.model.TestEntity
+import ru.itis.neuroteacher.testcreation.data.db.model.TestResultEntity
+
 
 @Database(
     entities = [

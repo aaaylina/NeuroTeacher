@@ -6,6 +6,7 @@ import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
 import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.home.navigation.model.HomeRoute
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
+import ru.itis.neuroteacher.testcreation.navigation.model.TestResultRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
 
@@ -62,7 +63,7 @@ class TestCreationRouterImpl(
         navController.navigate(TestRoute(testId))
     }
 
-    override fun navigateToResults(resultJson: String) {
-        // TODO: навигация на экран результатов
+    override fun navigateToResults(testId: Long, resultId: Long) {
+        navController.navigate(TestResultRoute(testId = testId, resultId = resultId))
     }
 }
