@@ -48,6 +48,14 @@ data class AppColors(
     val white: Color,
     val cardSubtitleColor: Color,
     val textOnCard: Color,
+    val buttonUnselectedBackground: Color,
+    val buttonUnselectedText: Color,
+    val deleteIconColor: Color,
+    val profileTextPrimary: Color,
+    val iconBookStroke: Color,
+    val iconArrowStroke: Color,
+    val iconTrophyStroke: Color,
+    val iconCheckStroke: Color,
 )
 
 @Immutable
@@ -62,7 +70,8 @@ data class AppTypography(
     val cardTitle: TextStyle,
     val cardSubtitle: TextStyle,
     val sectionTitle: TextStyle,
-    val emptyStateText: TextStyle
+    val emptyStateText: TextStyle,
+    val profileTitle: TextStyle,
 )
 
 @Immutable
@@ -123,6 +132,36 @@ data class AppDimensions(
     val buttonLargeHeight: Dp,
     val buttonShadowElevation: Dp,
     val iconSizeResult: Dp,
+    val fontSizeProfileSectionTitle: TextUnit,
+    val fontSizeProfileButtonLabel: TextUnit,
+    val cornerRadiusProfileButton: Dp,
+    val borderWidthProfileButton: Dp,
+    val iconSizeProfileButton: Dp,
+    val spacingIconText: Dp,
+    val profileHeaderHeight: Dp,
+    val profileIconSize: Dp,
+    val profileIconInnerSize: Dp,
+    val statsCardHeightSmall: Dp,
+    val statsCardHeightLarge: Dp,
+    val themeButtonHeight: Dp,
+    val themeButtonWidth: Dp,
+    val langButtonHeight: Dp,
+    val actionItemHeight: Dp,
+    val profileHeaderBottomPadding: Dp,
+    val profileCardTopPadding: Dp,
+    val statsRowSpacing: Dp,
+    val statsCardShadowElevation: Dp,
+    val statsCardIconSpacing: Dp,
+    val statsCardIconSize: Dp,
+    val fontSizeStatsTitle: TextUnit,
+    val fontSizeStatsValue: TextUnit,
+    val fontSizeProfileHeaderTitle: TextUnit,
+    val iconSizeThemeButton: Dp,
+    val themeButtonShadowElevation: Dp,
+    val spacingThemeButtonVerticalPadding: Dp,
+    val spacingThemeButtonGap: Dp,
+    val spacingCardHorizontalPadding: Dp,
+    val dividerThickness: Dp
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -155,6 +194,36 @@ val LocalAppDimensions = staticCompositionLocalOf {
         buttonLargeHeight = 80.dp,
         buttonShadowElevation = 4.dp,
         iconSizeResult = 20.dp,
+        fontSizeProfileSectionTitle = 18.sp,
+        fontSizeProfileButtonLabel = 14.sp,
+        cornerRadiusProfileButton = 14.dp,
+        borderWidthProfileButton = 1.dp,
+        iconSizeProfileButton = 16.dp,
+        spacingIconText = 8.dp,
+        profileHeaderHeight = 128.dp,
+        profileIconSize = 80.dp,
+        profileIconInnerSize = 40.dp,
+        statsCardHeightSmall = 92.dp,
+        statsCardHeightLarge = 112.dp,
+        themeButtonHeight = 72.dp,
+        themeButtonWidth = 90.dp,
+        langButtonHeight = 44.dp,
+        actionItemHeight = 56.dp,
+        profileHeaderBottomPadding = 24.dp,
+        profileCardTopPadding = 20.dp,
+        statsRowSpacing = 12.dp,
+        statsCardShadowElevation = 4.dp,
+        statsCardIconSpacing = 4.dp,
+        statsCardIconSize = 19.dp,
+        fontSizeStatsTitle = 14.sp,
+        fontSizeStatsValue = 24.sp,
+        fontSizeProfileHeaderTitle = 24.sp,
+        iconSizeThemeButton = 20.dp,
+        themeButtonShadowElevation = 4.dp,
+        spacingThemeButtonVerticalPadding = 8.dp,
+        spacingThemeButtonGap = 4.dp,
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 }
 
@@ -191,7 +260,15 @@ val LocalAppColors = staticCompositionLocalOf {
         progressBarTrack = Color.Unspecified,
         white = Color.Unspecified,
         cardSubtitleColor = Color.Unspecified,
-        textOnCard = Color.Unspecified
+        textOnCard = Color.Unspecified,
+        buttonUnselectedBackground = Color.Unspecified,
+        buttonUnselectedText = Color.Unspecified,
+        deleteIconColor = Color.Unspecified,
+        profileTextPrimary = Color.Unspecified,
+        iconBookStroke = Color.Unspecified,
+        iconArrowStroke = Color.Unspecified,
+        iconTrophyStroke = Color.Unspecified,
+        iconCheckStroke = Color.Unspecified,
     )
 }
 
@@ -207,7 +284,8 @@ val LocalAppTypography = staticCompositionLocalOf {
         cardTitle = TextStyle.Default,
         cardSubtitle = TextStyle.Default,
         sectionTitle = TextStyle.Default,
-        emptyStateText = TextStyle.Default
+        emptyStateText = TextStyle.Default,
+        profileTitle = TextStyle.Default,
     )
 }
 
@@ -255,7 +333,15 @@ fun AppTheme(content: @Composable () -> Unit) {
         progressBarTrack = ProgressBarTrack,
         white = Color.White,
         cardSubtitleColor = Color(0xFF4A5565),
-        textOnCard = Color(0xFF101828)
+        textOnCard = Color(0xFF101828),
+        buttonUnselectedBackground = ButtonUnselectedBackground,
+        buttonUnselectedText = ButtonUnselectedText,
+        deleteIconColor = DeleteIconColor,
+        profileTextPrimary = ProfileTextPrimary,
+        iconBookStroke = IconBookStroke,
+        iconArrowStroke = IconArrowStroke,
+        iconTrophyStroke = IconTrophyStroke,
+        iconCheckStroke = IconCheckStroke,
     )
 
     val typography = AppTypography(
@@ -269,7 +355,9 @@ fun AppTheme(content: @Composable () -> Unit) {
         cardTitle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
         cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Color(0xFF4A5565)),
         sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
-        emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite)
+        emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
+        profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white
+        ),
     )
 
     val shapes = AppShapes(
@@ -309,6 +397,36 @@ fun AppTheme(content: @Composable () -> Unit) {
         buttonLargeHeight = 80.dp,
         buttonShadowElevation = 4.dp,
         iconSizeResult = 20.dp,
+        fontSizeProfileSectionTitle = 18.sp,
+        fontSizeProfileButtonLabel = 14.sp,
+        cornerRadiusProfileButton = 14.dp,
+        borderWidthProfileButton = 1.dp,
+        iconSizeProfileButton = 16.dp,
+        spacingIconText = 8.dp,
+        profileHeaderHeight = 128.dp,
+        profileIconSize = 80.dp,
+        profileIconInnerSize = 40.dp,
+        statsCardHeightSmall = 92.dp,
+        statsCardHeightLarge = 112.dp,
+        themeButtonHeight = 72.dp,
+        themeButtonWidth = 90.dp,
+        langButtonHeight = 44.dp,
+        actionItemHeight = 56.dp,
+        profileHeaderBottomPadding = 24.dp,
+        profileCardTopPadding = 20.dp,
+        statsRowSpacing = 12.dp,
+        statsCardShadowElevation = 4.dp,
+        statsCardIconSpacing = 4.dp,
+        statsCardIconSize = 19.dp,
+        fontSizeStatsTitle = 14.sp,
+        fontSizeStatsValue = 24.sp,
+        fontSizeProfileHeaderTitle = 24.sp,
+        iconSizeThemeButton = 20.dp,
+        themeButtonShadowElevation = 4.dp,
+        spacingThemeButtonVerticalPadding = 8.dp,
+        spacingThemeButtonGap = 4.dp,
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 
     CompositionLocalProvider(

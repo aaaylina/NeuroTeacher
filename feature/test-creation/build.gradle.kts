@@ -71,4 +71,9 @@ dependencies {
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
 
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.mlkit.text.recognition)
+
+    implementation(libs.kotlinx.coroutines.play.services)
 }
