@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Profile Screen -->
+    <string name="profile_title">Профиль</string>
+
+    <!-- Stats Cards -->
+    <string name="profile_total_tests">Всего тестов</string>
+    <string name="profile_avg_score">Средний балл</string>
+    <string name="profile_best_result">Лучший результат</string>
+    <string name="profile_completed">Завершено</string>
+
+    <!-- Theme -->
+    <string name="profile_theme_title">Тема оформления</string>
+    <string name="profile_theme_light">Светлая</string>
+    <string name="profile_theme_dark">Темная</string>
+    <string name="profile_theme_system">Системная</string>
+
+    <!-- Language -->
+    <string name="profile_language_title">Язык</string>
+    <string name="profile_language_russian">Русский</string>
+    <string name="profile_language_english">English</string>
+
+    <string name="profile_clear_data">Очистить все данные</string>
+    <string name="profile_logout">Выйти из аккаунта</string>
+
+    <string name="profile_cd_avatar">Аватар пользователя</string>
+</resources>
