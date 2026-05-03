@@ -1,44 +1,18 @@
 package ru.itis.neuroteacher.testcreation.data.mapper
 
 import ru.itis.neuroteacher.network.model.response.GeneratedTestDto
-import ru.itis.neuroteacher.network.model.response.QuestionDto
-import ru.itis.neuroteacher.testcreation.data.model.QuestionDataModel
+import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
+import ru.itis.neuroteacher.testcreation.data.db.model.TestEntity
+import ru.itis.neuroteacher.testcreation.data.db.model.TestResultEntity
 import ru.itis.neuroteacher.testcreation.data.model.TestDataModel
-import ru.itis.neuroteacher.testcreation.domain.model.Question
 import ru.itis.neuroteacher.testcreation.domain.model.Test
-import javax.inject.Inject
+import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 
-class TestMapper @Inject constructor() {
-
-    fun toDataModel(dto: GeneratedTestDto): TestDataModel {
-        return TestDataModel(
-            title = dto.title,
-            questions = dto.questions.map { it.toDataModel() }
-        )
-    }
-
-    private fun QuestionDto.toDataModel(): QuestionDataModel {
-        return QuestionDataModel(
-            text = this.question,
-            options = this.options,
-            correctIndex = this.correct,
-            explanation = this.explanation
-        )
-    }
-
-    fun toDomain(dataModel: TestDataModel): Test {
-        return Test(
-            title = dataModel.title,
-            questions = dataModel.questions.map { it.toDomain() }
-        )
-    }
-
-    private fun QuestionDataModel.toDomain(): Question {
-        return Question(
-            text = this.text,
-            options = this.options,
-            correctIndex = this.correctIndex,
-            explanation = this.explanation
-        )
-    }
+internal interface TestMapper {
+    fun toDataModel(dto: GeneratedTestDto): TestDataModel
+    fun toDomain(dataModel: TestDataModel): Test
+    fun toEntity(test: Test, sourceType: SourceType): TestEntity
+    fun toDomain(entity: TestEntity): Test
+    fun toResultEntity(testId: Long, totalQuestions: Int, correctAnswers: Int, scorePercentage: Float, answers: List<Int>): TestResultEntity
+    fun toDomainResult(testEntity: TestEntity, resultEntity: TestResultEntity): TestResult
 }

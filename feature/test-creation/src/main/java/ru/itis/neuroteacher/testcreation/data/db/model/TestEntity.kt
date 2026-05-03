@@ -1,9 +1,9 @@
-package ru.itis.neuroteacher.testtaking.data.db.model
+package ru.itis.neuroteacher.testcreation.data.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import ru.itis.neuroteacher.testtaking.data.db.converter.TestConverters
+import ru.itis.neuroteacher.testcreation.data.db.converter.TestConverters
 import java.util.Date
 
 @Entity(tableName = "tests")

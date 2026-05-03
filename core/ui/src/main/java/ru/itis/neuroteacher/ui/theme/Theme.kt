@@ -1,6 +1,9 @@
 package ru.itis.neuroteacher.ui.theme
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -36,6 +39,8 @@ data class AppColors(
     val successBackground: Color,
     val errorBackground: Color,
     val successBorder: Color,
+    val chartSuccessBorder: Color,
+    val chartErrorBorder: Color,
     val errorBorder: Color,
     val explanationBackground: Color,
     val explanationText: Color,
@@ -71,10 +76,11 @@ data class AppTypography(
 
 @Immutable
 data class AppShapes(
-    val inputCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val buttonCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val cardCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val iconRound: androidx.compose.foundation.shape.RoundedCornerShape
+    val inputCorner: RoundedCornerShape,
+    val buttonCorner: RoundedCornerShape,
+    val cardCorner: RoundedCornerShape,
+    val iconRound: RoundedCornerShape,
+    val buttonCornerSmall: RoundedCornerShape,
 )
 
 @Immutable
@@ -122,6 +128,10 @@ data class AppDimensions(
     val fontSizeExplanationText: TextUnit,
     val fontSizeTopBarTitleTest: TextUnit,
 
+    val buttonCornerRadius: Dp,
+    val buttonLargeHeight: Dp,
+    val buttonShadowElevation: Dp,
+    val iconSizeResult: Dp,
     val fontSizeProfileSectionTitle: TextUnit,
     val fontSizeProfileButtonLabel: TextUnit,
     val cornerRadiusProfileButton: Dp,
@@ -180,6 +190,10 @@ val LocalAppDimensions = staticCompositionLocalOf {
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
         fontSizeTopBarTitleTest = 18.sp,
 
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
         fontSizeProfileSectionTitle = 18.sp,
         fontSizeProfileButtonLabel = 14.sp,
         cornerRadiusProfileButton = 14.dp,
@@ -238,7 +252,9 @@ val LocalAppColors = staticCompositionLocalOf {
         successBackground = Color.Unspecified,
         errorBackground = Color.Unspecified,
         successBorder = Color.Unspecified,
+        chartSuccessBorder = Color.Unspecified,
         errorBorder = Color.Unspecified,
+        chartErrorBorder = Color.Unspecified,
         explanationBackground = Color.Unspecified,
         explanationText = Color.Unspecified,
         progressBarTrack = Color.Unspecified,
@@ -275,10 +291,11 @@ val LocalAppTypography = staticCompositionLocalOf {
 
 val LocalAppShapes = staticCompositionLocalOf {
     AppShapes(
-        inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        iconRound = androidx.compose.foundation.shape.RoundedCornerShape(0.dp)
+        inputCorner = RoundedCornerShape(12.dp),
+        buttonCorner = RoundedCornerShape(12.dp),
+        cardCorner = RoundedCornerShape(24.dp),
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 }
 
@@ -308,6 +325,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         successBackground = SuccessBackground,
         errorBackground = ErrorBackground,
         successBorder = SuccessBorder,
+        chartSuccessBorder = ChartSuccessBorder,
+        chartErrorBorder = ChartErrorBorder,
         errorBorder = ErrorBorder,
         explanationBackground = ExplanationBackground,
         explanationText = ExplanationText,
@@ -345,7 +364,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-        iconRound = androidx.compose.foundation.shape.CircleShape
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 
     val dimensions = AppDimensions(
@@ -373,6 +393,10 @@ fun AppTheme(content: @Composable () -> Unit) {
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
         fontSizeTopBarTitleTest = 18.sp,
 
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
         fontSizeProfileSectionTitle = 18.sp,
         fontSizeProfileButtonLabel = 14.sp,
         cornerRadiusProfileButton = 14.dp,
@@ -405,7 +429,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         dividerThickness = 1.dp
     )
 
-    androidx.compose.runtime.CompositionLocalProvider(
+    CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTypography provides typography,
         LocalAppShapes provides shapes,

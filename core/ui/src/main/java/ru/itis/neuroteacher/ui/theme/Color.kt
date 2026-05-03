@@ -26,7 +26,11 @@ val BottomBarBorder = Color(0x14000000)
 val SuccessBackground = Color(0xFFD4EDD4)
 val ErrorBackground = Color(0xFFF8D7DA)
 val SuccessBorder = Color(0xFF28A745)
+
+val ChartSuccessBorder = Color(0xFF22C55E)
 val ErrorBorder = Color(0xFFDC3545)
+
+val ChartErrorBorder = Color(0xFFEF4444)
 val ExplanationBackground = Color(0xFFE7F3FF)
 val ExplanationText = Color(0xFF495057)
 val ProgressBarTrack = Color(0xFFE5E7EB)

@@ -18,9 +18,12 @@ import ru.itis.neuroteacher.navigation.AuthRouterImpl
 import ru.itis.neuroteacher.navigation.HomeRouterImpl
 import ru.itis.neuroteacher.navigation.TestCreationRouterImpl
 import ru.itis.neuroteacher.testcreation.data.TestCache
+import ru.itis.neuroteacher.testcreation.navigation.TestTakingRouterImpl
 import ru.itis.neuroteacher.testcreation.navigation.model.TestCreationRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
+import ru.itis.neuroteacher.testcreation.navigation.retryTestNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.testResultNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.textInputNavGraph
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
@@ -36,6 +39,7 @@ class MainActivity : ComponentActivity() {
                     val authRouter = remember(navController) { AuthRouterImpl(navController) }
                     val homeRouter = remember(navController) { HomeRouterImpl(navController) }
                     val testRouter = remember(navController) { TestCreationRouterImpl(navController) }
+                    val testTakingRouter = remember(navController) { TestTakingRouterImpl(navController) }
                     val sharedCache = remember { TestCache() }
                     NavHost(
                         navController = navController,
@@ -47,6 +51,8 @@ class MainActivity : ComponentActivity() {
                             textInputNavGraph(router = testRouter, testCache = sharedCache)
                             testNavGraph(router = testRouter, testCache = sharedCache)
                         }
+                        retryTestNavGraph(router = testRouter, testCache = sharedCache)
+                        testResultNavGraph(router = testTakingRouter)
                     }
                 }
             }

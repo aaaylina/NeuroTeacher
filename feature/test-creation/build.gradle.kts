@@ -35,9 +35,17 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:utils"))
     implementation(project(":core:ui"))
+    implementation(project(":core:db"))
+
+    implementation(project(":feature:home"))
+
 
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
     implementation(libs.core.ktx)

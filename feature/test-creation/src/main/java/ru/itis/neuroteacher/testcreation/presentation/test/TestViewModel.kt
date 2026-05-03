@@ -2,16 +2,24 @@ package ru.itis.neuroteacher.testcreation.presentation.test
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.serialization.Serializable
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.testcreation.data.TestCache
+import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Question
+import ru.itis.neuroteacher.testcreation.domain.model.Test
+import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
 import javax.inject.Inject
 
 private const val TEST_ID_KEY = "testId"
+private const val SAVED_TEST_ID_KEY = "savedTestId"
 
 data class TestUiState(
     val currentQuestionIndex: Int = 0,
@@ -20,79 +28,175 @@ data class TestUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val testTitle: String = "",
-    val questions: List<Question> = emptyList()
+    val questions: List<Question> = emptyList(),
+    val savedTestId: Long = 0L
 )
 
+sealed class TestEvent {
+    data class NavigateToResults(val testId: Long, val resultId: Long) : TestEvent()
+}
+
 @HiltViewModel
-class TestViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
+internal class TestViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repository: TestRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TestUiState())
     val uiState: StateFlow<TestUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<TestEvent>()
+    val events = _events.asSharedFlow()
+
     private var _questions: List<Question> = emptyList()
-    private var _testTitle: String = ""
+
     fun loadTestFromCache(cache: TestCache) {
         val testId = savedStateHandle.get<String>(TEST_ID_KEY)
         if (testId != null) {
             val test = cache.get(testId)
             if (test != null) {
-                _testTitle = test.title
-                _questions = test.questions
+                saveTestToDatabase(test, testId, cache)
 
-                _uiState.value = _uiState.value.copy(
-                    testTitle = test.title,
-                    questions = test.questions
-                )
+                _uiState.update {
+                    it.copy(
+                        testTitle = test.title,
+                        questions = test.questions
+                    )
+                }
+                _questions = test.questions
             } else {
-                _uiState.value = _uiState.value.copy(error = "Тест не найден в кеше")
+                _uiState.update { it.copy(error = "Тест не найден в кеше") }
             }
         } else {
-            _uiState.value = _uiState.value.copy(error = "testId не передан")
+            _uiState.update { it.copy(error = "testId не передан") }
+        }
+    }
+
+    fun loadTestFromDatabase(testId: Long) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            try {
+                val test = repository.getTestById(testId)
+                if (test != null) {
+                    _questions = test.questions
+                    _uiState.update {
+                        it.copy(
+                            testTitle = test.title,
+                            questions = test.questions,
+                            savedTestId = testId,
+                            isLoading = false
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            error = "Тест не найден в базе данных",
+                            isLoading = false
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        error = "Ошибка загрузки теста: ${e.message}",
+                        isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun saveTestToDatabase(test: Test, cacheId: String, cache: TestCache) {
+        viewModelScope.launch {
+            try {
+                val id = repository.saveTest(test, SourceType.TEXT)
+                _uiState.update { it.copy(savedTestId = id) }
+                cache.clear(cacheId)
+                savedStateHandle.set(SAVED_TEST_ID_KEY, id)
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(error = "Ошибка сохранения теста: ${e.message}")
+                }
+            }
         }
     }
 
     fun selectOption(index: Int) {
         if (_uiState.value.selectedOptionIndex != null) return
-        _uiState.value = _uiState.value.copy(
-            selectedOptionIndex = index,
-            answers = _uiState.value.answers.toMutableList().also {
-                if (it.size <= _uiState.value.currentQuestionIndex) it.add(index)
-                else it[_uiState.value.currentQuestionIndex] = index
+        _uiState.update { state ->
+            val newAnswers = state.answers.toMutableList().apply {
+                if (size <= state.currentQuestionIndex) add(index)
+                else set(state.currentQuestionIndex, index)
             }
-        )
+            state.copy(
+                selectedOptionIndex = index,
+                answers = newAnswers
+            )
+        }
     }
 
     fun nextQuestion() {
         if (_uiState.value.selectedOptionIndex == null) return
         val currentIndex = _uiState.value.currentQuestionIndex
-        if (currentIndex < _questions.size - 1) {
-            _uiState.value = _uiState.value.copy(
-                currentQuestionIndex = currentIndex + 1,
-                selectedOptionIndex = null
-            )
+        if (currentIndex < _questions.lastIndex) {
+            _uiState.update {
+                it.copy(
+                    currentQuestionIndex = currentIndex + 1,
+                    selectedOptionIndex = null
+                )
+            }
         }
     }
 
-    fun finishTest(): TestResult {
+    fun previousQuestion() {
+        val currentIndex = _uiState.value.currentQuestionIndex
+        if (currentIndex > 0) {
+            val previousAnswers = _uiState.value.answers
+            val previousSelectedIndex = if (currentIndex - 1 < previousAnswers.size) {
+                previousAnswers[currentIndex - 1]
+            } else {
+                null
+            }
+            _uiState.update {
+                it.copy(
+                    currentQuestionIndex = currentIndex - 1,
+                    selectedOptionIndex = previousSelectedIndex
+                )
+            }
+        }
+    }
+
+    fun finishTest() {
         val state = _uiState.value
         val correctCount = state.answers.foldIndexed(0) { idx, acc, answerIdx ->
             if (idx < _questions.size && answerIdx == _questions[idx].correctIndex) acc + 1 else acc
         }
-        return TestResult(
-            totalQuestions = _questions.size,
-            correctAnswers = correctCount,
-            testTitle = _testTitle
-        )
+
+        viewModelScope.launch {
+            val testIdToUse = _uiState.value.savedTestId
+                .takeIf { it != 0L }
+                ?: savedStateHandle.get<Long>(SAVED_TEST_ID_KEY)
+                ?: run {
+                    _uiState.update { it.copy(error = "ID теста не найден") }
+                    return@launch
+                }
+
+            val resultId = repository.saveResult(
+                testId = testIdToUse,
+                totalQuestions = _questions.size,
+                correctAnswers = correctCount,
+                scorePercentage = if (_questions.isNotEmpty()) {
+                    (correctCount.toFloat() / _questions.size) * 100
+                } else {
+                    0f
+                },
+                answers = state.answers
+            )
+
+            _events.emit(TestEvent.NavigateToResults(testIdToUse, resultId))
+        }
     }
 
     fun getCurrentQuestion(): Question? =
         _questions.getOrNull(_uiState.value.currentQuestionIndex)
-
-    @Serializable
-    data class TestResult(
-        val totalQuestions: Int,
-        val correctAnswers: Int,
-        val testTitle: String
-    )
 }
