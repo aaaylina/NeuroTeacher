@@ -150,7 +150,8 @@ data class AppDimensions(
     val themeButtonShadowElevation: Dp,
     val spacingThemeButtonVerticalPadding: Dp,
     val spacingThemeButtonGap: Dp,
-    val spacingCardHorizontalPadding: Dp
+    val spacingCardHorizontalPadding: Dp,
+    val dividerThickness: Dp
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -207,7 +208,8 @@ val LocalAppDimensions = staticCompositionLocalOf {
         themeButtonShadowElevation = 4.dp,
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
-        spacingCardHorizontalPadding = 8.dp
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 }
 
@@ -399,7 +401,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         themeButtonShadowElevation = 4.dp,
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
-        spacingCardHorizontalPadding = 8.dp
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 
     androidx.compose.runtime.CompositionLocalProvider(

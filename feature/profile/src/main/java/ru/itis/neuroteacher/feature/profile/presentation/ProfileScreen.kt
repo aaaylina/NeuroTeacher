@@ -18,44 +18,42 @@ fun ProfileScreen(
     onNavigateToLogin: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.verticalGradient(colors = colors.backgroundGradientMain)
+                brush = Brush.verticalGradient(colors = AppTheme.colors.backgroundGradientMain)
             )
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    horizontal = dimensions.paddingHorizontal,
-                    vertical = dimensions.profileCardTopPadding
+                    horizontal = AppTheme.dimensions.paddingHorizontal,
+                    vertical = AppTheme.dimensions.profileCardTopPadding
                 )
         ) {
             Text(
                 text = stringResource(R.string.profile_title),
                 style = AppTheme.typography.profileTitle,
-                modifier = Modifier.padding(bottom = dimensions.profileHeaderBottomPadding)
+                modifier = Modifier.padding(bottom = AppTheme.dimensions.profileHeaderBottomPadding)
             )
 
             ProfileHeaderCard()
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             StatsGrid(uiState = uiState)
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             ThemeSelectorCard(
                 uiState = uiState,
                 onThemeSelected = viewModel::onThemeSelected
             )
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             LanguageSelectorCard(
                 uiState = uiState,
                 onLanguageSelected = viewModel::onLanguageSelected
             )
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             ActionsCard(
                 onClearData = viewModel::onClearData,
                 onLogout = viewModel::onLogout

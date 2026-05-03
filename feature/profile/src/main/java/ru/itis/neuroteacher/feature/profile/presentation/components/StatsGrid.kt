@@ -20,50 +20,47 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun StatsGrid(uiState: ProfileUiState) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-
     Column {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(dimensions.statsRowSpacing),
+            horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.statsRowSpacing),
             modifier = Modifier.fillMaxWidth()
         ) {
             StatCard(
                 title = stringResource(R.string.profile_total_tests),
                 value = uiState.totalTests.toString(),
                 icon = Icons.AutoMirrored.Filled.MenuBook,
-                iconColor = colors.iconBookStroke,
-                height = dimensions.statsCardHeightSmall,
+                iconColor = AppTheme.colors.iconBookStroke,
+                height = AppTheme.dimensions.statsCardHeightSmall,
                 modifier = Modifier.weight(1f)
             )
             StatCard(
                 title = stringResource(R.string.profile_avg_score),
                 value = uiState.avgScore,
                 icon = Icons.AutoMirrored.Filled.TrendingUp,
-                iconColor = colors.iconArrowStroke,
-                height = dimensions.statsCardHeightSmall,
+                iconColor = AppTheme.colors.iconArrowStroke,
+                height = AppTheme.dimensions.statsCardHeightSmall,
                 modifier = Modifier.weight(1f)
             )
         }
-        Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+        Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
         Row(
-            horizontalArrangement = Arrangement.spacedBy(dimensions.statsRowSpacing),
+            horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.statsRowSpacing),
             modifier = Modifier.fillMaxWidth()
         ) {
             StatCard(
                 title = stringResource(R.string.profile_best_result),
                 value = uiState.bestScore,
                 icon = Icons.Default.EmojiEvents,
-                iconColor = colors.iconTrophyStroke,
-                height = dimensions.statsCardHeightLarge,
+                iconColor = AppTheme.colors.iconTrophyStroke,
+                height = AppTheme.dimensions.statsCardHeightLarge,
                 modifier = Modifier.weight(1f)
             )
             StatCard(
                 title = stringResource(R.string.profile_completed),
                 value = "10",
                 icon = Icons.Default.CheckCircle,
-                iconColor = colors.iconCheckStroke,
-                height = dimensions.statsCardHeightLarge,
+                iconColor = AppTheme.colors.iconCheckStroke,
+                height = AppTheme.dimensions.statsCardHeightLarge,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -79,46 +76,43 @@ private fun StatCard(
     height: androidx.compose.ui.unit.Dp,
     modifier: Modifier = Modifier
 ) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-
     Card(
-        colors = CardDefaults.cardColors(containerColor = colors.cardBackground),
+        colors = CardDefaults.cardColors(containerColor = AppTheme.colors.cardBackground),
         shape = AppTheme.shapes.cardCorner,
         modifier = modifier
             .height(height)
             .shadow(
-                elevation = dimensions.statsCardShadowElevation,
-                ambientColor = colors.shadowColor,
-                spotColor = colors.shadowColor
+                elevation = AppTheme.dimensions.statsCardShadowElevation,
+                ambientColor = AppTheme.colors.shadowColor,
+                spotColor = AppTheme.colors.shadowColor
             )
     ) {
         Column(
-            modifier = Modifier.padding(dimensions.spacingMd)
+            modifier = Modifier.padding(AppTheme.dimensions.spacingMd)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(dimensions.statsCardIconSpacing)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.statsCardIconSpacing)
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = iconColor,
-                    modifier = Modifier.size(dimensions.statsCardIconSize)
+                    modifier = Modifier.size(AppTheme.dimensions.statsCardIconSize)
                 )
                 Text(
                     text = title,
-                    fontSize = dimensions.fontSizeStatsTitle,
-                    color = colors.textSecondary,
+                    fontSize = AppTheme.dimensions.fontSizeStatsTitle,
+                    color = AppTheme.colors.textSecondary,
                     maxLines = 1
                 )
             }
-            Spacer(modifier = Modifier.height(dimensions.spacingXs))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXs))
             Text(
                 text = value,
-                fontSize = dimensions.fontSizeStatsValue,
+                fontSize = AppTheme.dimensions.fontSizeStatsValue,
                 fontWeight = FontWeight.Bold,
-                color = colors.textOnCard
+                color = AppTheme.colors.textOnCard
             )
         }
     }

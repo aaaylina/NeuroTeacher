@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,31 +24,28 @@ fun ThemeSelectorCard(
     uiState: ProfileUiState,
     onThemeSelected: (ThemeOption) -> Unit
 ) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-
     Card(
-        colors = CardDefaults.cardColors(containerColor = colors.cardBackground),
+        colors = CardDefaults.cardColors(containerColor = AppTheme.colors.cardBackground),
         shape = AppTheme.shapes.cardCorner,
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = dimensions.spacingCardHorizontalPadding)
+            .padding(horizontal = AppTheme.dimensions.spacingCardHorizontalPadding)
     ) {
         Column(
             modifier = Modifier.padding(
-                horizontal = dimensions.profileCardTopPadding,
-                vertical = dimensions.profileCardTopPadding
+                horizontal = AppTheme.dimensions.profileCardTopPadding,
+                vertical = AppTheme.dimensions.profileCardTopPadding
             )
         ) {
             Text(
                 text = stringResource(R.string.profile_theme_title),
-                fontSize = dimensions.fontSizeProfileSectionTitle,
+                fontSize = AppTheme.dimensions.fontSizeProfileSectionTitle,
                 fontWeight = FontWeight.Medium,
-                color = colors.textOnCard
+                color = AppTheme.colors.textOnCard
             )
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             Row(
                 horizontalArrangement = Arrangement.spacedBy(
-                    space = dimensions.statsRowSpacing,
+                    space = AppTheme.dimensions.statsRowSpacing,
                     alignment = Alignment.CenterHorizontally
                 ),
             ) {
@@ -83,28 +79,26 @@ private fun ThemeButton(
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-    val bgColor = if (isSelected) colors.primary else colors.buttonUnselectedBackground
-    val textColor = if (isSelected) Color.White else colors.buttonUnselectedText
+    val bgColor = if (isSelected) AppTheme.colors.primary else AppTheme.colors.buttonUnselectedBackground
+    val textColor = if (isSelected) AppTheme.colors.white else AppTheme.colors.buttonUnselectedText
 
     Card(
         colors = CardDefaults.cardColors(containerColor = bgColor),
-        shape = RoundedCornerShape(dimensions.cornerRadiusProfileButton),
+        shape = RoundedCornerShape(AppTheme.dimensions.cornerRadiusProfileButton),
         modifier = Modifier
-            .height(dimensions.themeButtonHeight)
-            .width(dimensions.themeButtonWidth)
+            .height(AppTheme.dimensions.themeButtonHeight)
+            .width(AppTheme.dimensions.themeButtonWidth)
             .shadow(
-                elevation = if (isSelected) 4.dp else 0.dp,
-                ambientColor = colors.shadowColor,
-                spotColor = colors.shadowColor
+                elevation = if (isSelected) AppTheme.dimensions.themeButtonShadowElevation else 0.dp,
+                ambientColor = AppTheme.colors.shadowColor,
+                spotColor = AppTheme.colors.shadowColor
             ),
         onClick = onClick
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = dimensions.spacingThemeButtonVerticalPadding),
+                .padding(vertical = AppTheme.dimensions.spacingThemeButtonVerticalPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -112,12 +106,12 @@ private fun ThemeButton(
                 imageVector = icon,
                 contentDescription = null,
                 tint = textColor,
-                modifier = Modifier.size(dimensions.iconSizeThemeButton)
+                modifier = Modifier.size(AppTheme.dimensions.iconSizeThemeButton)
             )
-            Spacer(modifier = Modifier.height(dimensions.spacingThemeButtonGap))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingThemeButtonGap))
             Text(
                 text = label,
-                fontSize = dimensions.fontSizeProfileButtonLabel,
+                fontSize = AppTheme.dimensions.fontSizeProfileButtonLabel,
                 fontWeight = FontWeight.Medium,
                 color = textColor,
                 textAlign = TextAlign.Center

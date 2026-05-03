@@ -24,29 +24,26 @@ fun LanguageSelectorCard(
     uiState: ProfileUiState,
     onLanguageSelected: (LanguageOption) -> Unit
 ) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-
-    Card(
-        colors = CardDefaults.cardColors(containerColor = colors.cardBackground),
+   Card(
+       colors = CardDefaults.cardColors(containerColor = AppTheme.colors.cardBackground),
         shape = AppTheme.shapes.cardCorner,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(
-                horizontal = dimensions.profileCardTopPadding,
-                vertical = dimensions.profileCardTopPadding
+                horizontal = AppTheme.dimensions.profileCardTopPadding,
+                vertical = AppTheme.dimensions.profileCardTopPadding
             )
         ) {
             Text(
                 text = stringResource(R.string.profile_language_title),
-                fontSize = dimensions.fontSizeProfileSectionTitle,
+                fontSize = AppTheme.dimensions.fontSizeProfileSectionTitle,
                 fontWeight = FontWeight.Medium,
                 color = AppTheme.colors.textOnCard
             )
-            Spacer(modifier = Modifier.height(dimensions.statsRowSpacing))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             Row(
-                horizontalArrangement = Arrangement.spacedBy(dimensions.statsRowSpacing)
+                horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.statsRowSpacing)
             ) {
                 LangButton(
                     isSelected = uiState.selectedLanguage == LanguageOption.RUSSIAN,
@@ -66,28 +63,26 @@ fun LanguageSelectorCard(
 }
 
 @Composable
-fun LangButton(
+private fun LangButton(
     isSelected: Boolean,
     label: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = AppTheme.colors
-    val dimensions = AppTheme.dimensions
-    val bgColor = if (isSelected) colors.primary else colors.buttonUnselectedBackground
-    val textColor = if (isSelected) Color.White else colors.buttonUnselectedText
-    val borderColor = if (isSelected) Color.Transparent else colors.borderDefault
+    val bgColor = if (isSelected) AppTheme.colors.primary else AppTheme.colors.buttonUnselectedBackground
+    val textColor = if (isSelected) AppTheme.colors.white else AppTheme.colors.buttonUnselectedText
+    val borderColor = if (isSelected) Color.Transparent else AppTheme.colors.borderDefault
 
     Card(
         colors = CardDefaults.cardColors(containerColor = bgColor),
-        shape = RoundedCornerShape(dimensions.cornerRadiusProfileButton),
+        shape = RoundedCornerShape(AppTheme.dimensions.cornerRadiusProfileButton),
         modifier = modifier
-            .height(dimensions.langButtonHeight)
-            .border(dimensions.borderWidthProfileButton, borderColor, RoundedCornerShape(dimensions.cornerRadiusProfileButton))
+            .height(AppTheme.dimensions.langButtonHeight)
+            .border(AppTheme.dimensions.borderWidthProfileButton, borderColor, RoundedCornerShape(AppTheme.dimensions.cornerRadiusProfileButton))
             .shadow(
-                elevation = if (isSelected) 4.dp else 0.dp,
-                ambientColor = colors.shadowColor,
-                spotColor = colors.shadowColor
+                elevation = if (isSelected) AppTheme.dimensions.shadowElevation else 0.dp,
+                ambientColor = AppTheme.colors.shadowColor,
+                spotColor = AppTheme.colors.shadowColor
             ),
         onClick = onClick
     ) {
@@ -100,12 +95,12 @@ fun LangButton(
                 imageVector = Icons.Default.Language,
                 contentDescription = null,
                 tint = textColor,
-                modifier = Modifier.size(dimensions.iconSizeProfileButton)
+                modifier = Modifier.size(AppTheme.dimensions.iconSizeProfileButton)
             )
-            Spacer(modifier = Modifier.width(dimensions.spacingIconText))
+            Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingIconText))
             Text(
                 text = label,
-                fontSize = dimensions.fontSizeProfileButtonLabel,
+                fontSize = AppTheme.dimensions.fontSizeProfileButtonLabel,
                 fontWeight = FontWeight.Medium,
                 color = textColor
             )
