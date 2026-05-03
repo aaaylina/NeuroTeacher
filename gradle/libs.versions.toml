@@ -4,6 +4,7 @@ kotlin = "2.3.10"
 ksp = "2.3.5"
 firebase = "4.4.4"
 firebaseBom = "34.11.0"
+coroutines-play-services = "1.7.3"
 
 # AndroidX
 coreKtx = "1.17.0"
@@ -52,6 +53,10 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 coreKtxVersion = "1.18.0"
+
+# Camera
+camerax = "1.6.0"
+mlkit-text-recognition = "16.0.1"
 
 
 [libraries]
@@ -115,6 +120,14 @@ firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 # Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 retrofit-converter-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinx-serialization-converter" }
+
+# CameraX
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+
+# ML Kit
+mlkit-text-recognition = { group = "com.google.mlkit", name = "text-recognition", version.ref = "mlkit-text-recognition" }
+kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines-play-services" }
 
 
 [plugins]
