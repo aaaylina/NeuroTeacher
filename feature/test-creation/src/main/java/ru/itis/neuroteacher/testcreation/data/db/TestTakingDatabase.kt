@@ -6,6 +6,7 @@ import androidx.room.TypeConverters
 import ru.itis.neuroteacher.db.converter.DateConverters
 import ru.itis.neuroteacher.testcreation.data.db.converter.TestConverters
 import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
+import ru.itis.neuroteacher.testcreation.data.db.dao.TestResultDao
 import ru.itis.neuroteacher.testcreation.data.db.model.TestEntity
 import ru.itis.neuroteacher.testcreation.data.db.model.TestResultEntity
 
@@ -22,4 +23,5 @@ import ru.itis.neuroteacher.testcreation.data.db.model.TestResultEntity
 abstract class TestTakingDatabase : RoomDatabase() {
 
     abstract fun testDao(): TestDao
+    abstract fun testResultDao(): TestResultDao
 }

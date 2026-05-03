@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
@@ -47,11 +46,11 @@ internal fun ResultButtons(
             onClick = onRetryClick,
             modifier = Modifier
                 .weight(1f)
-                .height(80.dp),
+                .height(AppTheme.dimensions.buttonLargeHeight),
             colors = ButtonDefaults.buttonColors(
                 containerColor = AppTheme.colors.disabled.copy(alpha = 0.8f)
             ),
-            shape = RoundedCornerShape(14.dp),
+            shape =  AppTheme.shapes.buttonCornerSmall,
             contentPadding = PaddingValues(0.dp)
         ) {
             Row(
@@ -61,7 +60,7 @@ internal fun ResultButtons(
                 Icon(
                     imageVector = Icons.Filled.Refresh,
                     contentDescription = stringResource(R.string.test_result_cd_retry),
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(AppTheme.dimensions.iconSizeResult),
                     tint = AppTheme.colors.white
                 )
                 Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingSm))
@@ -77,15 +76,15 @@ internal fun ResultButtons(
             onClick = onHomeClick,
             modifier = Modifier
                 .weight(1f)
-                .height(80.dp)
+                .height(AppTheme.dimensions.buttonLargeHeight)
                 .shadow(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(14.dp),
+                    elevation = AppTheme.dimensions.buttonShadowElevation,
+                    shape = AppTheme.shapes.buttonCornerSmall,
                     ambientColor = AppTheme.colors.shadowColor,
                     spotColor = AppTheme.colors.shadowColor
                 ),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            shape = RoundedCornerShape(14.dp),
+            shape = AppTheme.shapes.buttonCornerSmall,
             contentPadding = PaddingValues(0.dp)
         ) {
             Box(
@@ -93,7 +92,7 @@ internal fun ResultButtons(
                     .fillMaxSize()
                     .background(
                         brush = Brush.horizontalGradient(colors = AppTheme.colors.backgroundGradientMain),
-                        shape = RoundedCornerShape(14.dp)
+                        shape = AppTheme.shapes.buttonCornerSmall
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -104,7 +103,7 @@ internal fun ResultButtons(
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = stringResource(R.string.test_result_cd_home),
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(AppTheme.dimensions.iconSizeResult),
                         tint = AppTheme.colors.white
                     )
                     Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingSm))

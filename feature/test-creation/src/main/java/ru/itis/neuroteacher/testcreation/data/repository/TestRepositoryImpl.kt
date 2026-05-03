@@ -1,6 +1,7 @@
 package ru.itis.neuroteacher.testcreation.data.repository
 
 import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
+import ru.itis.neuroteacher.testcreation.data.db.dao.TestResultDao
 import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.data.mapper.TestMapper
 import ru.itis.neuroteacher.testcreation.domain.model.Test
@@ -8,8 +9,9 @@ import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
 import javax.inject.Inject
 
-class TestRepositoryImpl @Inject constructor(
+internal class TestRepositoryImpl @Inject constructor(
     private val dao: TestDao,
+    private val testResultDao: TestResultDao,
     private val mapper: TestMapper
 ) : TestRepository {
 
@@ -24,7 +26,7 @@ class TestRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAllTests(): List<Test> {
-        return dao.getAllTests().map { mapper.toDomain(it) }
+        return dao.getAllTestsSortedByDateDesc().map { mapper.toDomain(it) }
     }
 
     override suspend fun saveResult(
@@ -41,18 +43,18 @@ class TestRepositoryImpl @Inject constructor(
             scorePercentage = scorePercentage,
             answers = answers
         )
-        return dao.insertResult(entity)
+        return testResultDao.insertResult(entity)
     }
 
     override suspend fun getResultById(resultId: Long): TestResult? {
-        val resultEntity = dao.getResultById(resultId) ?: return null
+        val resultEntity = testResultDao.getResultById(resultId) ?: return null
         val testEntity = dao.getTestById(resultEntity.testId) ?: return null
         return mapper.toDomainResult(testEntity, resultEntity)
     }
 
     override suspend fun getResultsByTestId(testId: Long): List<TestResult> {
         val testEntity = dao.getTestById(testId) ?: return emptyList()
-        val resultEntities = dao.getResultsByTestId(testId)
+        val resultEntities = testResultDao.getResultsByTestIdSortedByDateDesc(testId)
         return resultEntities.map { mapper.toDomainResult(testEntity, it) }
     }
 }

@@ -4,7 +4,7 @@ import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 
-interface TestRepository {
+internal interface TestRepository {
     suspend fun saveTest(test: Test, sourceType: SourceType): Long
     suspend fun getTestById(id: Long): Test?
     suspend fun getAllTests(): List<Test>

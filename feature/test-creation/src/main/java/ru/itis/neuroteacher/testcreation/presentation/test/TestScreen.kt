@@ -1,6 +1,5 @@
 package ru.itis.neuroteacher.testcreation.presentation.test
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
@@ -46,7 +46,19 @@ internal fun TestScreen(
     viewModel: TestViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val savedTestId by viewModel.savedTestId.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.events.collectLatest { event ->
+            when (event) {
+                is TestEvent.NavigateToResults -> {
+                    router.navigateToResults(
+                        testId = event.testId,
+                        resultId = event.resultId
+                    )
+                }
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         if (isRetry && testId != null) {
@@ -54,9 +66,6 @@ internal fun TestScreen(
         } else {
             if (uiState.questions.isEmpty()) {
                 viewModel.loadTestFromCache(testCache)
-            }
-            viewModel.setOnTestReadyCallback { id ->
-                Log.d("TestScreen", "Test ready with ID: $id")
             }
         }
     }
@@ -152,15 +161,10 @@ internal fun TestScreen(
 
                 Button(
                     onClick = {
-                        if (uiState.currentQuestionIndex < uiState.questions.size - 1) {
+                        if (uiState.currentQuestionIndex < uiState.questions.lastIndex) {
                             viewModel.nextQuestion()
                         } else {
-                            viewModel.finishTest { resultId ->
-                                router.navigateToResults(
-                                    testId = savedTestId,
-                                    resultId = resultId
-                                )
-                            }
+                            viewModel.finishTest()
                         }
                     },
                     modifier = Modifier
@@ -177,7 +181,7 @@ internal fun TestScreen(
                     shape = AppTheme.shapes.buttonCorner
                 ) {
                     Text(
-                        text = if (uiState.currentQuestionIndex < uiState.questions.size - 1)
+                        text = if (uiState.currentQuestionIndex < uiState.questions.lastIndex)
                             stringResource(R.string.test_button_next)
                         else
                             stringResource(R.string.test_button_finish),

@@ -34,8 +34,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 internal fun QuestionReviewItem(
-    questionResult: TestResult.QuestionResult,
-    questionNumber: Int
+    questionResult: TestResult.QuestionResult
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -73,7 +72,7 @@ internal fun QuestionReviewItem(
                     )
 
                     Text(
-                        text = stringResource(R.string.test_result_question_number, questionNumber),
+                        text = stringResource(R.string.test_result_question_number, questionResult.questionNumber),
                         style = AppTheme.typography.cardTitle,
                         color = AppTheme.colors.textPrimary
                     )

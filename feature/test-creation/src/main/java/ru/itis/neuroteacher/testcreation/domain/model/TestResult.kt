@@ -1,6 +1,6 @@
 package ru.itis.neuroteacher.testcreation.domain.model
 
-data class TestResult(
+internal data class TestResult(
     val testTitle: String,
     val totalQuestions: Int,
     val correctAnswers: Int,
@@ -8,6 +8,7 @@ data class TestResult(
     val questions: List<QuestionResult>
 ) {
     data class QuestionResult(
+        val questionNumber: Int,
         val questionText: String,
         val selectedOptionIndex: Int,
         val correctOptionIndex: Int,

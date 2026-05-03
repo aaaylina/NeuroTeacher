@@ -62,4 +62,9 @@
     <string name="test_result_cd_retry">Пройти тест заново</string>
     <string name="test_result_cd_home">Перейти на главную</string>
     <string name="test_result_cd_circular_chart">Круговая диаграмма результатов</string>
+
+    <!-- TestResultViewModel -->
+    <string name="test_result_load_error">Ошибка загрузки результатов</string>
+    <string name="test_result_not_found">Результат не найден</string>
+    <string name="test_result_unknown_error">Неизвестная ошибка</string>
 </resources>

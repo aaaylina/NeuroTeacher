@@ -1,6 +1,5 @@
 package ru.itis.neuroteacher.testcreation.presentation.result
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,9 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -43,7 +41,9 @@ internal fun TestResultScreen(
     viewModel: TestResultViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val testId = viewModel.testId
+    val testId = uiState.testId
+
+    val errorMessage = uiState.errorResId?.let { stringResource(it) }
 
     Scaffold(
         containerColor = Color.Transparent,
@@ -59,103 +59,104 @@ internal fun TestResultScreen(
                 )
                 .padding(padding)
         ) {
-
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = AppTheme.colors.primary)
-                }
-                return@Scaffold
-            }
-
-            uiState.error?.let { error ->
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = error,
-                        color = AppTheme.colors.error,
-                        style = AppTheme.typography.subtitle
-                    )
-                }
-                return@Scaffold
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(AppTheme.dimensions.spacingLg),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    ResultHeader(
-                        percentage = uiState.scorePercentage,
-                        correctCount = uiState.correctAnswers,
-                        totalCount = uiState.totalQuestions
-                    )
-
-                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
-
-                    CircularProgressChart(
-                        percentage = uiState.scorePercentage,
-                        modifier = Modifier.padding(AppTheme.dimensions.spacingLg)
-                    )
-
+            when {
+                uiState.isLoading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = AppTheme.colors.white)
+                    }
                 }
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(
-                        topStart = 48.dp,
-                        topEnd = 48.dp,
-                        bottomStart = 0.dp,
-                        bottomEnd = 0.dp
-                    ),
-                    colors = CardDefaults.cardColors(
-                        containerColor = AppTheme.colors.cardBackground
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = AppTheme.dimensions.spacingLg,
-                                vertical = AppTheme.dimensions.spacingXl
-                            )
+                errorMessage != null -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = stringResource(R.string.test_result_review_title),
-                            style = AppTheme.typography.sectionTitle.copy(
-                                fontSize = AppTheme.dimensions.fontSizeTopBarTitle,
-                                color = AppTheme.colors.textOnWhite
-                            )
+                            text = errorMessage,
+                            color = AppTheme.colors.white,
+                            style = AppTheme.typography.subtitle
                         )
+                    }
+                }
 
-                        Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(AppTheme.dimensions.spacingLg),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                ResultHeader(
+                                    percentage = uiState.scorePercentage,
+                                    correctCount = uiState.correctAnswers,
+                                    totalCount = uiState.totalQuestions
+                                )
 
-                        uiState.questions.forEachIndexed { index, question ->
-                            QuestionReviewItem(
-                                questionResult = question,
-                                questionNumber = index + 1
-                            )
-                            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXs))
+                                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+
+                                CircularProgressChart(
+                                    percentage = uiState.scorePercentage,
+                                    modifier = Modifier.padding(AppTheme.dimensions.spacingLg)
+                                )
+                            }
                         }
 
-                        ResultButtons(
-                            onRetryClick = {  router.navigateToRetryTest(testId = testId) },
-                            onHomeClick = { router.navigateToHome() }
-                        )
+                        item {
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(
+                                    topStart = 48.dp,
+                                    topEnd = 48.dp,
+                                    bottomStart = 0.dp,
+                                    bottomEnd = 0.dp
+                                ),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = AppTheme.colors.cardBackground
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(
+                                            horizontal = AppTheme.dimensions.spacingLg,
+                                            vertical = AppTheme.dimensions.spacingXl
+                                        )
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.test_result_review_title),
+                                        style = AppTheme.typography.sectionTitle.copy(
+                                            fontSize = AppTheme.dimensions.fontSizeTopBarTitle,
+                                            color = AppTheme.colors.textOnWhite
+                                        )
+                                    )
 
-                        Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+                                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+
+                                    uiState.questions.forEach { question ->
+                                        QuestionReviewItem(
+                                            questionResult = question
+                                        )
+                                        Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXs))
+                                    }
+
+                                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+
+                                    ResultButtons(
+                                        onRetryClick = { router.navigateToRetryTest(testId = testId) },
+                                        onHomeClick = { router.navigateToHome() }
+                                    )
+
+                                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -1,6 +1,9 @@
 package ru.itis.neuroteacher.ui.theme
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -64,10 +67,11 @@ data class AppTypography(
 
 @Immutable
 data class AppShapes(
-    val inputCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val buttonCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val cardCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val iconRound: androidx.compose.foundation.shape.RoundedCornerShape
+    val inputCorner: RoundedCornerShape,
+    val buttonCorner: RoundedCornerShape,
+    val cardCorner: RoundedCornerShape,
+    val iconRound: RoundedCornerShape,
+    val buttonCornerSmall: RoundedCornerShape,
 )
 
 @Immutable
@@ -114,6 +118,11 @@ data class AppDimensions(
     val fontSizeExplanationTitle: TextUnit,
     val fontSizeExplanationText: TextUnit,
     val fontSizeTopBarTitleTest: TextUnit,
+
+    val buttonCornerRadius: Dp,
+    val buttonLargeHeight: Dp,
+    val buttonShadowElevation: Dp,
+    val iconSizeResult: Dp,
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -140,7 +149,12 @@ val LocalAppDimensions = staticCompositionLocalOf {
         fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
         fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
-        fontSizeTopBarTitleTest = 18.sp
+        fontSizeTopBarTitleTest = 18.sp,
+
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
     )
 }
 
@@ -199,10 +213,11 @@ val LocalAppTypography = staticCompositionLocalOf {
 
 val LocalAppShapes = staticCompositionLocalOf {
     AppShapes(
-        inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        iconRound = androidx.compose.foundation.shape.RoundedCornerShape(0.dp)
+        inputCorner = RoundedCornerShape(12.dp),
+        buttonCorner = RoundedCornerShape(12.dp),
+        cardCorner = RoundedCornerShape(24.dp),
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 }
 
@@ -261,7 +276,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-        iconRound = androidx.compose.foundation.shape.CircleShape
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 
     val dimensions = AppDimensions(
@@ -287,10 +303,15 @@ fun AppTheme(content: @Composable () -> Unit) {
         fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
         fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
-        fontSizeTopBarTitleTest = 18.sp
+        fontSizeTopBarTitleTest = 18.sp,
+
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
     )
 
-    androidx.compose.runtime.CompositionLocalProvider(
+    CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTypography provides typography,
         LocalAppShapes provides shapes,
