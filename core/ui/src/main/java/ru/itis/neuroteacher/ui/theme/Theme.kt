@@ -30,6 +30,8 @@ data class AppColors(
     val backgroundGradientMain: List<Color>,
     val iconGradientStart: Color,
     val iconGradientEnd: Color,
+    val iconGradientSecondaryStart: Color,
+    val iconGradientSecondaryEnd: Color,
     val shadowColor: Color,
     val bottomBarBorder: Color,
     val textOnWhite: Color,
@@ -87,8 +89,8 @@ data class AppDimensions(
     val iconSizeMedium: Dp,
     val iconSize: Dp,
     val iconEmptySize: Dp,
-    val iconEmojiSize: TextUnit,
-    val iconEmojiSizeLarge: TextUnit,
+    val iconSizeDefault: Dp,
+    val iconSizeLarge: Dp,
 
     val headerHeight: Dp,
     val containerWidth: Dp,
@@ -124,7 +126,7 @@ val LocalAppDimensions = staticCompositionLocalOf {
 
         iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
         iconSize = 80.dp, iconEmptySize = 96.dp,
-        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+        iconSizeDefault = 40.dp, iconSizeLarge = 48.dp,
 
         headerHeight = 96.dp, containerWidth = 345.dp,
         containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
@@ -161,6 +163,8 @@ val LocalAppColors = staticCompositionLocalOf {
         backgroundGradientMain = emptyList(),
         iconGradientStart = Color.Unspecified,
         iconGradientEnd = Color.Unspecified,
+        iconGradientSecondaryStart = Color.Unspecified,
+        iconGradientSecondaryEnd = Color.Unspecified,
         shadowColor = Color.Unspecified,
         bottomBarBorder = Color.Unspecified,
         textOnWhite = Color.Unspecified,
@@ -222,6 +226,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         backgroundGradientMain = BackgroundGradientMain,
         iconGradientStart = IconGradientStart,
         iconGradientEnd = IconGradientEnd,
+        iconGradientSecondaryStart = IconGradientSecondaryStart,
+        iconGradientSecondaryEnd = IconGradientSecondaryEnd,
         shadowColor = ShadowColor,
         bottomBarBorder = BottomBarBorder,
         textOnWhite = TextOnWhite,
@@ -267,7 +273,7 @@ fun AppTheme(content: @Composable () -> Unit) {
 
         iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
         iconSize = 80.dp, iconEmptySize = 96.dp,
-        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+        iconSizeDefault = 40.dp, iconSizeLarge = 48.dp,
 
         headerHeight = 96.dp, containerWidth = 345.dp,
         containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
