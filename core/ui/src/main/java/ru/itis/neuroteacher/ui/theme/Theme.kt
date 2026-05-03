@@ -45,6 +45,7 @@ data class AppColors(
     val white: Color,
     val cardSubtitleColor: Color,
     val textOnCard: Color,
+    val logoBackgroundColor: Color,
 )
 
 @Immutable
@@ -177,7 +178,8 @@ val LocalAppColors = staticCompositionLocalOf {
         progressBarTrack = Color.Unspecified,
         white = Color.Unspecified,
         cardSubtitleColor = Color.Unspecified,
-        textOnCard = Color.Unspecified
+        textOnCard = Color.Unspecified,
+        logoBackgroundColor = Color.Unspecified
     )
 }
 
@@ -240,7 +242,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         progressBarTrack = ProgressBarTrack,
         white = Color.White,
         cardSubtitleColor = Color(0xFF4A5565),
-        textOnCard = Color(0xFF101828)
+        textOnCard = Color(0xFF101828),
+        logoBackgroundColor = LogoBackgroundColor,
     )
 
     val typography = AppTypography(
