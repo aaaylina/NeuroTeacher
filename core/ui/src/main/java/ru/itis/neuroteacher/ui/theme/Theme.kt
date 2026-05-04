@@ -56,6 +56,9 @@ data class AppColors(
     val iconArrowStroke: Color,
     val iconTrophyStroke: Color,
     val iconCheckStroke: Color,
+    val cameraButtonBackground: Color,
+    val cameraBackButtonBackground: Color,
+    val cameraButtonShadow: Color,
 )
 
 @Immutable
@@ -161,7 +164,20 @@ data class AppDimensions(
     val spacingThemeButtonVerticalPadding: Dp,
     val spacingThemeButtonGap: Dp,
     val spacingCardHorizontalPadding: Dp,
-    val dividerThickness: Dp
+    val dividerThickness: Dp,
+
+    val cameraButtonSize: Dp,
+    val cameraIconSize: Dp,
+    val cameraBackButtonSize: Dp,
+    val cameraBackIconSize: Dp,
+    val cameraBottomPaddingStart: Dp,
+    val cameraBottomPaddingEnd: Dp,
+    val cameraTopPaddingStart: Dp,
+    val cameraButtonsGap: Dp,
+
+    val cameraOffsetX: Dp,
+    val cameraButtonSizeDelta: Dp,
+    val cameraIconSizeDelta: Dp,
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -223,7 +239,21 @@ val LocalAppDimensions = staticCompositionLocalOf {
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
         spacingCardHorizontalPadding = 8.dp,
-        dividerThickness = 1.dp
+        dividerThickness = 1.dp,
+
+        cameraButtonSize = 68.dp,
+        cameraIconSize = 28.dp,
+        cameraBackButtonSize = 40.dp,
+        cameraBackIconSize = 24.dp,
+        cameraBottomPaddingStart = 121.5.dp,
+        cameraBottomPaddingEnd = 213.5.dp,
+        cameraTopPaddingStart = 16.dp,
+        cameraButtonsGap = 32.dp,
+
+        cameraOffsetX = (-40).dp,
+        cameraButtonSizeDelta = 12.dp,
+        cameraIconSizeDelta = 4.dp,
+
     )
 }
 
@@ -269,6 +299,9 @@ val LocalAppColors = staticCompositionLocalOf {
         iconArrowStroke = Color.Unspecified,
         iconTrophyStroke = Color.Unspecified,
         iconCheckStroke = Color.Unspecified,
+        cameraButtonBackground = Color.Unspecified,
+        cameraBackButtonBackground = Color.Unspecified,
+        cameraButtonShadow = Color.Unspecified,
     )
 }
 
@@ -342,6 +375,9 @@ fun AppTheme(content: @Composable () -> Unit) {
         iconArrowStroke = IconArrowStroke,
         iconTrophyStroke = IconTrophyStroke,
         iconCheckStroke = IconCheckStroke,
+        cameraButtonBackground = CameraButtonBackground,
+        cameraBackButtonBackground = CameraBackButtonBackground,
+        cameraButtonShadow = CameraButtonShadow,
     )
 
     val typography = AppTypography(
@@ -426,7 +462,19 @@ fun AppTheme(content: @Composable () -> Unit) {
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
         spacingCardHorizontalPadding = 8.dp,
-        dividerThickness = 1.dp
+        dividerThickness = 1.dp,
+        cameraButtonSize = 68.dp,
+        cameraIconSize = 28.dp,
+        cameraBackButtonSize = 40.dp,
+        cameraBackIconSize = 24.dp,
+        cameraBottomPaddingStart = 121.5.dp,
+        cameraBottomPaddingEnd = 213.5.dp,
+        cameraTopPaddingStart = 16.dp,
+        cameraButtonsGap = 32.dp,
+
+        cameraOffsetX = (-40).dp,
+        cameraButtonSizeDelta = 12.dp,
+        cameraIconSizeDelta = 4.dp,
     )
 
     CompositionLocalProvider(

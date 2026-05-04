@@ -42,3 +42,9 @@ val IconBookStroke = Color(0xFF51A2FF)
 val IconArrowStroke = Color(0xFF05DF72)
 val IconTrophyStroke = Color(0xFFFDC700)
 val IconCheckStroke = Color(0xFFC27AFF)
+
+val CameraButtonBackground = Color(0xFF1E2939)
+
+val CameraBackButtonBackground = Color(0xFF1E2939).copy(alpha = 0.8f)
+
+val CameraButtonShadow = Color(0x1A000000)

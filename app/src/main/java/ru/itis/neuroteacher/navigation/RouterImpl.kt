@@ -6,6 +6,8 @@ import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
 import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.home.navigation.model.HomeRoute
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
+import ru.itis.neuroteacher.testcreation.navigation.model.CameraRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.PhotoDemoRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestResultRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
@@ -37,13 +39,8 @@ class AuthRouterImpl(
 class HomeRouterImpl(
     private val navController: NavHostController
 ) : HomeRouter {
-    override fun navigateToCamera() {
-        // TODO: навигация на камеру
-    }
-
-    override fun navigateToText() {
-        navController.navigate(TextInputRoute)
-    }
+    override fun navigateToCamera() = navController.navigate(CameraRoute)
+    override fun navigateToText() = navController.navigate(TextInputRoute)
 
     override fun navigateToHistory() { /* TODO */ }
     override fun navigateToProfile() { /* TODO */ }
@@ -66,4 +63,6 @@ class TestCreationRouterImpl(
     override fun navigateToResults(testId: Long, resultId: Long) {
         navController.navigate(TestResultRoute(testId = testId, resultId = resultId))
     }
+    override fun navigateToPhotoDemo(imageUri: String, recognizedText: String) =
+        navController.navigate(PhotoDemoRoute(imageUri = imageUri, recognizedText = recognizedText))
 }

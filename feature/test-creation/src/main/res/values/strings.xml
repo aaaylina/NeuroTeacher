@@ -67,4 +67,12 @@
     <string name="test_result_load_error">Ошибка загрузки результатов</string>
     <string name="test_result_not_found">Результат не найден</string>
     <string name="test_result_unknown_error">Неизвестная ошибка</string>
+
+    <!-- Camera Screen -->
+    <string name="camera_permission_denied">Нет разрешения на использование камеры</string>
+    <string name="camera_error">Ошибка: %s</string>
+    <string name="camera_unknown_error">Неизвестная ошибка</string>
+    <string name="camera_back_description">Назад</string>
+    <string name="camera_gallery_description">Галерея</string>
+    <string name="camera_capture_description">Сделать фото</string>
 </resources>
