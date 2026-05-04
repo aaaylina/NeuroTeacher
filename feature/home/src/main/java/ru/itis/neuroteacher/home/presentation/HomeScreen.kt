@@ -14,31 +14,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.ui.theme.AppTheme
+
 
 
 @Composable
 fun HomeScreen(
     router: HomeRouter
 ) {
-    val colors = AppTheme.colors
-    val typography = AppTheme.typography
-    val shapes = AppTheme.shapes
-
-    val mainGradient = Brush.linearGradient(
-        colors = colors.backgroundGradientMain,
-        start = androidx.compose.ui.geometry.Offset(0f, 0f),
-        end = androidx.compose.ui.geometry.Offset(1000f, 1000f)
-    )
     Scaffold(
         containerColor = Color.Transparent
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(mainGradient)
+                .background(
+                    Brush.linearGradient(
+                        colors = AppTheme.colors.backgroundGradientMain,
+                        start = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        end = androidx.compose.ui.geometry.Offset(1000f, 1000f)
+                    )
+                )
         ) {
             Column(
                 modifier = Modifier
@@ -59,7 +58,7 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_welcome),
-                        style = typography.welcomeText
+                        style = AppTheme.typography.welcomeText
                     )
                 }
 
@@ -71,12 +70,12 @@ fun HomeScreen(
                         .height(AppTheme.dimensions.containerCameraHeight)
                         .shadow(
                             elevation = AppTheme.dimensions.shadowElevation,
-                            shape = shapes.cardCorner,
-                            ambientColor = colors.shadowColor,
-                            spotColor = colors.shadowColor
+                            shape = AppTheme.shapes.cardCorner,
+                            ambientColor = AppTheme.colors.shadowColor,
+                            spotColor = AppTheme.colors.shadowColor
                         )
-                        .clip(shapes.cardCorner)
-                        .background(colors.cardBackground)
+                        .clip(AppTheme.shapes.cardCorner)
+                        .background(AppTheme.colors.cardBackground)
                         .clickable { router.navigateToCamera() },
                     contentAlignment = Alignment.Center
                 ) {
@@ -88,17 +87,19 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .size(AppTheme.dimensions.iconSize)
-                                .clip(shapes.iconRound)
+                                .clip(AppTheme.shapes.iconRound)
                                 .background(
                                     brush = Brush.linearGradient(
-                                        colors = listOf(colors.iconGradientStart, colors.iconGradientEnd)
+                                        colors = listOf(AppTheme.colors.iconGradientStart, AppTheme.colors.iconGradientEnd)
                                     )
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "📷", //пока так сделала хардкодом эмодзи, потом заменю их на иконки
-                                fontSize = AppTheme.dimensions.iconEmojiSize
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_camera_icon),
+                                contentDescription = stringResource(id = R.string.cd_camera_icon),
+                                tint = AppTheme.colors.white,
+                                modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                             )
                         }
 
@@ -106,14 +107,14 @@ fun HomeScreen(
 
                         Text(
                             text = stringResource(id = R.string.home_camera_title),
-                            style = typography.cardTitle
+                            style = AppTheme.typography.cardTitle
                         )
 
                         Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_camera_subtitle),
-                            style = typography.cardSubtitle,
+                            style = AppTheme.typography.cardSubtitle,
                             modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
@@ -127,12 +128,12 @@ fun HomeScreen(
                         .height(AppTheme.dimensions.containerTextHeight)
                         .shadow(
                             elevation = AppTheme.dimensions.shadowElevation,
-                            shape = shapes.cardCorner,
-                            ambientColor = colors.shadowColor,
-                            spotColor = colors.shadowColor
+                            shape = AppTheme.shapes.cardCorner,
+                            ambientColor = AppTheme.colors.shadowColor,
+                            spotColor = AppTheme.colors.shadowColor
                         )
-                        .clip(shapes.cardCorner)
-                        .background(colors.cardBackground)
+                        .clip(AppTheme.shapes.cardCorner)
+                        .background(AppTheme.colors.cardBackground)
                         .clickable { router.navigateToText() },
                     contentAlignment = Alignment.Center
                 ) {
@@ -144,13 +145,22 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .size(AppTheme.dimensions.iconSize)
-                                .clip(shapes.iconRound)
-                                .background(colors.backgroundLight),
+                                .clip(AppTheme.shapes.iconRound)
+                                .background(
+                                    brush = Brush.linearGradient(
+                                        colors = listOf(
+                                            AppTheme.colors.iconGradientSecondaryStart,
+                                            AppTheme.colors.iconGradientSecondaryEnd
+                                        )
+                                    )
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "📝", // тут аналогично
-                                fontSize = AppTheme.dimensions.iconEmojiSize
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_document_icon),
+                                contentDescription = stringResource(id = R.string.cd_text_icon),
+                                tint = AppTheme.colors.white,
+                                modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                             )
                         }
 
@@ -158,14 +168,14 @@ fun HomeScreen(
 
                         Text(
                             text = stringResource(id = R.string.home_text_title),
-                            style = typography.cardTitle
+                            style = AppTheme.typography.cardTitle
                         )
 
                         Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_text_subtitle),
-                            style = typography.cardSubtitle,
+                            style = AppTheme.typography.cardSubtitle,
                             modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
@@ -180,7 +190,7 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_recent_title),
-                        style = typography.sectionTitle
+                        style = AppTheme.typography.sectionTitle
                     )
 
                     Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
@@ -189,8 +199,8 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(AppTheme.dimensions.emptyStateHeight)
-                            .clip(shapes.cardCorner)
-                            .background(colors.cardBackground),
+                            .clip(AppTheme.shapes.cardCorner)
+                            .background(AppTheme.colors.cardBackground),
                         contentAlignment = Alignment.Center
                     ) {
                         Column(
@@ -199,13 +209,15 @@ fun HomeScreen(
                             Box(
                                 modifier = Modifier
                                     .size(AppTheme.dimensions.iconEmptySize)
-                                    .clip(shapes.iconRound)
-                                    .background(colors.backgroundLight),
+                                    .clip(AppTheme.shapes.iconRound)
+                                    .background(AppTheme.colors.backgroundLight),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = "📚", // тут аналогично
-                                    fontSize = AppTheme.dimensions.iconEmojiSizeLarge
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_book_icon),
+                                    contentDescription = stringResource(id = R.string.cd_book_icon),
+                                    tint = AppTheme.colors.textSecondary,
+                                    modifier = Modifier.size(AppTheme.dimensions.iconSizeLarge)
                                 )
                             }
 
@@ -213,7 +225,7 @@ fun HomeScreen(
 
                             Text(
                                 text = stringResource(id = R.string.home_empty_state),
-                                style = typography.emptyStateText
+                                style = AppTheme.typography.emptyStateText
                             )
                         }
                     }

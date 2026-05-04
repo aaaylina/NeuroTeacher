@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -85,15 +86,15 @@ fun RegisterScreen(
             Box(
                 modifier = Modifier
                     .size(AppTheme.dimensions.logoContainerSize)
-                    .clip(AppTheme.shapes.inputCorner)
-                    .background(AppTheme.colors.backgroundLight),
+                    .clip(AppTheme.shapes.iconRound)
+                    .background(AppTheme.colors.logoBackgroundColor),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.logotype2),
+                    painter = painterResource(id = R.drawable.ic_logo_icon),
                     contentDescription = stringResource(id = R.string.logo_description),
                     tint = Color.Unspecified,
-                    modifier = Modifier.size(AppTheme.dimensions.logoSize)
+                    modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                 )
             }
 
