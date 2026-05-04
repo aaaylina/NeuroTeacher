@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -28,6 +29,9 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
     implementation(project(":core:db"))
+    implementation(project(":core:ui"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:test-creation"))
 
 
     implementation(libs.androidx.room.runtime)
@@ -55,4 +59,5 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.compose.material.icons.extended)
 }

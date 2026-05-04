@@ -1,6 +1,9 @@
 package ru.itis.neuroteacher.ui.theme
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -38,6 +41,8 @@ data class AppColors(
     val successBackground: Color,
     val errorBackground: Color,
     val successBorder: Color,
+    val chartSuccessBorder: Color,
+    val chartErrorBorder: Color,
     val errorBorder: Color,
     val explanationBackground: Color,
     val explanationText: Color,
@@ -46,6 +51,14 @@ data class AppColors(
     val cardSubtitleColor: Color,
     val textOnCard: Color,
     val logoBackgroundColor: Color,
+    val buttonUnselectedBackground: Color,
+    val buttonUnselectedText: Color,
+    val deleteIconColor: Color,
+    val profileTextPrimary: Color,
+    val iconBookStroke: Color,
+    val iconArrowStroke: Color,
+    val iconTrophyStroke: Color,
+    val iconCheckStroke: Color,
 )
 
 @Immutable
@@ -60,15 +73,17 @@ data class AppTypography(
     val cardTitle: TextStyle,
     val cardSubtitle: TextStyle,
     val sectionTitle: TextStyle,
-    val emptyStateText: TextStyle
+    val emptyStateText: TextStyle,
+    val profileTitle: TextStyle,
 )
 
 @Immutable
 data class AppShapes(
-    val inputCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val buttonCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val cardCorner: androidx.compose.foundation.shape.RoundedCornerShape,
-    val iconRound: androidx.compose.foundation.shape.RoundedCornerShape
+    val inputCorner: RoundedCornerShape,
+    val buttonCorner: RoundedCornerShape,
+    val cardCorner: RoundedCornerShape,
+    val iconRound: RoundedCornerShape,
+    val buttonCornerSmall: RoundedCornerShape,
 )
 
 @Immutable
@@ -115,6 +130,41 @@ data class AppDimensions(
     val fontSizeExplanationTitle: TextUnit,
     val fontSizeExplanationText: TextUnit,
     val fontSizeTopBarTitleTest: TextUnit,
+
+    val buttonCornerRadius: Dp,
+    val buttonLargeHeight: Dp,
+    val buttonShadowElevation: Dp,
+    val iconSizeResult: Dp,
+    val fontSizeProfileSectionTitle: TextUnit,
+    val fontSizeProfileButtonLabel: TextUnit,
+    val cornerRadiusProfileButton: Dp,
+    val borderWidthProfileButton: Dp,
+    val iconSizeProfileButton: Dp,
+    val spacingIconText: Dp,
+    val profileHeaderHeight: Dp,
+    val profileIconSize: Dp,
+    val profileIconInnerSize: Dp,
+    val statsCardHeightSmall: Dp,
+    val statsCardHeightLarge: Dp,
+    val themeButtonHeight: Dp,
+    val themeButtonWidth: Dp,
+    val langButtonHeight: Dp,
+    val actionItemHeight: Dp,
+    val profileHeaderBottomPadding: Dp,
+    val profileCardTopPadding: Dp,
+    val statsRowSpacing: Dp,
+    val statsCardShadowElevation: Dp,
+    val statsCardIconSpacing: Dp,
+    val statsCardIconSize: Dp,
+    val fontSizeStatsTitle: TextUnit,
+    val fontSizeStatsValue: TextUnit,
+    val fontSizeProfileHeaderTitle: TextUnit,
+    val iconSizeThemeButton: Dp,
+    val themeButtonShadowElevation: Dp,
+    val spacingThemeButtonVerticalPadding: Dp,
+    val spacingThemeButtonGap: Dp,
+    val spacingCardHorizontalPadding: Dp,
+    val dividerThickness: Dp
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -141,7 +191,42 @@ val LocalAppDimensions = staticCompositionLocalOf {
         fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
         fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
-        fontSizeTopBarTitleTest = 18.sp
+        fontSizeTopBarTitleTest = 18.sp,
+
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
+        fontSizeProfileSectionTitle = 18.sp,
+        fontSizeProfileButtonLabel = 14.sp,
+        cornerRadiusProfileButton = 14.dp,
+        borderWidthProfileButton = 1.dp,
+        iconSizeProfileButton = 16.dp,
+        spacingIconText = 8.dp,
+        profileHeaderHeight = 128.dp,
+        profileIconSize = 80.dp,
+        profileIconInnerSize = 40.dp,
+        statsCardHeightSmall = 92.dp,
+        statsCardHeightLarge = 112.dp,
+        themeButtonHeight = 72.dp,
+        themeButtonWidth = 90.dp,
+        langButtonHeight = 44.dp,
+        actionItemHeight = 56.dp,
+        profileHeaderBottomPadding = 24.dp,
+        profileCardTopPadding = 20.dp,
+        statsRowSpacing = 12.dp,
+        statsCardShadowElevation = 4.dp,
+        statsCardIconSpacing = 4.dp,
+        statsCardIconSize = 19.dp,
+        fontSizeStatsTitle = 14.sp,
+        fontSizeStatsValue = 24.sp,
+        fontSizeProfileHeaderTitle = 24.sp,
+        iconSizeThemeButton = 20.dp,
+        themeButtonShadowElevation = 4.dp,
+        spacingThemeButtonVerticalPadding = 8.dp,
+        spacingThemeButtonGap = 4.dp,
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 }
 
@@ -172,7 +257,9 @@ val LocalAppColors = staticCompositionLocalOf {
         successBackground = Color.Unspecified,
         errorBackground = Color.Unspecified,
         successBorder = Color.Unspecified,
+        chartSuccessBorder = Color.Unspecified,
         errorBorder = Color.Unspecified,
+        chartErrorBorder = Color.Unspecified,
         explanationBackground = Color.Unspecified,
         explanationText = Color.Unspecified,
         progressBarTrack = Color.Unspecified,
@@ -180,6 +267,14 @@ val LocalAppColors = staticCompositionLocalOf {
         cardSubtitleColor = Color.Unspecified,
         textOnCard = Color.Unspecified,
         logoBackgroundColor = Color.Unspecified
+        buttonUnselectedBackground = Color.Unspecified,
+        buttonUnselectedText = Color.Unspecified,
+        deleteIconColor = Color.Unspecified,
+        profileTextPrimary = Color.Unspecified,
+        iconBookStroke = Color.Unspecified,
+        iconArrowStroke = Color.Unspecified,
+        iconTrophyStroke = Color.Unspecified,
+        iconCheckStroke = Color.Unspecified,
     )
 }
 
@@ -195,16 +290,18 @@ val LocalAppTypography = staticCompositionLocalOf {
         cardTitle = TextStyle.Default,
         cardSubtitle = TextStyle.Default,
         sectionTitle = TextStyle.Default,
-        emptyStateText = TextStyle.Default
+        emptyStateText = TextStyle.Default,
+        profileTitle = TextStyle.Default,
     )
 }
 
 val LocalAppShapes = staticCompositionLocalOf {
     AppShapes(
-        inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(0.dp),
-        iconRound = androidx.compose.foundation.shape.RoundedCornerShape(0.dp)
+        inputCorner = RoundedCornerShape(12.dp),
+        buttonCorner = RoundedCornerShape(12.dp),
+        cardCorner = RoundedCornerShape(24.dp),
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 }
 
@@ -236,6 +333,8 @@ fun AppTheme(content: @Composable () -> Unit) {
         successBackground = SuccessBackground,
         errorBackground = ErrorBackground,
         successBorder = SuccessBorder,
+        chartSuccessBorder = ChartSuccessBorder,
+        chartErrorBorder = ChartErrorBorder,
         errorBorder = ErrorBorder,
         explanationBackground = ExplanationBackground,
         explanationText = ExplanationText,
@@ -244,6 +343,14 @@ fun AppTheme(content: @Composable () -> Unit) {
         cardSubtitleColor = Color(0xFF4A5565),
         textOnCard = Color(0xFF101828),
         logoBackgroundColor = LogoBackgroundColor,
+        buttonUnselectedBackground = ButtonUnselectedBackground,
+        buttonUnselectedText = ButtonUnselectedText,
+        deleteIconColor = DeleteIconColor,
+        profileTextPrimary = ProfileTextPrimary,
+        iconBookStroke = IconBookStroke,
+        iconArrowStroke = IconArrowStroke,
+        iconTrophyStroke = IconTrophyStroke,
+        iconCheckStroke = IconCheckStroke,
     )
 
     val typography = AppTypography(
@@ -257,14 +364,17 @@ fun AppTheme(content: @Composable () -> Unit) {
         cardTitle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
         cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Color(0xFF4A5565)),
         sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
-        emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite)
+        emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
+        profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white
+        ),
     )
 
     val shapes = AppShapes(
         inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-        iconRound = androidx.compose.foundation.shape.CircleShape
+        iconRound = CircleShape,
+        buttonCornerSmall = RoundedCornerShape(14.dp),
     )
 
     val dimensions = AppDimensions(
@@ -290,10 +400,45 @@ fun AppTheme(content: @Composable () -> Unit) {
         fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
         fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
-        fontSizeTopBarTitleTest = 18.sp
+        fontSizeTopBarTitleTest = 18.sp,
+
+        buttonCornerRadius = 14.dp,
+        buttonLargeHeight = 80.dp,
+        buttonShadowElevation = 4.dp,
+        iconSizeResult = 20.dp,
+        fontSizeProfileSectionTitle = 18.sp,
+        fontSizeProfileButtonLabel = 14.sp,
+        cornerRadiusProfileButton = 14.dp,
+        borderWidthProfileButton = 1.dp,
+        iconSizeProfileButton = 16.dp,
+        spacingIconText = 8.dp,
+        profileHeaderHeight = 128.dp,
+        profileIconSize = 80.dp,
+        profileIconInnerSize = 40.dp,
+        statsCardHeightSmall = 92.dp,
+        statsCardHeightLarge = 112.dp,
+        themeButtonHeight = 72.dp,
+        themeButtonWidth = 90.dp,
+        langButtonHeight = 44.dp,
+        actionItemHeight = 56.dp,
+        profileHeaderBottomPadding = 24.dp,
+        profileCardTopPadding = 20.dp,
+        statsRowSpacing = 12.dp,
+        statsCardShadowElevation = 4.dp,
+        statsCardIconSpacing = 4.dp,
+        statsCardIconSize = 19.dp,
+        fontSizeStatsTitle = 14.sp,
+        fontSizeStatsValue = 24.sp,
+        fontSizeProfileHeaderTitle = 24.sp,
+        iconSizeThemeButton = 20.dp,
+        themeButtonShadowElevation = 4.dp,
+        spacingThemeButtonVerticalPadding = 8.dp,
+        spacingThemeButtonGap = 4.dp,
+        spacingCardHorizontalPadding = 8.dp,
+        dividerThickness = 1.dp
     )
 
-    androidx.compose.runtime.CompositionLocalProvider(
+    CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppTypography provides typography,
         LocalAppShapes provides shapes,

@@ -18,4 +18,5 @@ fun NavGraphBuilder.testNavGraph(
             viewModel = hiltViewModel()
         )
     }
+
 }
