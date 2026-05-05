@@ -1,6 +1,5 @@
 package ru.itis.neuroteacher.testcreation.presentation.test
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -105,9 +104,7 @@ internal class TestViewModel @Inject constructor(
                 val id = repository.saveTest(test, SourceType.TEXT)
                 _uiState.update { it.copy(savedTestId = id) }
                 TestCache.clear(cacheId)
-                Log.d("TestVM", "✅ Тест сохранен локально с ID: $id")
             } catch (e: Exception) {
-                Log.e("TestVM", "❌ Ошибка: ${e.message}", e)
                 _uiState.update {
                     it.copy(error = "Ошибка сохранения теста: ${e.message}")
                 }
@@ -186,7 +183,6 @@ internal class TestViewModel @Inject constructor(
                 answers = state.answers
             )
 
-            // Асинхронная синхронизация с Firebase
             val test = Test(_uiState.value.testTitle, _questions)
             syncUseCase.syncCompleteTest(
                 test = test,
@@ -195,9 +191,7 @@ internal class TestViewModel @Inject constructor(
                 correctCount = correctCount,
                 scorePercentage = (correctCount.toFloat() / _questions.size) * 100
             ).onSuccess { firebaseId ->
-                Log.d("TestVM", "✅✅✅ Firebase синхронизация успешна! ID: $firebaseId")
             }.onFailure { error ->
-                Log.e("TestVM", "❌❌❌ Ошибка синхронизации: ${error.message}")
             }
 
             _events.emit(TestEvent.NavigateToResults(testIdToUse, resultId))
