@@ -31,4 +31,6 @@
     <string name="profile_logout_confirm_text">Вы сможете войти снова в любое время.</string>
     <string name="profile_confirm">Подтвердить</string>
     <string name="profile_cancel">Отмена</string>
+    <string name="profile_logout_error">Не удалось выйти из аккаунта</string>
+
 </resources>

@@ -11,6 +11,7 @@ import ru.itis.neuroteacher.auth.data.repository.FireBaseErrorHandler
 import ru.itis.neuroteacher.auth.domain.repository.AuthErrorHandler
 import ru.itis.neuroteacher.auth.domain.repository.AuthRepository
 import ru.itis.neuroteacher.auth.domain.usecase.LogoutUseCase
+import ru.itis.neuroteacher.auth.domain.usecase.LogoutUseCaseImpl
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCase
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCaseImpl
 import ru.itis.neuroteacher.auth.domain.usecase.SignUpUseCase
@@ -41,8 +42,7 @@ internal abstract class AuthModule {
     ): SignUpUseCase
 
     @Binds
-    abstract fun bindLogoutUseCase(impl: LogoutUseCase): LogoutUseCase
-
+    abstract fun bindLogoutUseCase(impl: LogoutUseCaseImpl): LogoutUseCase
 }
 
 @Module

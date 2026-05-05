@@ -49,22 +49,21 @@ class SettingsRepositoryImpl @Inject constructor(
         _settingsFlow.value = AppSettings()
     }
 
-    override fun getSavedTheme(): ThemeOption {
-        return try {
-            val saved = prefs.getString(KEY_THEME, ThemeOption.SYSTEM.name)
-            ThemeOption.valueOf(saved ?: ThemeOption.SYSTEM.name)
-        } catch (e: IllegalArgumentException) {
-            ThemeOption.SYSTEM
-        }
+    override fun getSavedTheme(): ThemeOption = runCatching {
+        prefs.getString(KEY_THEME, null)?.let {
+            ThemeOption.valueOf(it)
+        } ?: ThemeOption.SYSTEM
+    }.getOrElse {
+        ThemeOption.SYSTEM
     }
 
-    override fun getSavedLanguage(): LanguageOption {
-        return try {
-            val saved = prefs.getString(KEY_LANGUAGE, LanguageOption.RUSSIAN.name)
-            LanguageOption.valueOf(saved ?: LanguageOption.RUSSIAN.name)
-        } catch (e: IllegalArgumentException) {
-            LanguageOption.RUSSIAN
-        }
+
+    override fun getSavedLanguage(): LanguageOption = runCatching {
+        prefs.getString(KEY_LANGUAGE, null)?.let {
+            LanguageOption.valueOf(it)
+        } ?: LanguageOption.RUSSIAN
+    }.getOrElse {
+        LanguageOption.RUSSIAN
     }
 
     companion object {

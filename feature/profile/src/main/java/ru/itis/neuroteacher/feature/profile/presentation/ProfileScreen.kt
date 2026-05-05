@@ -19,16 +19,16 @@ fun ProfileScreen(
     onNavigateToLogin: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(uiState.errorMessage) {
-        uiState.errorMessage?.let { message ->
-            snackbarHostState.showSnackbar(message)
+    val errorMessage = uiState.errorResId?.let { stringResource(it) }
+
+    LaunchedEffect(uiState.errorResId) {
+        errorMessage?.let { msg ->
+            snackbarHostState.showSnackbar(message = msg)
             viewModel.clearError()
         }
     }
-
     LaunchedEffect(Unit) {
         viewModel.refreshStatistics()
     }

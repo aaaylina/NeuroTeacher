@@ -1,5 +1,6 @@
 package ru.itis.neuroteacher.feature.profile.presentation
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import ru.itis.neuroteacher.feature.profile.domain.usecase.ClearUserDataUseCase
 import ru.itis.neuroteacher.core.settings.domain.usecase.UpdateLanguageUseCase
 import ru.itis.neuroteacher.core.settings.domain.usecase.UpdateThemeUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.GetTestStatisticsUseCase
+import ru.itis.neuroteacher.feature.profile.R
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +30,7 @@ class ProfileViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ProfileUiState())
+    private val _uiState = MutableStateFlow(ProfileUiState.initial())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
     init {
@@ -85,12 +87,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             clearUserDataUseCase()
             _uiState.update {
-                it.copy(
-                    totalTests = 0,
-                    completedTests = 0,
-                    avgScore = "0%",
-                    bestScore = "0%"
-                )
+                ProfileUiState.cleared()
             }
             onSuccess()
         }
@@ -100,20 +97,18 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             logoutUseCase().fold(
                 onSuccess = {
-                    _uiState.update { it.copy(errorMessage = null) }
+                    _uiState.update { it.copy(errorResId = null) }
                     onSuccess()
                 },
-                onFailure = { exception ->
-                    _uiState.update {
-                        it.copy(errorMessage = exception.message ?: "Ошибка выхода из аккаунта")
-                    }
+                onFailure = { _ ->
+                    _uiState.update { it.copy(errorResId = R.string.profile_logout_error) }
                 }
             )
         }
     }
 
     fun clearError() {
-        _uiState.update { it.copy(errorMessage = null) }
+        _uiState.update { it.copy(errorResId = null) }
     }
 
     fun refreshStatistics() {
@@ -122,11 +117,24 @@ class ProfileViewModel @Inject constructor(
 }
 
 data class ProfileUiState(
-    val selectedTheme: ThemeOption = ThemeOption.LIGHT,
-    val selectedLanguage: LanguageOption = LanguageOption.RUSSIAN,
-    val totalTests: Int = 0,
-    val completedTests: Int = 0,
-    val avgScore: String = "0%",
-    val bestScore: String = "0%",
-    val errorMessage: String? = null
-)
+    val selectedTheme: ThemeOption,
+    val selectedLanguage: LanguageOption,
+    val totalTests: Int,
+    val completedTests: Int,
+    val avgScore: String,
+    val bestScore: String,
+    @StringRes val errorResId: Int? = null
+) {
+    companion object {
+        fun initial() = ProfileUiState(
+            selectedTheme = ThemeOption.SYSTEM,
+            selectedLanguage = LanguageOption.RUSSIAN,
+            totalTests = 0,
+            completedTests = 0,
+            avgScore = "0%",
+            bestScore = "0%"
+        )
+
+        fun cleared() = initial()
+    }
+}

@@ -21,4 +21,5 @@
     <string name="profile_logout_confirm_text">You can sign in again anytime.</string>
     <string name="profile_confirm">Confirm</string>
     <string name="profile_cancel">Cancel</string>
+    <string name="profile_logout_error">Failed to log out</string>
 </resources>
