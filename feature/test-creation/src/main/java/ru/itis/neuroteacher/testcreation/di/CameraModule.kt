@@ -8,15 +8,28 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.itis.neuroteacher.testcreation.data.repository.CameraRepositoryImpl
 import ru.itis.neuroteacher.testcreation.data.repository.TestRecognitionRepositoryImpl
+import ru.itis.neuroteacher.testcreation.data.usecase.SyncTestToFirebaseUseCaseImpl
+import ru.itis.neuroteacher.testcreation.domain.repository.CameraRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TextRecognitionRepository
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManager
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManagerImpl
+import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCase
+import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCaseImpl
+import ru.itis.neuroteacher.testcreation.domain.usecase.SyncTestToFirebaseUseCase
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CameraModule {
+internal abstract class CameraModule {
+
+    @Binds
+    abstract fun bindCameraRepository(
+        impl: CameraRepositoryImpl
+    ): CameraRepository
 
     @Binds
     @Singleton
@@ -25,15 +38,31 @@ abstract class CameraModule {
     ): TextRecognitionRepository
 
     @Binds
+    abstract fun bindCameraUseCase(
+        impl: CameraManagerImpl
+    ): CameraManager
+
+    @Binds
     internal abstract fun bindRecognizeTextUseCase(
         impl: RecognizeTextUseCaseImpl
     ): RecognizeTextUseCase
+
+    @Binds
+    abstract fun bindLoadBitmapUseCase(
+        impl: LoadBitmapUseCaseImpl
+    ): LoadBitmapUseCase
+
+    @Binds
+    abstract fun bindSyncTestToFirebaseUseCase(
+        impl: SyncTestToFirebaseUseCaseImpl
+    ): SyncTestToFirebaseUseCase
 
     companion object {
         @Provides
         fun provideTextRecognizer(): TextRecognizer {
             return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         }
+
     }
 
 }

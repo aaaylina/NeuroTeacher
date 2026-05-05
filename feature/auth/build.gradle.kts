@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:utils"))
     implementation(project(":core:ui"))
+    implementation(project(":feature:test-creation"))
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.firebase.analytics)

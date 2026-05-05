@@ -5,7 +5,15 @@ import javax.inject.Inject
 internal class TestPromptBuilder @Inject constructor() {
 
     fun buildSystemPrompt(): String {
-        return "Ты - эксперт по созданию тестов. Отвечай ТОЛЬКО в формате JSON."
+        return """
+            Ты — профессиональный эксперт по созданию тестов. 
+            Твоя задача: генерировать учебные материалы строго в формате JSON.
+            
+            ПРАВИЛА:
+            - Отвечай ТОЛЬКО валидным JSON-объектом.[cite: 14, 15]
+            - Запрещено использовать Markdown разметку (никаких ```json).[cite: 15]
+            - Запрещен любой текст, комментарии или пояснения до и после JSON.[cite: 15]
+        """.trimIndent()
     }
 
     fun buildGenerationPrompt(text: String, questionCount: Int): String {
@@ -14,7 +22,7 @@ internal class TestPromptBuilder @Inject constructor() {
             
             $text
             
-            Формат ответа должен быть строго JSON:
+            СТРОГАЯ СХЕМА JSON (соблюдай ключи СТРОГО):
             {
                 "title": "Название теста",
                 "questions": [
@@ -27,8 +35,12 @@ internal class TestPromptBuilder @Inject constructor() {
                 ]
             }
             
-            Где correct - индекс правильного ответа (0-based).
-            Верни ТОЛЬКО JSON, без дополнительного текста.
+            ТЕХНИЧЕСКИЕ ТРЕБОВАНИЯ:
+            1. "question": строка с текстом вопроса.[cite: 28]
+            2. "options": массив ровно из 4-х строк.[cite: 28]
+            3. "correct": целое число (0, 1, 2 или 3) — индекс верного ответа в массиве options.[cite: 28]
+            4. "explanation": строка с объяснением (может быть null, если объяснение невозможно составить).[cite: 28]
+            5. Язык текста: используй тот же язык, на котором написан исходный текст.
         """.trimIndent()
     }
 }

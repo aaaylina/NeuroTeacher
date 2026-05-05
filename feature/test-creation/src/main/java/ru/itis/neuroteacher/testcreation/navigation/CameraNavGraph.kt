@@ -3,14 +3,14 @@ package ru.itis.neuroteacher.testcreation.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
-import ru.itis.neuroteacher.testcreation.presentation.textinput.TextInputScreen
+import ru.itis.neuroteacher.testcreation.navigation.model.CameraRoute
+import ru.itis.neuroteacher.testcreation.presentation.camera.CameraScreen
 
-fun NavGraphBuilder.textInputNavGraph(
+fun NavGraphBuilder.cameraNavGraph(
     router: TestCreationRouter,
 ) {
-    composable<TextInputRoute> {
-        TextInputScreen(
+    composable<CameraRoute> {
+        CameraScreen(
             router = router,
             viewModel = hiltViewModel()
         )
