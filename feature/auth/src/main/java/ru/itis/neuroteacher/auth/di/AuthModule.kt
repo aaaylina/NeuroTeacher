@@ -46,4 +46,5 @@ internal object MapperModule {
 
     @Provides
     fun provideUserMapper(): UserMapper = UserMapper()
+
 }
