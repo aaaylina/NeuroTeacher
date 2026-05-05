@@ -26,6 +26,8 @@ internal abstract class RepositoryModule {
 
     @Binds
     abstract fun bindGetTestStatisticsUseCase(impl: GetTestStatisticsUseCaseImpl): GetTestStatisticsUseCase
+
+    @Binds
     @Singleton
     abstract fun bindFirebaseQuizRepository(
         impl: FirebaseQuizRepositoryImpl
