@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import ru.itis.neuroteacher.testcreation.R
-import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.testcreation.presentation.test.components.ExplanationCard
 import ru.itis.neuroteacher.testcreation.presentation.test.components.QuestionCard
@@ -40,9 +39,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 @Composable
 internal fun TestScreen(
     router: TestCreationRouter,
-    testCache: TestCache,
-    testId: Long? = null,
-    isRetry: Boolean = false,
+    testId: String,
     viewModel: TestViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -60,12 +57,14 @@ internal fun TestScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (isRetry && testId != null) {
-            viewModel.loadTestFromDatabase(testId)
-        } else {
-            if (uiState.questions.isEmpty()) {
-                viewModel.loadTestFromCache(testCache)
+    LaunchedEffect(testId) {
+        if (uiState.questions.isEmpty() && !uiState.isLoading) {
+            val idAsLong = testId.toLongOrNull()
+
+            if (idAsLong != null) {
+                viewModel.loadTestFromDatabase(idAsLong)
+            } else {
+                viewModel.loadTestFromCache(testId)
             }
         }
     }
