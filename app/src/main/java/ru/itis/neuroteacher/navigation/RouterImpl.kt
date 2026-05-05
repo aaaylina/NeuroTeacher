@@ -3,6 +3,10 @@ package ru.itis.neuroteacher.navigation
 import androidx.navigation.NavHostController
 import ru.itis.neuroteacher.auth.navigation.AuthRouter
 import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
+import ru.itis.neuroteacher.feature.history.navigation.HistoryRoute
+import ru.itis.neuroteacher.feature.history.navigation.HistoryRouter
+import ru.itis.neuroteacher.feature.profile.navigation.ProfileRoute
+import ru.itis.neuroteacher.feature.profile.navigation.ProfileRouter
 import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.home.navigation.model.HomeRoute
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
@@ -45,8 +49,16 @@ class HomeRouterImpl(
         navController.navigate(TextInputRoute)
     }
 
-    override fun navigateToHistory() { /* TODO */ }
-    override fun navigateToProfile() { /* TODO */ }
+    override fun navigateToHistory() {
+        navController.navigate(HistoryRoute) {
+            launchSingleTop = true
+        }
+    }
+    override fun navigateToProfile() {
+        navController.navigate(ProfileRoute) {
+            launchSingleTop = true
+        }
+    }
     override fun navigateUp() {
         navController.navigateUp()
     }
@@ -65,5 +77,62 @@ class TestCreationRouterImpl(
 
     override fun navigateToResults(testId: Long, resultId: Long) {
         navController.navigate(TestResultRoute(testId = testId, resultId = resultId))
+    }
+}
+
+class HistoryRouterImpl(
+    private val navController: NavHostController
+) : HistoryRouter {
+
+    override fun navigateUp() {
+        navController.navigateUp()
+    }
+
+    override fun navigateToTestResult(testId: Long, resultId: Long) {
+        navController.navigate(TestResultRoute(testId, resultId))
+    }
+    override fun navigateToHome() {
+        navController.navigate(HomeRoute) {
+            launchSingleTop = true
+            popUpTo(HomeRoute) { inclusive = false }
+        }
+    }
+
+    override fun navigateToProfile() {
+        navController.navigate(ProfileRoute) {
+            launchSingleTop = true
+            popUpTo(ProfileRoute) { inclusive = false }
+        }
+    }
+}
+
+class ProfileRouterImpl(
+    private val navController: NavHostController
+) : ProfileRouter {
+
+    override fun navigateToLogin() {
+        navController.navigate(AuthRoute.Login) {
+            popUpTo(0) {
+                inclusive = true
+            }
+        }
+    }
+
+    override fun navigateUp() {
+        navController.navigateUp()
+    }
+
+    override fun navigateToHome() {
+        navController.navigate(HomeRoute) {
+            launchSingleTop = true
+            popUpTo(HomeRoute) { inclusive = false }
+        }
+    }
+
+    override fun navigateToHistory() {
+        navController.navigate(HistoryRoute) {
+            launchSingleTop = true
+            popUpTo(HistoryRoute) { inclusive = false }
+        }
     }
 }
