@@ -34,7 +34,7 @@ class CameraRepositoryImpl @Inject constructor(
     private val cameraExecutor: ExecutorService by lazy { Executors.newSingleThreadExecutor() }
     private val mainExecutor = ContextCompat.getMainExecutor(appContext)
 
-    override suspend fun startCamera(lifecycleOwner: LifecycleOwner) = suspendCancellableCoroutine<Unit> { continuation ->
+    override suspend fun startCamera() = suspendCancellableCoroutine<Unit> { continuation ->
         val cameraProviderFuture = ProcessCameraProvider.getInstance(appContext)
 
         cameraProviderFuture.addListener({
@@ -130,5 +130,6 @@ class CameraRepositoryImpl @Inject constructor(
         }
         cameraProvider = null
         imageCapture = null
+        cameraExecutor.shutdownNow()
     }
 }

@@ -14,13 +14,13 @@ data class PhotoRecognitionResult(
     val bitmap: Bitmap
 )
 
-internal class CameraUseCaseImpl @Inject constructor(
+internal class CameraManagerImpl @Inject constructor(
     private val cameraRepository: CameraRepository,
     private val textRecognitionRepository: TextRecognitionRepository
-) : CameraUseCase {
+) : CameraManager {
 
-    override suspend fun startCamera(lifecycleOwner: LifecycleOwner): Result<Unit> = runCatching {
-        cameraRepository.startCamera(lifecycleOwner)
+    override suspend fun startCamera(): Result<Unit> = runCatching {
+        cameraRepository.startCamera()
     }
 
     override fun setupPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner) {
@@ -49,6 +49,6 @@ internal class CameraUseCaseImpl @Inject constructor(
     }
 }
 
-class CameraException(message: String, cause: Throwable) : Exception(message, cause)
-class SaveException(message: String, cause: Throwable) : Exception(message, cause)
-class RecognitionException(message: String, cause: Throwable) : Exception(message, cause)
+internal class CameraException(message: String, cause: Throwable) : Exception(message, cause)
+internal class SaveException(message: String, cause: Throwable) : Exception(message, cause)
+internal class RecognitionException(message: String, cause: Throwable) : Exception(message, cause)

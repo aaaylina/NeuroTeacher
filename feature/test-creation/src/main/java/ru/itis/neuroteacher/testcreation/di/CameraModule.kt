@@ -13,8 +13,8 @@ import ru.itis.neuroteacher.testcreation.data.repository.TestRecognitionReposito
 import ru.itis.neuroteacher.testcreation.data.usecase.SyncTestToFirebaseUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.repository.CameraRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TextRecognitionRepository
-import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCase
-import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCaseImpl
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManager
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManagerImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCase
@@ -39,8 +39,8 @@ internal abstract class CameraModule {
 
     @Binds
     abstract fun bindCameraUseCase(
-        impl: CameraUseCaseImpl
-    ): CameraUseCase
+        impl: CameraManagerImpl
+    ): CameraManager
 
     @Binds
     internal abstract fun bindRecognizeTextUseCase(

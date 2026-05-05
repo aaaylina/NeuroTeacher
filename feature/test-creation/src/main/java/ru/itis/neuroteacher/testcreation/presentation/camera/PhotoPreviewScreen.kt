@@ -47,9 +47,9 @@ import ru.itis.neuroteacher.testcreation.utils.constants.TestGenerationConstants
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
-fun PhotoDemoScreen(
+fun PhotoPreviewScreen(
     router: TestCreationRouter,
-    viewModel: PhotoDemoViewModel = hiltViewModel()
+    viewModel: PhotoPreviewViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val typography = AppTheme.typography
@@ -68,8 +68,8 @@ fun PhotoDemoScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collectLatest { event ->
             when (event) {
-                is PhotoDemoNavigationEvent.NavigateToTest -> router.navigateToTest(event.testId)
-                PhotoDemoNavigationEvent.NavigateBackToCamera -> router.navigateUp()
+                is PhotoPreviewNavigationEvent.NavigateToTest -> router.navigateToTest(event.testId)
+                PhotoPreviewNavigationEvent.NavigateBackToCamera -> router.navigateUp()
             }
         }
     }

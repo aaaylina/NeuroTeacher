@@ -7,7 +7,7 @@ import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.home.navigation.model.HomeRoute
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.testcreation.navigation.model.CameraRoute
-import ru.itis.neuroteacher.testcreation.navigation.model.PhotoDemoRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.PhotoPreviewRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestResultRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
@@ -64,5 +64,5 @@ class TestCreationRouterImpl(
         navController.navigate(TestResultRoute(testId = testId, resultId = resultId))
     }
     override fun navigateToPhotoDemo(imageUri: String, recognizedText: String) =
-        navController.navigate(PhotoDemoRoute(imageUri = imageUri, recognizedText = recognizedText))
+        navController.navigate(PhotoPreviewRoute(imageUri = imageUri, recognizedText = recognizedText))
 }

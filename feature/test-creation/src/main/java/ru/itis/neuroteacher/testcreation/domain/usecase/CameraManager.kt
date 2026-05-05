@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
 
-interface CameraUseCase {
-    suspend fun startCamera(lifecycleOwner: LifecycleOwner): Result<Unit>
+interface CameraManager {
+    suspend fun startCamera(): Result<Unit>
 
     fun setupPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner)
 
