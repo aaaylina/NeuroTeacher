@@ -1,5 +1,6 @@
 package ru.itis.neuroteacher.testcreation.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
@@ -27,4 +28,6 @@ interface TestRepository {
     suspend fun getBestScore(): Float?
     suspend fun getTestStatistics(): TestStatistics
     suspend fun clearAllData()
+    suspend fun getAllTestResults(): List<TestResult>
+    fun getTestResultsFlow(query: String): Flow<List<TestResult>>
 }

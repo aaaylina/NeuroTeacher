@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":feature:test-creation"))
     implementation(project(":feature:test-taking"))
+    implementation(project(":feature:history"))
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
     implementation(project(":core:settings"))

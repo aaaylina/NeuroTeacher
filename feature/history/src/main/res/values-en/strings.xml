@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Test History</string>
+    <string name="history_search_placeholder">Search by title</string>
+    <string name="history_cd_back">Back</string>
+    <string name="history_empty_state">You haven\'t taken any tests yet</string>
+</resources>

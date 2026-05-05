@@ -124,10 +124,13 @@ internal class TestMapperImpl @Inject constructor(
         }
 
         return TestResult(
+            id = resultEntity.id,
+            testId = testEntity.id,
             testTitle = testDataModel.title,
             totalQuestions = resultEntity.totalQuestions,
             correctAnswers = resultEntity.correctAnswers,
             scorePercentage = resultEntity.scorePercentage,
+            dateCompleted = resultEntity.dateCompleted,
             questions = questionResults
         )
     }

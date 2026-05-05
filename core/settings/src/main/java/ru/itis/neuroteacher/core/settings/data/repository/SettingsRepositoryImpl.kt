@@ -40,6 +40,8 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun updateLanguage(language: LanguageOption) {
         prefs.edit { putString(KEY_LANGUAGE, language.name) }
         _settingsFlow.value = _settingsFlow.value.copy(language = language)
+        android.util.Log.d("SettingsDebug", "Language updated to: ${language.name}")
+
     }
 
     override suspend fun clearAllData() {

@@ -1,5 +1,8 @@
 package ru.itis.neuroteacher.testcreation.data.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
 import ru.itis.neuroteacher.testcreation.data.db.dao.TestResultDao
 import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
@@ -87,5 +90,25 @@ internal class TestRepositoryImpl @Inject constructor(
     override suspend fun clearAllData() {
         dao.deleteAllTests()
         testResultDao.deleteAllResults()
+    }
+
+    override suspend fun getAllTestResults(): List<TestResult> {
+        val results = testResultDao.getAllResultsFlowSortedByDateDesc().first()
+        return results.mapNotNull { resultEntity ->
+            val testEntity = dao.getTestById(resultEntity.testId) ?: return@mapNotNull null
+            mapper.toDomainResult(testEntity, resultEntity)
+        }
+    }
+    override fun getTestResultsFlow(query: String): Flow<List<TestResult>> {
+        return if (query.isBlank()) {
+            testResultDao.getAllResultsFlowSortedByDateDesc()
+        } else {
+            testResultDao.searchResultsByTestTitle(query)
+        }.map { entities ->
+            entities.mapNotNull { resultEntity ->
+                val testEntity = dao.getTestById(resultEntity.testId)
+                if (testEntity != null) mapper.toDomainResult(testEntity, resultEntity) else null
+            }
+        }
     }
 }

@@ -1,10 +1,15 @@
 package ru.itis.neuroteacher.testcreation.domain.model
 
+import java.util.Date
+
 data class TestResult(
+    val id: Long,
+    val testId: Long,
     val testTitle: String,
     val totalQuestions: Int,
     val correctAnswers: Int,
     val scorePercentage: Float,
+    val dateCompleted: Date,
     val questions: List<QuestionResult>
 ) {
     data class QuestionResult(

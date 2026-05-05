@@ -41,4 +41,11 @@ interface TestResultDao {
 
     @Query("DELETE FROM test_results")
     suspend fun deleteAllResults()
+    @Query("""
+        SELECT tr.* FROM test_results tr
+        JOIN tests t ON tr.testId = t.id
+        WHERE t.title LIKE '%' || :query || '%'
+        ORDER BY tr.dateCompleted DESC
+    """)
+    fun searchResultsByTestTitle(query: String): Flow<List<TestResultEntity>>
 }

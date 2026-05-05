@@ -4,8 +4,11 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -13,12 +16,16 @@ import ru.itis.neuroteacher.auth.domain.usecase.LogoutUseCase
 import ru.itis.neuroteacher.common.model.LanguageOption
 import ru.itis.neuroteacher.common.model.ThemeOption
 import ru.itis.neuroteacher.core.settings.domain.repository.SettingsRepository
+import ru.itis.neuroteacher.feature.profile.R
 import ru.itis.neuroteacher.feature.profile.domain.usecase.ClearUserDataUseCase
 import ru.itis.neuroteacher.core.settings.domain.usecase.UpdateLanguageUseCase
 import ru.itis.neuroteacher.core.settings.domain.usecase.UpdateThemeUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.GetTestStatisticsUseCase
-import ru.itis.neuroteacher.feature.profile.R
 import javax.inject.Inject
+
+sealed class ProfileNavigationEvent {
+    object NavigateToLogin : ProfileNavigationEvent()
+}
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -32,6 +39,9 @@ class ProfileViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(ProfileUiState.initial())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+
+    private val _navigationEvents = MutableSharedFlow<ProfileNavigationEvent>()
+    val navigationEvents: SharedFlow<ProfileNavigationEvent> = _navigationEvents.asSharedFlow()
 
     init {
         loadInitialSettings()
@@ -82,28 +92,25 @@ class ProfileViewModel @Inject constructor(
             _uiState.update { it.copy(selectedLanguage = language) }
         }
     }
-
-    fun onClearData(onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            clearUserDataUseCase()
-            _uiState.update {
-                ProfileUiState.cleared()
-            }
-            onSuccess()
-        }
-    }
-
-    fun onLogout(onSuccess: () -> Unit) {
+    fun onLogout() {
         viewModelScope.launch {
             logoutUseCase().fold(
                 onSuccess = {
                     _uiState.update { it.copy(errorResId = null) }
-                    onSuccess()
+                    _navigationEvents.emit(ProfileNavigationEvent.NavigateToLogin)
                 },
-                onFailure = { _ ->
+                onFailure = {
                     _uiState.update { it.copy(errorResId = R.string.profile_logout_error) }
                 }
             )
+        }
+    }
+
+    fun onClearData(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            clearUserDataUseCase()
+            _uiState.value = ProfileUiState.cleared()
+            onSuccess()
         }
     }
 

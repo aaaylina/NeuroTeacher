@@ -10,18 +10,29 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import ru.itis.neuroteacher.feature.profile.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import ru.itis.neuroteacher.feature.profile.navigation.ProfileRouter
 import ru.itis.neuroteacher.feature.profile.presentation.components.*
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel = hiltViewModel(),
-    onNavigateToLogin: () -> Unit = {}
+    router: ProfileRouter,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     val errorMessage = uiState.errorResId?.let { stringResource(it) }
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvents.collect { event ->
+            when (event) {
+                is ProfileNavigationEvent.NavigateToLogin -> {
+                    router.navigateToLogin()
+                }
+            }
+        }
+    }
 
     LaunchedEffect(uiState.errorResId) {
         errorMessage?.let { msg ->
@@ -70,7 +81,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             ActionsCard(
                 onClearData = { viewModel.onClearData(onSuccess = {}) },
-                onLogout = { viewModel.onLogout(onSuccess = onNavigateToLogin) }
+                onLogout = { viewModel.onLogout() }
             )
         }
         SnackbarHost(
