@@ -15,6 +15,7 @@ import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Question
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
+import ru.itis.neuroteacher.testcreation.domain.usecase.SyncTestToFirebaseUseCase
 import javax.inject.Inject
 
 data class TestUiState(
@@ -34,7 +35,8 @@ sealed class TestEvent {
 
 @HiltViewModel
 internal class TestViewModel @Inject constructor(
-    private val repository: TestRepository
+    private val repository: TestRepository,
+    private val syncUseCase: SyncTestToFirebaseUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TestUiState())
@@ -180,6 +182,17 @@ internal class TestViewModel @Inject constructor(
                 },
                 answers = state.answers
             )
+
+            val test = Test(_uiState.value.testTitle, _questions)
+            syncUseCase.syncCompleteTest(
+                test = test,
+                resultId = resultId,
+                answers = state.answers,
+                correctCount = correctCount,
+                scorePercentage = (correctCount.toFloat() / _questions.size) * 100
+            ).onSuccess { firebaseId ->
+            }.onFailure { error ->
+            }
 
             _events.emit(TestEvent.NavigateToResults(testIdToUse, resultId))
         }

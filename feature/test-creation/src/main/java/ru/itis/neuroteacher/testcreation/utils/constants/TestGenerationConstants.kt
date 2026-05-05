@@ -1,9 +1,9 @@
 package ru.itis.neuroteacher.testcreation.utils.constants
 
 object TestGenerationConstants {
-    const val DEFAULT_MODEL = "openrouter/free"
+    const val DEFAULT_MODEL = "openai/gpt-oss-120b:free"
 
-    const val DEFAULT_TEMPERATURE = 0.7
+    const val DEFAULT_TEMPERATURE = 0.5
     const val DEFAULT_MAX_TOKENS = 8000
     const val RESPONSE_FORMAT_TYPE = "json_object"
 
