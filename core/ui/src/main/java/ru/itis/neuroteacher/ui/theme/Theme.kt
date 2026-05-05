@@ -211,7 +211,7 @@ data class AppDimensions(
     val photoButtonsSpacing: Dp,
     val photoCardPadding: Dp,
 
-)
+    )
 
 val LocalAppDimensions = staticCompositionLocalOf {
     AppDimensions(
@@ -301,7 +301,7 @@ val LocalAppDimensions = staticCompositionLocalOf {
         photoButtonsSpacing = 8.dp,
         photoCardPadding = 24.dp,
 
-    )
+        )
 }
 
 val LocalAppColors = staticCompositionLocalOf {
@@ -398,7 +398,10 @@ val LocalAppShapes = staticCompositionLocalOf {
 }
 
 @Composable
-fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
+fun AppTheme(
+    darkTheme: Boolean = false,
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) {
         AppColors(
             primary = PrimaryDark,
@@ -418,6 +421,8 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             backgroundGradientMain = BackgroundGradientMainDark,
             iconGradientStart = IconGradientStartDark,
             iconGradientEnd = IconGradientEndDark,
+            iconGradientSecondaryStart = IconGradientSecondaryStartDark,
+            iconGradientSecondaryEnd = IconGradientSecondaryEndDark,
             shadowColor = ShadowColorDark,
             bottomBarBorder = BottomBarBorderDark,
             textOnWhite = TextOnWhiteDark,
@@ -433,6 +438,7 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             white = Color.White,
             cardSubtitleColor = Color(0xFF94A3B8),
             textOnCard = TextPrimaryDark,
+            logoBackgroundColor = LogoBackgroundColorDark,
             buttonUnselectedBackground = ButtonUnselectedBackgroundDark,
             buttonUnselectedText = ButtonUnselectedTextDark,
             deleteIconColor = DeleteIconColorDark,
@@ -441,6 +447,19 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             iconArrowStroke = IconArrowStrokeDark,
             iconTrophyStroke = IconTrophyStrokeDark,
             iconCheckStroke = IconCheckStrokeDark,
+            cameraButtonBackground = CameraButtonBackgroundDark,
+            cameraBackButtonBackground = CameraBackButtonBackgroundDark,
+            cameraButtonShadow = CameraButtonShadowDark,
+            photoDemoQuestionCardBackground = PhotoDemoQuestionCardBackgroundDark,
+
+            photoDemoBgBlack = PhotoDemoBgBlackDark,
+            photoDemoPhotoGray = PhotoDemoPhotoGrayDark,
+            photoDemoTextDark = PhotoDemoTextDarkDark,
+            photoDemoTextSecondary = PhotoDemoTextSecondaryDark,
+            photoDemoCardBg = PhotoDemoCardBgDark,
+            photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselectedDark,
+            photoDemoGradientStart = PhotoDemoGradientStartDark,
+            photoDemoGradientEnd = PhotoDemoGradientEndDark,
         )
     } else {
         AppColors(
@@ -461,6 +480,8 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             backgroundGradientMain = BackgroundGradientMain,
             iconGradientStart = IconGradientStart,
             iconGradientEnd = IconGradientEnd,
+            iconGradientSecondaryStart = IconGradientSecondaryStart,
+            iconGradientSecondaryEnd = IconGradientSecondaryEnd,
             shadowColor = ShadowColor,
             bottomBarBorder = BottomBarBorder,
             textOnWhite = TextOnWhite,
@@ -476,6 +497,7 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             white = Color.White,
             cardSubtitleColor = Color(0xFF4A5565),
             textOnCard = Color(0xFF101828),
+            logoBackgroundColor = LogoBackgroundColor,
             buttonUnselectedBackground = ButtonUnselectedBackground,
             buttonUnselectedText = ButtonUnselectedText,
             deleteIconColor = DeleteIconColor,
@@ -484,67 +506,21 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             iconArrowStroke = IconArrowStroke,
             iconTrophyStroke = IconTrophyStroke,
             iconCheckStroke = IconCheckStroke,
+            cameraButtonBackground = CameraButtonBackground,
+            cameraBackButtonBackground = CameraBackButtonBackground,
+            cameraButtonShadow = CameraButtonShadow,
+            photoDemoQuestionCardBackground = PhotoDemoQuestionCardBackground,
+
+            photoDemoBgBlack = PhotoDemoBgBlack,
+            photoDemoPhotoGray = PhotoDemoPhotoGray,
+            photoDemoTextDark = PhotoDemoTextDark,
+            photoDemoTextSecondary = PhotoDemoTextSecondary,
+            photoDemoCardBg = PhotoDemoCardBg,
+            photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselected,
+            photoDemoGradientStart = PhotoDemoGradientStart,
+            photoDemoGradientEnd = PhotoDemoGradientEnd,
         )
     }
-fun AppTheme(content: @Composable () -> Unit) {
-    val colors = AppColors(
-        primary = Primary,
-        primaryVariant = PrimaryVariant,
-        backgroundLight = BackgroundLight,
-        cardBackground = CardBackground,
-        textPrimary = TextPrimary,
-        textSecondary = TextSecondary,
-        textHint = TextHint,
-        textLabel = TextLabel,
-        borderDefault = BorderDefault,
-        borderFocused = BorderFocused,
-        borderError = BorderError,
-        error = Error,
-        disabled = Disabled,
-        backgroundGradient = BackgroundGradient,
-        backgroundGradientMain = BackgroundGradientMain,
-        iconGradientStart = IconGradientStart,
-        iconGradientEnd = IconGradientEnd,
-        iconGradientSecondaryStart = IconGradientSecondaryStart,
-        iconGradientSecondaryEnd = IconGradientSecondaryEnd,
-        shadowColor = ShadowColor,
-        bottomBarBorder = BottomBarBorder,
-        textOnWhite = TextOnWhite,
-        successBackground = SuccessBackground,
-        errorBackground = ErrorBackground,
-        successBorder = SuccessBorder,
-        chartSuccessBorder = ChartSuccessBorder,
-        chartErrorBorder = ChartErrorBorder,
-        errorBorder = ErrorBorder,
-        explanationBackground = ExplanationBackground,
-        explanationText = ExplanationText,
-        progressBarTrack = ProgressBarTrack,
-        white = Color.White,
-        cardSubtitleColor = Color(0xFF4A5565),
-        textOnCard = Color(0xFF101828),
-        logoBackgroundColor = LogoBackgroundColor,
-        buttonUnselectedBackground = ButtonUnselectedBackground,
-        buttonUnselectedText = ButtonUnselectedText,
-        deleteIconColor = DeleteIconColor,
-        profileTextPrimary = ProfileTextPrimary,
-        iconBookStroke = IconBookStroke,
-        iconArrowStroke = IconArrowStroke,
-        iconTrophyStroke = IconTrophyStroke,
-        iconCheckStroke = IconCheckStroke,
-        cameraButtonBackground = CameraButtonBackground,
-        cameraBackButtonBackground = CameraBackButtonBackground,
-        cameraButtonShadow = CameraButtonShadow,
-        photoDemoQuestionCardBackground = PhotoDemoQuestionCardBackground,
-
-        photoDemoBgBlack = PhotoDemoBgBlack,
-        photoDemoPhotoGray = PhotoDemoPhotoGray,
-        photoDemoTextDark = PhotoDemoTextDark,
-        photoDemoTextSecondary = PhotoDemoTextSecondary,
-        photoDemoCardBg = PhotoDemoCardBg,
-        photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselected,
-        photoDemoGradientStart = PhotoDemoGradientStart,
-        photoDemoGradientEnd = PhotoDemoGradientEnd,
-    )
 
     val typography = AppTypography(
         title = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Medium, color = colors.textPrimary),
@@ -558,14 +534,13 @@ fun AppTheme(content: @Composable () -> Unit) {
         cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Color(0xFF4A5565)),
         sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
         emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
-        profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white
-        ),
+        profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white),
     )
 
     val shapes = AppShapes(
-        inputCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-        buttonCorner = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-        cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+        inputCorner = RoundedCornerShape(12.dp),
+        buttonCorner = RoundedCornerShape(12.dp),
+        cardCorner = RoundedCornerShape(24.dp),
         iconRound = CircleShape,
         buttonCornerSmall = RoundedCornerShape(14.dp),
 
@@ -575,92 +550,7 @@ fun AppTheme(content: @Composable () -> Unit) {
         photoImageShape = RoundedCornerShape(24.dp),
     )
 
-    val dimensions = AppDimensions(
-        spacingXxxs = 4.dp, spacingXs = 8.dp, spacingSm = 12.dp,
-        spacingMd = 16.dp, spacingLg = 24.dp, spacingXl = 32.dp,
-
-        buttonHeight = 50.dp, progressHeight = 4.dp, textFieldMinHeight = 300.dp,
-        questionButtonWidth = 64.dp, questionButtonHeight = 48.dp,
-
-        iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
-        iconSize = 80.dp, iconEmptySize = 96.dp,
-        iconSizeDefault = 40.dp, iconSizeLarge = 48.dp,
-
-        headerHeight = 96.dp, containerWidth = 345.dp,
-        containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
-        emptyStateHeight = 200.dp, shadowElevation = 8.dp,
-        cardPadding = 32.dp, paddingHorizontal = 24.dp,
-        logoContainerSize = 80.dp, logoSize = 60.dp,
-
-        borderThickness = 1.5.dp,
-
-        fontSizeHelper = 12.sp, fontSizeButton = 16.sp,
-        fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
-        fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
-        fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
-        fontSizeTopBarTitleTest = 18.sp,
-
-        buttonCornerRadius = 14.dp,
-        buttonLargeHeight = 80.dp,
-        buttonShadowElevation = 4.dp,
-        iconSizeResult = 20.dp,
-        fontSizeProfileSectionTitle = 18.sp,
-        fontSizeProfileButtonLabel = 14.sp,
-        cornerRadiusProfileButton = 14.dp,
-        borderWidthProfileButton = 1.dp,
-        iconSizeProfileButton = 16.dp,
-        spacingIconText = 8.dp,
-        profileHeaderHeight = 128.dp,
-        profileIconSize = 80.dp,
-        profileIconInnerSize = 40.dp,
-        statsCardHeightSmall = 92.dp,
-        statsCardHeightLarge = 112.dp,
-        themeButtonHeight = 72.dp,
-        themeButtonWidth = 90.dp,
-        langButtonHeight = 44.dp,
-        actionItemHeight = 56.dp,
-        profileHeaderBottomPadding = 24.dp,
-        profileCardTopPadding = 20.dp,
-        statsRowSpacing = 12.dp,
-        statsCardShadowElevation = 4.dp,
-        statsCardIconSpacing = 4.dp,
-        statsCardIconSize = 19.dp,
-        fontSizeStatsTitle = 14.sp,
-        fontSizeStatsValue = 24.sp,
-        fontSizeProfileHeaderTitle = 24.sp,
-        iconSizeThemeButton = 20.dp,
-        themeButtonShadowElevation = 4.dp,
-        spacingThemeButtonVerticalPadding = 8.dp,
-        spacingThemeButtonGap = 4.dp,
-        spacingCardHorizontalPadding = 8.dp,
-        dividerThickness = 1.dp,
-        cameraButtonSize = 68.dp,
-        cameraIconSize = 28.dp,
-        cameraBackButtonSize = 40.dp,
-        cameraBackIconSize = 24.dp,
-        cameraBottomPaddingStart = 121.5.dp,
-        cameraBottomPaddingEnd = 213.5.dp,
-        cameraTopPaddingStart = 16.dp,
-        cameraButtonsGap = 32.dp,
-
-        cameraOffsetX = (-40).dp,
-        cameraButtonSizeDelta = 12.dp,
-        cameraIconSizeDelta = 4.dp,
-
-        photoHeight = 340.dp,
-        fontSizePhotoTitle = 18.sp,
-        fontSizePhotoSubtitle = 14.sp,
-        fontSizeLabel = 14.sp,
-        fontSizeButtonText = 16.sp,
-        strokeWidthSmall = 2.dp,
-        photoCardCorner = 16.dp,
-        photoButtonCorner = 16.dp,
-        photoQuestionButtonCorner = 14.dp,
-        photoQuestionButtonHeight = 48.dp,
-        photoMainButtonHeight = 56.dp,
-        photoButtonsSpacing = 8.dp,
-        photoCardPadding = 24.dp,
-    )
+    val dimensions = LocalAppDimensions.current
 
     CompositionLocalProvider(
         LocalAppColors provides colors,
