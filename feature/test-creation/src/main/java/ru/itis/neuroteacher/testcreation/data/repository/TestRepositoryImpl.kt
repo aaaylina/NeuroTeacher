@@ -6,6 +6,7 @@ import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.data.mapper.TestMapper
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
+import ru.itis.neuroteacher.testcreation.domain.model.TestStatistics
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
 import javax.inject.Inject
 
@@ -56,5 +57,35 @@ internal class TestRepositoryImpl @Inject constructor(
         val testEntity = dao.getTestById(testId) ?: return emptyList()
         val resultEntities = testResultDao.getResultsByTestIdSortedByDateDesc(testId)
         return resultEntities.map { mapper.toDomainResult(testEntity, it) }
+    }
+
+    override suspend fun getTotalTestsCount(): Int {
+        return dao.getTotalTestsCount()
+    }
+
+    override suspend fun getTotalCompletedTestsCount(): Int {
+        return testResultDao.getTotalCompletedTestsCount()
+    }
+
+    override suspend fun getAverageScore(): Float? {
+        return testResultDao.getAverageScore()
+    }
+
+    override suspend fun getBestScore(): Float? {
+        return testResultDao.getBestScore()
+    }
+
+    override suspend fun getTestStatistics(): TestStatistics {
+        return TestStatistics(
+            totalTests = getTotalTestsCount(),
+            completedTests = getTotalCompletedTestsCount(),
+            averageScore = getAverageScore() ?: 0f,
+            bestScore = getBestScore() ?: 0f
+        )
+    }
+
+    override suspend fun clearAllData() {
+        dao.deleteAllTests()
+        testResultDao.deleteAllResults()
     }
 }

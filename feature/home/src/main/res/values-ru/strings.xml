@@ -1,0 +1,25 @@
+<resources>
+    <string name="home_welcome">Добро пожаловать!</string>
+
+    <!-- Camera Card -->
+    <string name="home_camera_title">Создать тест по конспекту</string>
+    <string name="home_camera_subtitle">Сфотографируйте конспект и получите готовый тест</string>
+
+    <!-- Text Card -->
+    <string name="home_text_title">Создать из текста</string>
+    <string name="home_text_subtitle">Вставьте или введите текст лекции</string>
+
+    <!-- Recent Tests Section -->
+    <string name="home_recent_title">Недавние тесты</string>
+    <string name="home_empty_state">У вас пока нет тестов</string>
+
+    <!-- Bottom Bar -->
+    <string name="bottom_home">Главная</string>
+    <string name="bottom_history">История</string>
+    <string name="bottom_profile">Профиль</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_camera_icon">Иконка камеры</string>
+    <string name="cd_text_icon">Иконка текста</string>
+    <string name="cd_book_icon">Иконка книги</string>
+</resources>

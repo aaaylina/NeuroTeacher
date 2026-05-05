@@ -14,8 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ru.itis.neuroteacher.common.model.LanguageOption
 import ru.itis.neuroteacher.feature.profile.R
-import ru.itis.neuroteacher.feature.profile.presentation.LanguageOption
 import ru.itis.neuroteacher.feature.profile.presentation.ProfileUiState
 import ru.itis.neuroteacher.ui.theme.AppTheme
 

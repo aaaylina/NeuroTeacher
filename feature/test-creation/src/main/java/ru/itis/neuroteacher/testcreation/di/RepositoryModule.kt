@@ -10,6 +10,8 @@ import ru.itis.neuroteacher.testcreation.data.repository.FirebaseQuizRepositoryI
 import ru.itis.neuroteacher.testcreation.data.repository.TestRepositoryImpl
 import ru.itis.neuroteacher.testcreation.domain.repository.FirebaseQuizRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
+import ru.itis.neuroteacher.testcreation.domain.usecase.GetTestStatisticsUseCase
+import ru.itis.neuroteacher.testcreation.domain.usecase.GetTestStatisticsUseCaseImpl
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +25,7 @@ internal abstract class RepositoryModule {
     abstract fun bindTestRepository(impl: TestRepositoryImpl): TestRepository
 
     @Binds
+    abstract fun bindGetTestStatisticsUseCase(impl: GetTestStatisticsUseCaseImpl): GetTestStatisticsUseCase
     @Singleton
     abstract fun bindFirebaseQuizRepository(
         impl: FirebaseQuizRepositoryImpl

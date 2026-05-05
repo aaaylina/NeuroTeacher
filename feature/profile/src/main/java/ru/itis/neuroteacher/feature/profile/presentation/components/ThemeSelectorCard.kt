@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ru.itis.neuroteacher.common.model.ThemeOption
 import ru.itis.neuroteacher.feature.profile.R
 import ru.itis.neuroteacher.feature.profile.presentation.ProfileUiState
-import ru.itis.neuroteacher.feature.profile.presentation.ThemeOption
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable

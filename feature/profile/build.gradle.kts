@@ -48,4 +48,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(project(":core:ui"))
+    implementation(project(":feature:test-creation"))
+    implementation(project(":feature:auth"))
+    implementation(project(":core:common"))
+    implementation(project(":core:settings"))
 }
