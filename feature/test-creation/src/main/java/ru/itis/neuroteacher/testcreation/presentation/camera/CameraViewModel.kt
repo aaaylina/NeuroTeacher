@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCase
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManager
 import javax.inject.Inject
 
 sealed class CameraNavigationEvent {
@@ -26,7 +26,7 @@ data class CameraUiState(
 
 @HiltViewModel
 class CameraViewModel @Inject constructor(
-    private val cameraUseCase: CameraUseCase
+    private val cameraManager: CameraManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CameraUiState())
@@ -37,21 +37,21 @@ class CameraViewModel @Inject constructor(
 
     fun startCamera(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            cameraUseCase.startCamera(lifecycleOwner).onFailure { e ->
+            cameraManager.startCamera().onFailure { e ->
                 handleError(e.message)
             }
         }
     }
 
     fun setupPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner) {
-        cameraUseCase.setupPreview(previewView, lifecycleOwner)
+        cameraManager.setupPreview(previewView, lifecycleOwner)
     }
 
     fun capturePhoto() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
 
-            cameraUseCase.capturePhotoAndRecognizeText().fold(
+            cameraManager.capturePhotoAndRecognizeText().fold(
                 onSuccess = { result ->
                     _uiState.update { it.copy(isLoading = false) }
                     _navigationEvents.update {
@@ -72,7 +72,7 @@ class CameraViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
 
-            cameraUseCase.processAndRecognizeImage(bitmap).fold(
+            cameraManager.processAndRecognizeImage(bitmap).fold(
                 onSuccess = { result ->
                     _uiState.update { it.copy(isLoading = false) }
                     _navigationEvents.update {
@@ -105,6 +105,6 @@ class CameraViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        cameraUseCase.releaseCamera()
+        cameraManager.releaseCamera()
     }
 }

@@ -1,7 +1,7 @@
 package ru.itis.neuroteacher.testcreation.navigation
 
 import androidx.navigation.NavHostController
-import ru.itis.neuroteacher.testcreation.navigation.model.PhotoDemoRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.PhotoPreviewRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestResultRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
 
@@ -28,7 +28,7 @@ class TestCreationRouterImpl(
 
     override fun navigateToPhotoDemo(imageUri: String, recognizedText: String) {
         navController.navigate(
-            PhotoDemoRoute(
+            PhotoPreviewRoute(
                 imageUri = imageUri,
                 recognizedText = recognizedText
             )

@@ -14,16 +14,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.domain.usecase.GenerateTestUseCase
-import ru.itis.neuroteacher.testcreation.navigation.model.PhotoDemoRoute
+import ru.itis.neuroteacher.testcreation.navigation.model.PhotoPreviewRoute
 import ru.itis.neuroteacher.testcreation.utils.constants.TestGenerationConstants
 import javax.inject.Inject
 
-sealed class PhotoDemoNavigationEvent {
-    data class NavigateToTest(val testId: String) : PhotoDemoNavigationEvent()
-    data object NavigateBackToCamera : PhotoDemoNavigationEvent()
+sealed class PhotoPreviewNavigationEvent {
+    data class NavigateToTest(val testId: String) : PhotoPreviewNavigationEvent()
+    data object NavigateBackToCamera : PhotoPreviewNavigationEvent()
 }
 
-data class PhotoDemoUiState(
+data class PhotoPreviewUiState(
     val imageUri: String = "",
     val recognizedText: String = "",
     val isGeneratingTest: Boolean = false,
@@ -32,22 +32,22 @@ data class PhotoDemoUiState(
 )
 
 @HiltViewModel
-class PhotoDemoViewModel @Inject constructor(
+class PhotoPreviewViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val generateTestUseCase: GenerateTestUseCase,
 ) : ViewModel() {
 
-    private val route: PhotoDemoRoute = savedStateHandle.toRoute()
+    private val route: PhotoPreviewRoute = savedStateHandle.toRoute()
 
     private val _uiState = MutableStateFlow(
-        PhotoDemoUiState(
+        PhotoPreviewUiState(
             imageUri = route.imageUri,
             recognizedText = route.recognizedText
         )
     )
-    val uiState: StateFlow<PhotoDemoUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<PhotoPreviewUiState> = _uiState.asStateFlow()
 
-    private val _navigationEvent = MutableSharedFlow<PhotoDemoNavigationEvent>()
+    private val _navigationEvent = MutableSharedFlow<PhotoPreviewNavigationEvent>()
     val navigationEvent = _navigationEvent.asSharedFlow()
 
     fun updateQuestionCount(count: Int) {
@@ -56,7 +56,7 @@ class PhotoDemoViewModel @Inject constructor(
 
     fun onRetakeClick() {
         viewModelScope.launch {
-            _navigationEvent.emit(PhotoDemoNavigationEvent.NavigateBackToCamera)
+            _navigationEvent.emit(PhotoPreviewNavigationEvent.NavigateBackToCamera)
         }
     }
 
@@ -78,7 +78,7 @@ class PhotoDemoViewModel @Inject constructor(
                 onSuccess = { test ->
                     val cacheId = TestCache.save(test)
                     _uiState.update { it.copy(isGeneratingTest = false) }
-                    _navigationEvent.emit(PhotoDemoNavigationEvent.NavigateToTest(cacheId))
+                    _navigationEvent.emit(PhotoPreviewNavigationEvent.NavigateToTest(cacheId))
                 },
                 onFailure = { error ->
                     _uiState.update {

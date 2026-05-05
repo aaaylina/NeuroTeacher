@@ -21,7 +21,7 @@ import ru.itis.neuroteacher.testcreation.navigation.TestTakingRouterImpl
 import ru.itis.neuroteacher.testcreation.navigation.cameraNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.model.TestCreationRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
-import ru.itis.neuroteacher.testcreation.navigation.photoDemoNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.photoPreviewNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.retryTestNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testResultNavGraph
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         authNavGraph(router = authRouter)
                         homeNavGraph(router = homeRouter)
                         cameraNavGraph(router = testRouter)
-                        photoDemoNavGraph(router = testRouter)
+                        photoPreviewNavGraph(router = testRouter)
                         navigation<TestCreationRoute>(startDestination = TextInputRoute) {
                             textInputNavGraph(router = testRouter)
                         }
