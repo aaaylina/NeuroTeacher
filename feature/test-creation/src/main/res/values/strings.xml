@@ -75,4 +75,19 @@
     <string name="camera_back_description">Назад</string>
     <string name="camera_gallery_description">Галерея</string>
     <string name="camera_capture_description">Сделать фото</string>
+
+    <!-- Photo Demo Screen -->
+    <string name="photo_demo_title">Предпросмотр</string>
+    <string name="photo_demo_captured_image">Сделанное фото</string>
+    <string name="photo_demo_no_image">Изображение не загружено</string>
+    <string name="photo_demo_recognized_text">Распознанный текст:</string>
+    <string name="photo_demo_no_text">Текст не распознан</string>
+    <string name="photo_demo_retake">Переснять</string>
+    <string name="photo_demo_continue">Продолжить</string>
+    <string name="photo_demo_generating">Генерация...</string>
+    <string name="photo_demo_subtitle">(Демонстрация)</string>
+
+    <string name="photo_demo_captured_photo_desc">Captured Photo</string>
+    <string name="photo_demo_retake_desc">Retake photo</string>
+    <string name="photo_demo_generate_desc">Generate test</string>
 </resources>

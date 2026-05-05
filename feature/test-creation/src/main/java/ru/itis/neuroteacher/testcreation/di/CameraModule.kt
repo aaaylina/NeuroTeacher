@@ -14,6 +14,8 @@ import ru.itis.neuroteacher.testcreation.domain.repository.CameraRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TextRecognitionRepository
 import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCaseImpl
+import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCase
+import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCaseImpl
 import javax.inject.Singleton
@@ -43,11 +45,17 @@ internal abstract class CameraModule {
         impl: RecognizeTextUseCaseImpl
     ): RecognizeTextUseCase
 
+    @Binds
+    abstract fun bindLoadBitmapUseCase(
+        impl: LoadBitmapUseCaseImpl
+    ): LoadBitmapUseCase
+
     companion object {
         @Provides
         fun provideTextRecognizer(): TextRecognizer {
             return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
         }
+
     }
 
 }

@@ -40,7 +40,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import ru.itis.neuroteacher.testcreation.R
-import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.navigation.TestCreationRouter
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
@@ -48,7 +47,6 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 @Composable
 internal fun CameraScreen(
     router: TestCreationRouter,
-    testCache: TestCache,
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()

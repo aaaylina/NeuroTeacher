@@ -51,3 +51,14 @@ val CameraButtonBackground = Color(0xFF1E2939)
 val CameraBackButtonBackground = Color(0xFF1E2939).copy(alpha = 0.8f)
 
 val CameraButtonShadow = Color(0x1A000000)
+
+val PhotoDemoQuestionCardBackground = Color(0x33FFFFFF)
+
+val PhotoDemoBgBlack = Color(0xFF000000)
+val PhotoDemoPhotoGray = Color(0xFFE5E7EB)
+val PhotoDemoTextDark = Color(0xFF364153)
+val PhotoDemoTextSecondary = Color(0xFF6A7282)
+val PhotoDemoCardBg = Color(0x1AFFFFFF)
+val PhotoDemoButtonBgUnselected = Color(0x33FFFFFF)
+val PhotoDemoGradientStart = Color(0xFF155DFC)
+val PhotoDemoGradientEnd = Color(0xFF9810FA)

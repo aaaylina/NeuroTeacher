@@ -62,6 +62,16 @@ data class AppColors(
     val cameraButtonBackground: Color,
     val cameraBackButtonBackground: Color,
     val cameraButtonShadow: Color,
+    val photoDemoQuestionCardBackground: Color,
+
+    val photoDemoBgBlack: Color,
+    val photoDemoPhotoGray: Color,
+    val photoDemoTextDark: Color,
+    val photoDemoTextSecondary: Color,
+    val photoDemoCardBg: Color,
+    val photoDemoButtonBgUnselected: Color,
+    val photoDemoGradientStart: Color,
+    val photoDemoGradientEnd: Color,
 )
 
 @Immutable
@@ -87,6 +97,11 @@ data class AppShapes(
     val cardCorner: RoundedCornerShape,
     val iconRound: RoundedCornerShape,
     val buttonCornerSmall: RoundedCornerShape,
+
+    val photoCardShape: RoundedCornerShape,
+    val photoButtonShape: RoundedCornerShape,
+    val photoQuestionButtonShape: RoundedCornerShape,
+    val photoImageShape: RoundedCornerShape,
 )
 
 @Immutable
@@ -181,6 +196,21 @@ data class AppDimensions(
     val cameraOffsetX: Dp,
     val cameraButtonSizeDelta: Dp,
     val cameraIconSizeDelta: Dp,
+
+    val photoHeight: Dp,
+    val fontSizePhotoTitle: TextUnit,
+    val fontSizePhotoSubtitle: TextUnit,
+    val fontSizeLabel: TextUnit,
+    val fontSizeButtonText: TextUnit,
+    val strokeWidthSmall: Dp,
+    val photoCardCorner: Dp,
+    val photoButtonCorner: Dp,
+    val photoQuestionButtonCorner: Dp,
+    val photoQuestionButtonHeight: Dp,
+    val photoMainButtonHeight: Dp,
+    val photoButtonsSpacing: Dp,
+    val photoCardPadding: Dp,
+
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -257,6 +287,20 @@ val LocalAppDimensions = staticCompositionLocalOf {
         cameraButtonSizeDelta = 12.dp,
         cameraIconSizeDelta = 4.dp,
 
+        photoHeight = 340.dp,
+        fontSizePhotoTitle = 18.sp,
+        fontSizePhotoSubtitle = 14.sp,
+        fontSizeLabel = 14.sp,
+        fontSizeButtonText = 16.sp,
+        strokeWidthSmall = 2.dp,
+        photoCardCorner = 16.dp,
+        photoButtonCorner = 16.dp,
+        photoQuestionButtonCorner = 14.dp,
+        photoQuestionButtonHeight = 48.dp,
+        photoMainButtonHeight = 56.dp,
+        photoButtonsSpacing = 8.dp,
+        photoCardPadding = 24.dp,
+
     )
 }
 
@@ -308,6 +352,16 @@ val LocalAppColors = staticCompositionLocalOf {
         cameraButtonBackground = Color.Unspecified,
         cameraBackButtonBackground = Color.Unspecified,
         cameraButtonShadow = Color.Unspecified,
+        photoDemoQuestionCardBackground = Color.Unspecified,
+
+        photoDemoBgBlack = Color.Unspecified,
+        photoDemoPhotoGray = Color.Unspecified,
+        photoDemoTextDark = Color.Unspecified,
+        photoDemoTextSecondary = Color.Unspecified,
+        photoDemoCardBg = Color.Unspecified,
+        photoDemoButtonBgUnselected = Color.Unspecified,
+        photoDemoGradientStart = Color.Unspecified,
+        photoDemoGradientEnd = Color.Unspecified,
     )
 }
 
@@ -335,6 +389,11 @@ val LocalAppShapes = staticCompositionLocalOf {
         cardCorner = RoundedCornerShape(24.dp),
         iconRound = CircleShape,
         buttonCornerSmall = RoundedCornerShape(14.dp),
+
+        photoCardShape = RoundedCornerShape(16.dp),
+        photoButtonShape = RoundedCornerShape(16.dp),
+        photoQuestionButtonShape = RoundedCornerShape(14.dp),
+        photoImageShape = RoundedCornerShape(24.dp),
     )
 }
 
@@ -387,6 +446,16 @@ fun AppTheme(content: @Composable () -> Unit) {
         cameraButtonBackground = CameraButtonBackground,
         cameraBackButtonBackground = CameraBackButtonBackground,
         cameraButtonShadow = CameraButtonShadow,
+        photoDemoQuestionCardBackground = PhotoDemoQuestionCardBackground,
+
+        photoDemoBgBlack = PhotoDemoBgBlack,
+        photoDemoPhotoGray = PhotoDemoPhotoGray,
+        photoDemoTextDark = PhotoDemoTextDark,
+        photoDemoTextSecondary = PhotoDemoTextSecondary,
+        photoDemoCardBg = PhotoDemoCardBg,
+        photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselected,
+        photoDemoGradientStart = PhotoDemoGradientStart,
+        photoDemoGradientEnd = PhotoDemoGradientEnd,
     )
 
     val typography = AppTypography(
@@ -411,6 +480,11 @@ fun AppTheme(content: @Composable () -> Unit) {
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
         iconRound = CircleShape,
         buttonCornerSmall = RoundedCornerShape(14.dp),
+
+        photoCardShape = RoundedCornerShape(16.dp),
+        photoButtonShape = RoundedCornerShape(16.dp),
+        photoQuestionButtonShape = RoundedCornerShape(14.dp),
+        photoImageShape = RoundedCornerShape(24.dp),
     )
 
     val dimensions = AppDimensions(
@@ -484,6 +558,20 @@ fun AppTheme(content: @Composable () -> Unit) {
         cameraOffsetX = (-40).dp,
         cameraButtonSizeDelta = 12.dp,
         cameraIconSizeDelta = 4.dp,
+
+        photoHeight = 340.dp,
+        fontSizePhotoTitle = 18.sp,
+        fontSizePhotoSubtitle = 14.sp,
+        fontSizeLabel = 14.sp,
+        fontSizeButtonText = 16.sp,
+        strokeWidthSmall = 2.dp,
+        photoCardCorner = 16.dp,
+        photoButtonCorner = 16.dp,
+        photoQuestionButtonCorner = 14.dp,
+        photoQuestionButtonHeight = 48.dp,
+        photoMainButtonHeight = 56.dp,
+        photoButtonsSpacing = 8.dp,
+        photoCardPadding = 24.dp,
     )
 
     CompositionLocalProvider(
