@@ -8,21 +8,35 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.itis.neuroteacher.testcreation.data.repository.CameraRepositoryImpl
 import ru.itis.neuroteacher.testcreation.data.repository.TestRecognitionRepositoryImpl
+import ru.itis.neuroteacher.testcreation.domain.repository.CameraRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TextRecognitionRepository
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCase
+import ru.itis.neuroteacher.testcreation.domain.usecase.CameraUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCaseImpl
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CameraModule {
+internal abstract class CameraModule {
+
+    @Binds
+    abstract fun bindCameraRepository(
+        impl: CameraRepositoryImpl
+    ): CameraRepository
 
     @Binds
     @Singleton
     abstract fun bindTextRecognitionRepository(
         impl: TestRecognitionRepositoryImpl
     ): TextRecognitionRepository
+
+    @Binds
+    abstract fun bindCameraUseCase(
+        impl: CameraUseCaseImpl
+    ): CameraUseCase
 
     @Binds
     internal abstract fun bindRecognizeTextUseCase(

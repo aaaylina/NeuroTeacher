@@ -61,8 +61,10 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.foundation)
     implementation(libs.androidx.navigation.compose)
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.coil.compose)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.core.ktx)
@@ -70,10 +72,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
+    implementation(libs.lifecycle.runtime.compose)
 
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
-    implementation(libs.mlkit.text.recognition)
+    implementation(libs.camera.view)
 
+    implementation(libs.mlkit.text.recognition)
     implementation(libs.kotlinx.coroutines.play.services)
+
+    implementation(libs.accompanist.permissions)
 }
