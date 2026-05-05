@@ -1,6 +1,5 @@
 package ru.itis.neuroteacher.testcreation.presentation.test
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,10 +15,8 @@ import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Question
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
+import ru.itis.neuroteacher.testcreation.domain.usecase.SyncTestToFirebaseUseCase
 import javax.inject.Inject
-
-private const val TEST_ID_KEY = "testId"
-private const val SAVED_TEST_ID_KEY = "savedTestId"
 
 data class TestUiState(
     val currentQuestionIndex: Int = 0,
@@ -38,8 +35,8 @@ sealed class TestEvent {
 
 @HiltViewModel
 internal class TestViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val repository: TestRepository
+    private val repository: TestRepository,
+    private val syncUseCase: SyncTestToFirebaseUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TestUiState())
@@ -50,31 +47,26 @@ internal class TestViewModel @Inject constructor(
 
     private var _questions: List<Question> = emptyList()
 
-    fun loadTestFromCache(cache: TestCache) {
-        val testId = savedStateHandle.get<String>(TEST_ID_KEY)
-        if (testId != null) {
-            val test = cache.get(testId)
-            if (test != null) {
-                saveTestToDatabase(test, testId, cache)
+    fun loadTestFromCache(testId: String) {
+        val test = TestCache.get(testId)
+        if (test != null) {
+            saveTestToDatabase(test, testId)
 
-                _uiState.update {
-                    it.copy(
-                        testTitle = test.title,
-                        questions = test.questions
-                    )
-                }
-                _questions = test.questions
-            } else {
-                _uiState.update { it.copy(error = "Тест не найден в кеше") }
+            _uiState.update {
+                it.copy(
+                    testTitle = test.title,
+                    questions = test.questions
+                )
             }
+            _questions = test.questions
         } else {
-            _uiState.update { it.copy(error = "testId не передан") }
+            _uiState.update { it.copy(error = "Тест не найден в кэше") }
         }
     }
 
     fun loadTestFromDatabase(testId: Long) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = null) }
             try {
                 val test = repository.getTestById(testId)
                 if (test != null) {
@@ -106,13 +98,12 @@ internal class TestViewModel @Inject constructor(
         }
     }
 
-    private fun saveTestToDatabase(test: Test, cacheId: String, cache: TestCache) {
+    private fun saveTestToDatabase(test: Test, cacheId: String) {
         viewModelScope.launch {
             try {
                 val id = repository.saveTest(test, SourceType.TEXT)
                 _uiState.update { it.copy(savedTestId = id) }
-                cache.clear(cacheId)
-                savedStateHandle.set(SAVED_TEST_ID_KEY, id)
+                TestCache.clear(cacheId)
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(error = "Ошибка сохранения теста: ${e.message}")
@@ -175,7 +166,6 @@ internal class TestViewModel @Inject constructor(
         viewModelScope.launch {
             val testIdToUse = _uiState.value.savedTestId
                 .takeIf { it != 0L }
-                ?: savedStateHandle.get<Long>(SAVED_TEST_ID_KEY)
                 ?: run {
                     _uiState.update { it.copy(error = "ID теста не найден") }
                     return@launch
@@ -192,6 +182,17 @@ internal class TestViewModel @Inject constructor(
                 },
                 answers = state.answers
             )
+
+            val test = Test(_uiState.value.testTitle, _questions)
+            syncUseCase.syncCompleteTest(
+                test = test,
+                resultId = resultId,
+                answers = state.answers,
+                correctCount = correctCount,
+                scorePercentage = (correctCount.toFloat() / _questions.size) * 100
+            ).onSuccess { firebaseId ->
+            }.onFailure { error ->
+            }
 
             _events.emit(TestEvent.NavigateToResults(testIdToUse, resultId))
         }

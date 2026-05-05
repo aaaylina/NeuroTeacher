@@ -27,10 +27,11 @@ import ru.itis.neuroteacher.home.navigation.homeNavGraph
 import ru.itis.neuroteacher.navigation.AuthRouterImpl
 import ru.itis.neuroteacher.navigation.HomeRouterImpl
 import ru.itis.neuroteacher.navigation.TestCreationRouterImpl
-import ru.itis.neuroteacher.testcreation.data.TestCache
 import ru.itis.neuroteacher.testcreation.navigation.TestTakingRouterImpl
+import ru.itis.neuroteacher.testcreation.navigation.cameraNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.model.TestCreationRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
+import ru.itis.neuroteacher.testcreation.navigation.photoPreviewNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.retryTestNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testResultNavGraph
@@ -75,18 +76,19 @@ class MainActivity : ComponentActivity() {
                     val homeRouter = remember(navController) { HomeRouterImpl(navController) }
                     val testRouter = remember(navController) { TestCreationRouterImpl(navController) }
                     val testTakingRouter = remember(navController) { TestTakingRouterImpl(navController) }
-                    val sharedCache = remember { TestCache() }
                     NavHost(
                         navController = navController,
                         startDestination = AuthRoute.Login
                     ) {
                         authNavGraph(router = authRouter)
                         homeNavGraph(router = homeRouter)
+                        cameraNavGraph(router = testRouter)
+                        photoPreviewNavGraph(router = testRouter)
                         navigation<TestCreationRoute>(startDestination = TextInputRoute) {
-                            textInputNavGraph(router = testRouter, testCache = sharedCache)
-                            testNavGraph(router = testRouter, testCache = sharedCache)
+                            textInputNavGraph(router = testRouter)
                         }
-                        retryTestNavGraph(router = testRouter, testCache = sharedCache)
+                        testNavGraph(router = testRouter)
+                        retryTestNavGraph(router = testRouter)
                         testResultNavGraph(router = testTakingRouter)
                     }
                 }

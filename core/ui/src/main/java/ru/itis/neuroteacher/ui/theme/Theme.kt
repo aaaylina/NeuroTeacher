@@ -33,6 +33,8 @@ data class AppColors(
     val backgroundGradientMain: List<Color>,
     val iconGradientStart: Color,
     val iconGradientEnd: Color,
+    val iconGradientSecondaryStart: Color,
+    val iconGradientSecondaryEnd: Color,
     val shadowColor: Color,
     val bottomBarBorder: Color,
     val textOnWhite: Color,
@@ -48,6 +50,7 @@ data class AppColors(
     val white: Color,
     val cardSubtitleColor: Color,
     val textOnCard: Color,
+    val logoBackgroundColor: Color,
     val buttonUnselectedBackground: Color,
     val buttonUnselectedText: Color,
     val deleteIconColor: Color,
@@ -56,6 +59,19 @@ data class AppColors(
     val iconArrowStroke: Color,
     val iconTrophyStroke: Color,
     val iconCheckStroke: Color,
+    val cameraButtonBackground: Color,
+    val cameraBackButtonBackground: Color,
+    val cameraButtonShadow: Color,
+    val photoDemoQuestionCardBackground: Color,
+
+    val photoDemoBgBlack: Color,
+    val photoDemoPhotoGray: Color,
+    val photoDemoTextDark: Color,
+    val photoDemoTextSecondary: Color,
+    val photoDemoCardBg: Color,
+    val photoDemoButtonBgUnselected: Color,
+    val photoDemoGradientStart: Color,
+    val photoDemoGradientEnd: Color,
 )
 
 @Immutable
@@ -81,6 +97,11 @@ data class AppShapes(
     val cardCorner: RoundedCornerShape,
     val iconRound: RoundedCornerShape,
     val buttonCornerSmall: RoundedCornerShape,
+
+    val photoCardShape: RoundedCornerShape,
+    val photoButtonShape: RoundedCornerShape,
+    val photoQuestionButtonShape: RoundedCornerShape,
+    val photoImageShape: RoundedCornerShape,
 )
 
 @Immutable
@@ -102,8 +123,8 @@ data class AppDimensions(
     val iconSizeMedium: Dp,
     val iconSize: Dp,
     val iconEmptySize: Dp,
-    val iconEmojiSize: TextUnit,
-    val iconEmojiSizeLarge: TextUnit,
+    val iconSizeDefault: Dp,
+    val iconSizeLarge: Dp,
 
     val headerHeight: Dp,
     val containerWidth: Dp,
@@ -161,7 +182,35 @@ data class AppDimensions(
     val spacingThemeButtonVerticalPadding: Dp,
     val spacingThemeButtonGap: Dp,
     val spacingCardHorizontalPadding: Dp,
-    val dividerThickness: Dp
+    val dividerThickness: Dp,
+
+    val cameraButtonSize: Dp,
+    val cameraIconSize: Dp,
+    val cameraBackButtonSize: Dp,
+    val cameraBackIconSize: Dp,
+    val cameraBottomPaddingStart: Dp,
+    val cameraBottomPaddingEnd: Dp,
+    val cameraTopPaddingStart: Dp,
+    val cameraButtonsGap: Dp,
+
+    val cameraOffsetX: Dp,
+    val cameraButtonSizeDelta: Dp,
+    val cameraIconSizeDelta: Dp,
+
+    val photoHeight: Dp,
+    val fontSizePhotoTitle: TextUnit,
+    val fontSizePhotoSubtitle: TextUnit,
+    val fontSizeLabel: TextUnit,
+    val fontSizeButtonText: TextUnit,
+    val strokeWidthSmall: Dp,
+    val photoCardCorner: Dp,
+    val photoButtonCorner: Dp,
+    val photoQuestionButtonCorner: Dp,
+    val photoQuestionButtonHeight: Dp,
+    val photoMainButtonHeight: Dp,
+    val photoButtonsSpacing: Dp,
+    val photoCardPadding: Dp,
+
 )
 
 val LocalAppDimensions = staticCompositionLocalOf {
@@ -174,7 +223,7 @@ val LocalAppDimensions = staticCompositionLocalOf {
 
         iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
         iconSize = 80.dp, iconEmptySize = 96.dp,
-        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+        iconSizeDefault = 40.dp, iconSizeLarge = 48.dp,
 
         headerHeight = 96.dp, containerWidth = 345.dp,
         containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
@@ -223,7 +272,35 @@ val LocalAppDimensions = staticCompositionLocalOf {
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
         spacingCardHorizontalPadding = 8.dp,
-        dividerThickness = 1.dp
+        dividerThickness = 1.dp,
+
+        cameraButtonSize = 68.dp,
+        cameraIconSize = 28.dp,
+        cameraBackButtonSize = 40.dp,
+        cameraBackIconSize = 24.dp,
+        cameraBottomPaddingStart = 121.5.dp,
+        cameraBottomPaddingEnd = 213.5.dp,
+        cameraTopPaddingStart = 16.dp,
+        cameraButtonsGap = 32.dp,
+
+        cameraOffsetX = (-40).dp,
+        cameraButtonSizeDelta = 12.dp,
+        cameraIconSizeDelta = 4.dp,
+
+        photoHeight = 340.dp,
+        fontSizePhotoTitle = 18.sp,
+        fontSizePhotoSubtitle = 14.sp,
+        fontSizeLabel = 14.sp,
+        fontSizeButtonText = 16.sp,
+        strokeWidthSmall = 2.dp,
+        photoCardCorner = 16.dp,
+        photoButtonCorner = 16.dp,
+        photoQuestionButtonCorner = 14.dp,
+        photoQuestionButtonHeight = 48.dp,
+        photoMainButtonHeight = 56.dp,
+        photoButtonsSpacing = 8.dp,
+        photoCardPadding = 24.dp,
+
     )
 }
 
@@ -246,6 +323,8 @@ val LocalAppColors = staticCompositionLocalOf {
         backgroundGradientMain = emptyList(),
         iconGradientStart = Color.Unspecified,
         iconGradientEnd = Color.Unspecified,
+        iconGradientSecondaryStart = Color.Unspecified,
+        iconGradientSecondaryEnd = Color.Unspecified,
         shadowColor = Color.Unspecified,
         bottomBarBorder = Color.Unspecified,
         textOnWhite = Color.Unspecified,
@@ -261,6 +340,7 @@ val LocalAppColors = staticCompositionLocalOf {
         white = Color.Unspecified,
         cardSubtitleColor = Color.Unspecified,
         textOnCard = Color.Unspecified,
+        logoBackgroundColor = Color.Unspecified,
         buttonUnselectedBackground = Color.Unspecified,
         buttonUnselectedText = Color.Unspecified,
         deleteIconColor = Color.Unspecified,
@@ -269,6 +349,19 @@ val LocalAppColors = staticCompositionLocalOf {
         iconArrowStroke = Color.Unspecified,
         iconTrophyStroke = Color.Unspecified,
         iconCheckStroke = Color.Unspecified,
+        cameraButtonBackground = Color.Unspecified,
+        cameraBackButtonBackground = Color.Unspecified,
+        cameraButtonShadow = Color.Unspecified,
+        photoDemoQuestionCardBackground = Color.Unspecified,
+
+        photoDemoBgBlack = Color.Unspecified,
+        photoDemoPhotoGray = Color.Unspecified,
+        photoDemoTextDark = Color.Unspecified,
+        photoDemoTextSecondary = Color.Unspecified,
+        photoDemoCardBg = Color.Unspecified,
+        photoDemoButtonBgUnselected = Color.Unspecified,
+        photoDemoGradientStart = Color.Unspecified,
+        photoDemoGradientEnd = Color.Unspecified,
     )
 }
 
@@ -296,6 +389,11 @@ val LocalAppShapes = staticCompositionLocalOf {
         cardCorner = RoundedCornerShape(24.dp),
         iconRound = CircleShape,
         buttonCornerSmall = RoundedCornerShape(14.dp),
+
+        photoCardShape = RoundedCornerShape(16.dp),
+        photoButtonShape = RoundedCornerShape(16.dp),
+        photoQuestionButtonShape = RoundedCornerShape(14.dp),
+        photoImageShape = RoundedCornerShape(24.dp),
     )
 }
 
@@ -388,6 +486,65 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
             iconCheckStroke = IconCheckStroke,
         )
     }
+fun AppTheme(content: @Composable () -> Unit) {
+    val colors = AppColors(
+        primary = Primary,
+        primaryVariant = PrimaryVariant,
+        backgroundLight = BackgroundLight,
+        cardBackground = CardBackground,
+        textPrimary = TextPrimary,
+        textSecondary = TextSecondary,
+        textHint = TextHint,
+        textLabel = TextLabel,
+        borderDefault = BorderDefault,
+        borderFocused = BorderFocused,
+        borderError = BorderError,
+        error = Error,
+        disabled = Disabled,
+        backgroundGradient = BackgroundGradient,
+        backgroundGradientMain = BackgroundGradientMain,
+        iconGradientStart = IconGradientStart,
+        iconGradientEnd = IconGradientEnd,
+        iconGradientSecondaryStart = IconGradientSecondaryStart,
+        iconGradientSecondaryEnd = IconGradientSecondaryEnd,
+        shadowColor = ShadowColor,
+        bottomBarBorder = BottomBarBorder,
+        textOnWhite = TextOnWhite,
+        successBackground = SuccessBackground,
+        errorBackground = ErrorBackground,
+        successBorder = SuccessBorder,
+        chartSuccessBorder = ChartSuccessBorder,
+        chartErrorBorder = ChartErrorBorder,
+        errorBorder = ErrorBorder,
+        explanationBackground = ExplanationBackground,
+        explanationText = ExplanationText,
+        progressBarTrack = ProgressBarTrack,
+        white = Color.White,
+        cardSubtitleColor = Color(0xFF4A5565),
+        textOnCard = Color(0xFF101828),
+        logoBackgroundColor = LogoBackgroundColor,
+        buttonUnselectedBackground = ButtonUnselectedBackground,
+        buttonUnselectedText = ButtonUnselectedText,
+        deleteIconColor = DeleteIconColor,
+        profileTextPrimary = ProfileTextPrimary,
+        iconBookStroke = IconBookStroke,
+        iconArrowStroke = IconArrowStroke,
+        iconTrophyStroke = IconTrophyStroke,
+        iconCheckStroke = IconCheckStroke,
+        cameraButtonBackground = CameraButtonBackground,
+        cameraBackButtonBackground = CameraBackButtonBackground,
+        cameraButtonShadow = CameraButtonShadow,
+        photoDemoQuestionCardBackground = PhotoDemoQuestionCardBackground,
+
+        photoDemoBgBlack = PhotoDemoBgBlack,
+        photoDemoPhotoGray = PhotoDemoPhotoGray,
+        photoDemoTextDark = PhotoDemoTextDark,
+        photoDemoTextSecondary = PhotoDemoTextSecondary,
+        photoDemoCardBg = PhotoDemoCardBg,
+        photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselected,
+        photoDemoGradientStart = PhotoDemoGradientStart,
+        photoDemoGradientEnd = PhotoDemoGradientEnd,
+    )
 
     val typography = AppTypography(
         title = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Medium, color = colors.textPrimary),
@@ -411,6 +568,11 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
         cardCorner = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
         iconRound = CircleShape,
         buttonCornerSmall = RoundedCornerShape(14.dp),
+
+        photoCardShape = RoundedCornerShape(16.dp),
+        photoButtonShape = RoundedCornerShape(16.dp),
+        photoQuestionButtonShape = RoundedCornerShape(14.dp),
+        photoImageShape = RoundedCornerShape(24.dp),
     )
 
     val dimensions = AppDimensions(
@@ -422,7 +584,7 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
 
         iconSizeSmall = 20.dp, iconSizeMedium = 24.dp,
         iconSize = 80.dp, iconEmptySize = 96.dp,
-        iconEmojiSize = 40.sp, iconEmojiSizeLarge = 48.sp,
+        iconSizeDefault = 40.dp, iconSizeLarge = 48.dp,
 
         headerHeight = 96.dp, containerWidth = 345.dp,
         containerCameraHeight = 236.dp, containerTextHeight = 216.dp,
@@ -471,7 +633,33 @@ fun AppTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
         spacingThemeButtonVerticalPadding = 8.dp,
         spacingThemeButtonGap = 4.dp,
         spacingCardHorizontalPadding = 8.dp,
-        dividerThickness = 1.dp
+        dividerThickness = 1.dp,
+        cameraButtonSize = 68.dp,
+        cameraIconSize = 28.dp,
+        cameraBackButtonSize = 40.dp,
+        cameraBackIconSize = 24.dp,
+        cameraBottomPaddingStart = 121.5.dp,
+        cameraBottomPaddingEnd = 213.5.dp,
+        cameraTopPaddingStart = 16.dp,
+        cameraButtonsGap = 32.dp,
+
+        cameraOffsetX = (-40).dp,
+        cameraButtonSizeDelta = 12.dp,
+        cameraIconSizeDelta = 4.dp,
+
+        photoHeight = 340.dp,
+        fontSizePhotoTitle = 18.sp,
+        fontSizePhotoSubtitle = 14.sp,
+        fontSizeLabel = 14.sp,
+        fontSizeButtonText = 16.sp,
+        strokeWidthSmall = 2.dp,
+        photoCardCorner = 16.dp,
+        photoButtonCorner = 16.dp,
+        photoQuestionButtonCorner = 14.dp,
+        photoQuestionButtonHeight = 48.dp,
+        photoMainButtonHeight = 56.dp,
+        photoButtonsSpacing = 8.dp,
+        photoCardPadding = 24.dp,
     )
 
     CompositionLocalProvider(

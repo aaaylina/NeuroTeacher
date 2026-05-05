@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <!-- Корпус камеры -->
+    <path
+        android:pathData="M6,10h4l2,-4h8l2,4h4v14H6z"
+        android:strokeWidth="2.5"
+        android:strokeColor="#1E2939"
+        android:fillColor="#00000000"
+        android:strokeLineJoin="round"/>
+    <!-- Объектив -->
+    <path
+        android:pathData="M16,20a4,4 0,1 0,0 -8,4,4 0,0 0,0 8z"
+        android:strokeWidth="2.5"
+        android:strokeColor="#1E2939"
+        android:fillColor="#00000000"/>
+    <!-- Вспышка (маленький кружок сверху) -->
+    <path
+        android:pathData="M22,12a1,1 0,1 0,0 -2,1,1 0,0 0,0 2z"
+        android:strokeWidth="2"
+        android:strokeColor="#1E2939"
+        android:fillColor="#00000000"/>
+</vector>

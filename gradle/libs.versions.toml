@@ -18,6 +18,7 @@ compose-foundation = "1.10.2"
 compose-ui = "1.10.2"
 compose-material3 = "1.4.0"
 compose-bom = "2024.12.01"
+lifecycle-runtime-compose = "2.10.0"
 
 # Navigation
 navigation-compose = "2.8.4"
@@ -58,6 +59,9 @@ coreKtxVersion = "1.18.0"
 camerax = "1.6.0"
 mlkit-text-recognition = "16.0.1"
 
+#Accompanist
+accompanist = "0.35.0-alpha"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,6 +78,7 @@ compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", ver
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
 
 # Retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -124,10 +129,15 @@ retrofit-converter-kotlinx-serialization = { group = "com.jakewharton.retrofit",
 # CameraX
 camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
 camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
 
 # ML Kit
 mlkit-text-recognition = { group = "com.google.mlkit", name = "text-recognition", version.ref = "mlkit-text-recognition" }
 kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines-play-services" }
+
+#Accompanist
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
