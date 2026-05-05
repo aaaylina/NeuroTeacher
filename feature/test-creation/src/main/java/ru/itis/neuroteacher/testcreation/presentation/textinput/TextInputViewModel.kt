@@ -7,14 +7,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import ru.itis.neuroteacher.testcreation.data.model.QuestionDataModel
-import ru.itis.neuroteacher.testcreation.data.model.TestDataModel
+import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.usecase.GenerateTestUseCase
 import javax.inject.Inject
 
 sealed class TextInputNavigationEvent {
-    data class NavigateToTest(val title: String, val questionsJson: String) : TextInputNavigationEvent()
+    data class NavigateToTest(val test: Test) : TextInputNavigationEvent()
     data object ShowError : TextInputNavigationEvent()
 }
 
@@ -26,7 +24,6 @@ data class TextInputUiState(
 @HiltViewModel
 class TextInputViewModel @Inject constructor(
     private val generateTestUseCase: GenerateTestUseCase,
-    private val json: Json
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TextInputUiState())
@@ -41,23 +38,8 @@ class TextInputViewModel @Inject constructor(
 
             generateTestUseCase(text, questionCount)
                 .onSuccess { test ->
-                    val dataModel = TestDataModel(
-                        title = test.title,
-                        questions = test.questions.map { q ->
-                            QuestionDataModel(
-                                text = q.text,
-                                options = q.options,
-                                correctIndex = q.correctIndex,
-                                explanation = q.explanation
-                            )
-                        }
-                    )
-                    val testJson = json.encodeToString(dataModel)
-
-                    _navigationEvents.value = TextInputNavigationEvent.NavigateToTest(
-                        title = test.title,
-                        questionsJson = testJson
-                    )
+                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    _navigationEvents.value = TextInputNavigationEvent.NavigateToTest(test)
                 }
                 .onFailure { error ->
                     _uiState.value = _uiState.value.copy(

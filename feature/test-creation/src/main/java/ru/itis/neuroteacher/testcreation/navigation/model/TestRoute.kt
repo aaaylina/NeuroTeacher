@@ -4,6 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TestRoute(
-    val testTitle: String,
-    val questionsJson: String
+    val testId: String
 )

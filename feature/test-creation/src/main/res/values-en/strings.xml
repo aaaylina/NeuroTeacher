@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common -->
+    <string name="common_back">Back</string>
+    <string name="common_next">Next</string>
+    <string name="common_finish">Finish</string>
+    <string name="common_paste">Paste</string>
+    <string name="common_generate">Generate</string>
+    <string name="common_generating">Generating…</string>
+    <string name="common_error_generation">Generation error</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back">Back</string>
+    <string name="cd_info">Information</string>
+    <string name="cd_correct">Correct answer</string>
+    <string name="cd_paste">Paste from clipboard</string>
+    <string name="cd_generate">Generate test</string>
+
+    <!-- Test Creation -->
+
+    <!-- TextInputScreen -->
+    <string name="text_input_title">Enter Text</string>
+    <string name="text_input_placeholder">Paste lecture text, notes, or textbook content…</string>
+    <string name="text_input_min_length_hint">Minimum recommended length — %d characters</string>
+    <string name="text_input_char_counter">%1$d / %2$d characters</string>
+    <string name="text_input_question_count_label">Number of questions</string>
+
+    <!-- TestTopBar -->
+    <string name="test_title_default">Test</string>
+
+    <!-- TestProgressBar -->
+    <string name="test_progress_label">Question %1$d of %2$d</string>
+
+    <!-- ExplanationCard -->
+    <string name="explanation_label">Explanation:</string>
+
+    <!-- TestScreen buttons -->
+    <string name="test_button_previous">Back</string>
+    <string name="test_button_next">Next</string>
+    <string name="test_button_finish">Finish</string>
+
+    <!-- Test Result Screen -->
+    <string name="test_result_title">Test Results</string>
+    <string name="test_result_review_title">Question Review</string>
+    <string name="test_result_percentage_format">%d%%</string>
+    <string name="test_result_good_message">Great job!</string>
+    <string name="test_result_can_be_better_message">Can be better</string>
+    <string name="test_result_correct_format">%1$d out of %2$d correct answers</string>
+
+    <string name="test_result_question_number">Question %d</string>
+    <string name="test_result_correct">Correct</string>
+    <string name="test_result_incorrect">Incorrect</string>
+    <string name="test_result_expand">Expand</string>
+    <string name="test_result_collapse">Collapse</string>
+    <string name="test_result_explanation_label">Explanation:</string>
+
+    <string name="test_result_retry_button">Retry Test</string>
+    <string name="test_result_home_button">Back to Home</string>
+
+    <!-- Content Descriptions for Result Screen -->
+    <string name="test_result_cd_back">Back</string>
+    <string name="test_result_cd_correct_icon">Correct answer icon</string>
+    <string name="test_result_cd_incorrect_icon">Incorrect answer icon</string>
+    <string name="test_result_cd_retry">Retry test</string>
+    <string name="test_result_cd_home">Go to home screen</string>
+    <string name="test_result_cd_circular_chart">Results circular chart</string>
+
+    <!-- TestResultViewModel Errors -->
+    <string name="test_result_load_error">Failed to load results</string>
+    <string name="test_result_not_found">Result not found</string>
+    <string name="test_result_unknown_error">Unknown error</string>
+</resources>

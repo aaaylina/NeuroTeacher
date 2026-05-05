@@ -1,69 +1,152 @@
 package ru.itis.neuroteacher
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.itis.neuroteacher.auth.navigation.authNavGraph
 import ru.itis.neuroteacher.auth.navigation.model.AuthRoute
+import ru.itis.neuroteacher.common.model.AppSettings
+import ru.itis.neuroteacher.common.model.LanguageOption
+import ru.itis.neuroteacher.common.model.ThemeOption
+import ru.itis.neuroteacher.core.settings.domain.repository.SettingsRepository
+import ru.itis.neuroteacher.feature.history.navigation.historyNavGraph
+import ru.itis.neuroteacher.feature.profile.navigation.profileNavGraph
 import ru.itis.neuroteacher.home.navigation.homeNavGraph
-import ru.itis.neuroteacher.home.navigation.model.HomeRoute
-import ru.itis.neuroteacher.testcreation.navigation.model.TestRoute
+import ru.itis.neuroteacher.navigation.AuthRouterImpl
+import ru.itis.neuroteacher.navigation.HistoryRouterImpl
+import ru.itis.neuroteacher.navigation.HomeRouterImpl
+import ru.itis.neuroteacher.navigation.ProfileRouterImpl
+import ru.itis.neuroteacher.navigation.TestCreationRouterImpl
+import ru.itis.neuroteacher.testcreation.navigation.TestTakingRouterImpl
+import ru.itis.neuroteacher.testcreation.navigation.cameraNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.model.TestCreationRoute
 import ru.itis.neuroteacher.testcreation.navigation.model.TextInputRoute
+import ru.itis.neuroteacher.testcreation.navigation.photoPreviewNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.retryTestNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.testNavGraph
+import ru.itis.neuroteacher.testcreation.navigation.testResultNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.textInputNavGraph
 import ru.itis.neuroteacher.ui.theme.AppTheme
+import ru.itis.neuroteacher.ui.theme.components.AppBottomBar
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme {
+
+            val settings by settingsRepository.getSettingsFlow()
+                .collectAsState(initial = AppSettings())
+
+            val appLanguage = settings.language
+
+            LaunchedEffect(appLanguage) {
+                val localeTag = when (appLanguage) {
+                    LanguageOption.RUSSIAN -> "ru"
+                    LanguageOption.ENGLISH -> "en"
+                }
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(localeTag)
+                )
+            }
+
+            val isDarkTheme = when (settings.theme) {
+                ThemeOption.LIGHT -> false
+                ThemeOption.DARK -> true
+                ThemeOption.SYSTEM -> {
+                    (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+                }
+            }
+
+
+            AppTheme(darkTheme = isDarkTheme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = AuthRoute.Login
-                    ) {
-                        authNavGraph(
-                            navController = navController,
-                            onNavigateToMain = {
-                                navController.navigate(HomeRoute) {
-                                    popUpTo(AuthRoute.Login) { inclusive = true }
+                    val authRouter = remember(navController) { AuthRouterImpl(navController) }
+                    val homeRouter = remember(navController) { HomeRouterImpl(navController) }
+                    val testRouter =
+                        remember(navController) { TestCreationRouterImpl(navController) }
+                    val testTakingRouter =
+                        remember(navController) { TestTakingRouterImpl(navController) }
+                    val historyRouter = remember(navController) { HistoryRouterImpl(navController) }
+                    val profileRouter = remember(navController) { ProfileRouterImpl(navController) }
+
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentRoute = navBackStackEntry?.destination?.route
+
+                    LaunchedEffect(currentRoute) {
+                        android.util.Log.d("BottomBarDebug", "Current route: $currentRoute")
+                    }
+                    val showBottomBar = currentRoute?.let { route ->
+                        route.endsWith(".HomeRoute") ||
+                                route.endsWith(".HistoryRoute") ||
+                                route.endsWith(".ProfileRoute")
+                    } ?: false
+                    val onBottomBarNavigate: (String) -> Unit = { targetRoute ->
+                        if (currentRoute != targetRoute) {
+                            navController.navigate(targetRoute) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        )
+                        }
+                    }
 
-                        homeNavGraph(
-                            onNavigateToCamera = { /* TODO */ },
-                            onNavigateToText = {
-                                navController.navigate(TextInputRoute)
-                            },
-                            onNavigateToHistory = { /* TODO */ },
-                            onNavigateToProfile = { /* TODO */ }
-                        )
-
-                        textInputNavGraph(
-                            onNavigateBack = { navController.popBackStack() },
-                            onNavigateToTest = { testTitle, questionsJson ->
-                                navController.navigate(TestRoute(testTitle, questionsJson))
+                    Scaffold(
+                        bottomBar = {
+                            if (showBottomBar) {
+                                AppBottomBar(
+                                    currentRoute = currentRoute ?: "",
+                                    onNavigate = onBottomBarNavigate
+                                )
                             }
-                        )
+                        },
+                        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+                    ) { padding ->
+                        NavHost(
+                            navController = navController,
+                            startDestination = AuthRoute.Login,
+                            modifier = Modifier.padding(padding)
 
-                        testNavGraph(
-                            onNavigateBack = { navController.popBackStack() },
-                            onTestCompleted = { resultJson ->
-                                // TODO: навигация на экран результатов
+                        ) {
+                            authNavGraph(router = authRouter)
+                            homeNavGraph(router = homeRouter)
+                            cameraNavGraph(router = testRouter)
+                            photoPreviewNavGraph(router = testRouter)
+                            navigation<TestCreationRoute>(startDestination = TextInputRoute) {
+                                textInputNavGraph(router = testRouter)
                             }
-                        )
+                            testNavGraph(router = testRouter)
+                            retryTestNavGraph(router = testRouter)
+                            testResultNavGraph(router = testTakingRouter)
+                            historyNavGraph(router = historyRouter)
+                            profileNavGraph(router = profileRouter)
+                        }
                     }
                 }
             }

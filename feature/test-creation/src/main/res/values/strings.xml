@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common -->
+    <string name="common_back">Назад</string>
+    <string name="common_next">Далее</string>
+    <string name="common_finish">Завершить</string>
+    <string name="common_paste">Вставить</string>
+    <string name="common_generate">Сгенерировать</string>
+    <string name="common_generating">Генерация…</string>
+    <string name="common_error_generation">Ошибка генерации</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back">Назад</string>
+    <string name="cd_info">Информация</string>
+    <string name="cd_correct">Правильный ответ</string>
+    <string name="cd_paste">Вставить из буфера</string>
+    <string name="cd_generate">Сгенерировать тест</string>
+
+    <!-- Test Creation -->
+
+    <!-- TextInputScreen -->
+    <string name="text_input_title">Ввод текста</string>
+    <string name="text_input_placeholder">Вставьте текст лекции, конспекта или учебника…</string>
+    <string name="text_input_min_length_hint">Минимальная рекомендуемая длина — %d символов</string>
+    <string name="text_input_char_counter">%1$d / %2$d символов</string>
+    <string name="text_input_question_count_label">Количество вопросов</string>
+
+    <!-- TestTopBar -->
+    <string name="test_title_default">Тест</string>
+
+    <!-- TestProgressBar -->
+    <string name="test_progress_label">Вопрос %1$d из %2$d</string>
+
+    <!-- ExplanationCard -->
+    <string name="explanation_label">Объяснение:</string>
+
+    <!-- TestScreen buttons -->
+    <string name="test_button_previous">Назад</string>
+    <string name="test_button_next">Далее</string>
+    <string name="test_button_finish">Завершить</string>
+
+    <string name="test_result_title">Результаты теста</string>
+    <string name="test_result_review_title">Разбор вопросов</string>
+    <string name="test_result_percentage_format">%d%%</string>
+    <string name="test_result_good_message">Хороший результат!</string>
+    <string name="test_result_can_be_better_message">Можно лучше</string>
+    <string name="test_result_correct_format">%d из %d правильных ответов</string>
+
+    <string name="test_result_question_number">Вопрос %d</string>
+    <string name="test_result_correct">Правильно</string>
+    <string name="test_result_incorrect">Неправильно</string>
+    <string name="test_result_expand">Развернуть</string>
+    <string name="test_result_collapse">Свернуть</string>
+    <string name="test_result_explanation_label">Объяснение:</string>
+
+    <string name="test_result_retry_button">Пройти заново</string>
+    <string name="test_result_home_button">На главную</string>
+
+    <string name="test_result_cd_back">Назад</string>
+    <string name="test_result_cd_correct_icon">Иконка правильного ответа</string>
+    <string name="test_result_cd_incorrect_icon">Иконка неправильного ответа</string>
+    <string name="test_result_cd_retry">Пройти тест заново</string>
+    <string name="test_result_cd_home">Перейти на главную</string>
+    <string name="test_result_cd_circular_chart">Круговая диаграмма результатов</string>
+
+    <!-- TestResultViewModel -->
+    <string name="test_result_load_error">Ошибка загрузки результатов</string>
+    <string name="test_result_not_found">Результат не найден</string>
+    <string name="test_result_unknown_error">Неизвестная ошибка</string>
+
+    <!-- Camera Screen -->
+    <string name="camera_permission_denied">Нет разрешения на использование камеры</string>
+    <string name="camera_error">Ошибка: %s</string>
+    <string name="camera_unknown_error">Неизвестная ошибка</string>
+    <string name="camera_back_description">Назад</string>
+    <string name="camera_gallery_description">Галерея</string>
+    <string name="camera_capture_description">Сделать фото</string>
+
+    <!-- Photo Demo Screen -->
+    <string name="photo_demo_title">Предпросмотр</string>
+    <string name="photo_demo_captured_image">Сделанное фото</string>
+    <string name="photo_demo_no_image">Изображение не загружено</string>
+    <string name="photo_demo_recognized_text">Распознанный текст:</string>
+    <string name="photo_demo_no_text">Текст не распознан</string>
+    <string name="photo_demo_retake">Переснять</string>
+    <string name="photo_demo_continue">Продолжить</string>
+    <string name="photo_demo_generating">Генерация...</string>
+    <string name="photo_demo_subtitle">(Демонстрация)</string>
+
+    <string name="photo_demo_captured_photo_desc">Captured Photo</string>
+    <string name="photo_demo_retake_desc">Retake photo</string>
+    <string name="photo_demo_generate_desc">Generate test</string>
+</resources>

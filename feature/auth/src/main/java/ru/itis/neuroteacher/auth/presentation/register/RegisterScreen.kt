@@ -32,7 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.itis.neuroteacher.auth.R
+import ru.itis.neuroteacher.auth.navigation.AuthRouter
 import ru.itis.neuroteacher.auth.presentation.components.AuthButton
 import ru.itis.neuroteacher.auth.presentation.components.AuthTextField
 import ru.itis.neuroteacher.auth.presentation.components.AuthToolbar
@@ -48,8 +49,7 @@ import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
 fun RegisterScreen(
-    onNavigateToLogin: () -> Unit,
-    onRegisterSuccess: () -> Unit,
+    router: AuthRouter,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -62,117 +62,117 @@ fun RegisterScreen(
         }
     }
 
-    AppTheme {
-        Box(
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = AppTheme.colors.backgroundGradient
+                )
+            )
+            .padding(AppTheme.dimensions.spacingLg),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = AppTheme.colors.backgroundGradient
-                    )
-                )
-                .padding(dimensionResource(id = R.dimen.spacing_lg)),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .clip(AppTheme.shapes.cardCorner)
+                .background(AppTheme.colors.cardBackground)
+                .padding(AppTheme.dimensions.cardPadding)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(AppTheme.shapes.cardCorner)
-                    .background(AppTheme.colors.cardBackground)
-                    .padding(dimensionResource(id = R.dimen.card_padding))
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .size(AppTheme.dimensions.logoContainerSize)
+                    .clip(AppTheme.shapes.iconRound)
+                    .background(AppTheme.colors.logoBackgroundColor),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.logo_container_size))
-                        .clip(AppTheme.shapes.inputCorner)
-                        .background(AppTheme.colors.backgroundLight),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.logotype2),
-                        contentDescription = stringResource(id = R.string.logo_description),
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(dimensionResource(id = R.dimen.logo_size))
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
-
-                Text(
-                    text = stringResource(id = R.string.register_title),
-                    style = AppTheme.typography.title
-                )
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_sm)))
-
-                Text(
-                    text = stringResource(id = R.string.register_subtitle),
-                    style = AppTheme.typography.subtitle
-                )
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_xl)))
-
-                AuthTextField(
-                    value = uiState.email,
-                    onValueChange = viewModel::onEmailChange,
-                    label = stringResource(id = R.string.register_email_label),
-                    placeholder = stringResource(id = R.string.register_email_placeholder),
-                    leadingIcon = Icons.Default.Email,
-                    isError = uiState.errorMessage?.contains("email", ignoreCase = true) == true
-                )
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
-
-                AuthTextField(
-                    value = uiState.password,
-                    onValueChange = viewModel::onPasswordChange,
-                    label = stringResource(id = R.string.register_password_label),
-                    placeholder = stringResource(id = R.string.register_password_placeholder),
-                    leadingIcon = Icons.Default.Lock,
-                    trailingIcon = if (uiState.passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    onTrailingIconClick = viewModel::onPasswordVisibilityToggle,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
-                )
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
-
-                AuthTextField(
-                    value = uiState.confirmPassword,
-                    onValueChange = viewModel::onConfirmPasswordChange,
-                    label = stringResource(id = R.string.register_confirm_password_label),
-                    placeholder = stringResource(id = R.string.register_confirm_password_placeholder),
-                    leadingIcon = Icons.Default.Lock,
-                    trailingIcon = if (uiState.confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    onTrailingIconClick = viewModel::onConfirmPasswordVisibilityToggle,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    visualTransformation = if (uiState.confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
-                )
-
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_xl)))
-
-                AuthButton(
-                    text = stringResource(id = R.string.register_button),
-                    onClick = { viewModel.onRegisterClick(onRegisterSuccess) },
-                    enabled = uiState.email.isNotBlank() &&
-                            uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH &&
-                            uiState.password == uiState.confirmPassword,
-                    isLoading = uiState.isLoading
-                )
-
-                AuthToolbar(
-                    primaryText = stringResource(id = R.string.register_have_account),
-                    secondaryText = stringResource(id = R.string.register_login_link),
-                    onSecondaryClick = onNavigateToLogin
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logo_icon),
+                    contentDescription = stringResource(id = R.string.logo_description),
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                 )
             }
 
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter)
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+
+            Text(
+                text = stringResource(id = R.string.register_title),
+                style = AppTheme.typography.title
+            )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
+
+            Text(
+                text = stringResource(id = R.string.register_subtitle),
+                style = AppTheme.typography.subtitle
+            )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
+
+            AuthTextField(
+                value = uiState.email,
+                onValueChange = viewModel::onEmailChange,
+                label = stringResource(id = R.string.register_email_label),
+                placeholder = stringResource(id = R.string.register_email_placeholder),
+                leadingIcon = Icons.Default.Email,
+                isError = uiState.errorMessage?.contains("email", ignoreCase = true) == true
+            )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
+
+            AuthTextField(
+                value = uiState.password,
+                onValueChange = viewModel::onPasswordChange,
+                label = stringResource(id = R.string.register_password_label),
+                placeholder = stringResource(id = R.string.register_password_placeholder),
+                leadingIcon = Icons.Default.Lock,
+                trailingIcon = if (uiState.passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                onTrailingIconClick = viewModel::onPasswordVisibilityToggle,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+            )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
+
+            AuthTextField(
+                value = uiState.confirmPassword,
+                onValueChange = viewModel::onConfirmPasswordChange,
+                label = stringResource(id = R.string.register_confirm_password_label),
+                placeholder = stringResource(id = R.string.register_confirm_password_placeholder),
+                leadingIcon = Icons.Default.Lock,
+                trailingIcon = if (uiState.confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                onTrailingIconClick = viewModel::onConfirmPasswordVisibilityToggle,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (uiState.confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation()
+            )
+
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
+
+            AuthButton(
+                text = stringResource(id = R.string.register_button),
+                onClick = { viewModel.onRegisterClick { router.navigateToMain() } },
+                enabled = uiState.email.isNotBlank() &&
+                        uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH &&
+                        uiState.password == uiState.confirmPassword,
+                isLoading = uiState.isLoading
+            )
+
+            AuthToolbar(
+                primaryText = stringResource(id = R.string.register_have_account),
+                secondaryText = stringResource(id = R.string.register_login_link),
+                onSecondaryClick = { router.navigateToLogin() }
             )
         }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
+
 }

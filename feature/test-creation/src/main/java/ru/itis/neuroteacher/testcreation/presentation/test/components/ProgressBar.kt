@@ -7,42 +7,45 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import ru.itis.neuroteacher.testcreation.R
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
-fun TestProgressBar(
+internal fun TestProgressBar(
     currentQuestion: Int,
     totalQuestions: Int
 ) {
-    val progress = currentQuestion.toFloat() / totalQuestions.toFloat()
-    val colors = AppTheme.colors
+    val progress = remember(currentQuestion, totalQuestions) {
+        currentQuestion.toFloat() / totalQuestions.toFloat()
+    }
 
     Text(
-        text = "Вопрос $currentQuestion из $totalQuestions",
-        style = AppTheme.typography.subtitle.copy(fontSize = 14.sp),
-        color = Color.Gray,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        text = stringResource(R.string.test_progress_label, currentQuestion, totalQuestions),
+        style = AppTheme.typography.subtitle.copy(
+            fontSize = AppTheme.dimensions.fontSizeHelper
+        ),
+        color = AppTheme.colors.textSecondary,
+        modifier = Modifier.padding(horizontal = AppTheme.dimensions.spacingLg)
     )
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .height(4.dp)
-            .background(Color(0xFFE5E7EB))
+            .padding(horizontal = AppTheme.dimensions.spacingLg)
+            .height(AppTheme.dimensions.progressHeight)
+            .background(AppTheme.colors.progressBarTrack)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(progress)
-                .height(4.dp)
+                .height(AppTheme.dimensions.progressHeight)
                 .background(
                     brush = Brush.horizontalGradient(
-                        colors = listOf(colors.primary, colors.primaryVariant)
+                        colors = AppTheme.colors.backgroundGradient
                     )
                 )
         )

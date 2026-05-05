@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_home">Home</string>
+    <string name="bottom_history">History</string>
+    <string name="bottom_profile">Profile</string>
+</resources>

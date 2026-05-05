@@ -14,35 +14,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import ru.itis.neuroteacher.home.navigation.HomeRouter
 import ru.itis.neuroteacher.ui.theme.AppTheme
+
 
 
 @Composable
 fun HomeScreen(
-    onCameraClick: () -> Unit,
-    onTextClick: () -> Unit,
-    onHistoryClick: () -> Unit,
-    onProfileClick: () -> Unit,
+    router: HomeRouter
 ) {
-    val colors = AppTheme.colors
-    val typography = AppTheme.typography
-    val shapes = AppTheme.shapes
-
-    val mainGradient = Brush.linearGradient(
-        colors = colors.backgroundGradientMain,
-        start = androidx.compose.ui.geometry.Offset(0f, 0f),
-        end = androidx.compose.ui.geometry.Offset(1000f, 1000f)
-    )
     Scaffold(
         containerColor = Color.Transparent
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(mainGradient)
+                .background(
+                    Brush.linearGradient(
+                        colors = AppTheme.colors.backgroundGradientMain,
+                        start = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        end = androidx.compose.ui.geometry.Offset(1000f, 1000f)
+                    )
+                )
         ) {
             Column(
                 modifier = Modifier
@@ -54,149 +49,158 @@ fun HomeScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(dimensionResource(id = R.dimen.header_height))
+                        .height(AppTheme.dimensions.headerHeight)
                         .padding(
-                            horizontal = dimensionResource(id = R.dimen.padding_horizontal),
-                            vertical = dimensionResource(id = R.dimen.padding_horizontal)
+                            horizontal = AppTheme.dimensions.paddingHorizontal,
+                            vertical = AppTheme.dimensions.paddingHorizontal
                         ),
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_welcome),
-                        style = typography.welcomeText
+                        style = AppTheme.typography.welcomeText
                     )
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
-
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
                 Box(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .height(dimensionResource(id = R.dimen.container_camera_height))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .height(AppTheme.dimensions.containerCameraHeight)
                         .shadow(
-                            elevation = dimensionResource(id = R.dimen.shadow_elevation),
-                            shape = shapes.cardCorner,
-                            ambientColor = colors.shadowColor,
-                            spotColor = colors.shadowColor
+                            elevation = AppTheme.dimensions.shadowElevation,
+                            shape = AppTheme.shapes.cardCorner,
+                            ambientColor = AppTheme.colors.shadowColor,
+                            spotColor = AppTheme.colors.shadowColor
                         )
-                        .clip(shapes.cardCorner)
-                        .background(colors.cardBackground)
-                        .clickable(onClick = onCameraClick),
+                        .clip(AppTheme.shapes.cardCorner)
+                        .background(AppTheme.colors.cardBackground)
+                        .clickable { router.navigateToCamera() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_card))
+                        modifier = Modifier.padding(AppTheme.dimensions.cardPadding)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(dimensionResource(id = R.dimen.icon_size))
-                                .clip(shapes.iconRound)
+                                .size(AppTheme.dimensions.iconSize)
+                                .clip(AppTheme.shapes.iconRound)
                                 .background(
                                     brush = Brush.linearGradient(
-                                        colors = listOf(colors.iconGradientStart, colors.iconGradientEnd)
+                                        colors = listOf(AppTheme.colors.iconGradientStart, AppTheme.colors.iconGradientEnd)
                                     )
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "📷", //пока так сделала хардкодом эмодзи, потом заменю их на иконки
-                                fontSize = dimensionResource(id = R.dimen.icon_emoji_size).value.sp
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_camera_icon),
+                                contentDescription = stringResource(id = R.string.cd_camera_icon),
+                                tint = AppTheme.colors.white,
+                                modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                             )
                         }
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                         Text(
                             text = stringResource(id = R.string.home_camera_title),
-                            style = typography.cardTitle
+                            style = AppTheme.typography.cardTitle
                         )
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_xs)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_camera_subtitle),
-                            style = typography.cardSubtitle,
-                            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                            style = AppTheme.typography.cardSubtitle,
+                            modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_sm)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingSm))
 
                 Box(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .height(dimensionResource(id = R.dimen.container_text_height))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .height(AppTheme.dimensions.containerTextHeight)
                         .shadow(
-                            elevation = dimensionResource(id = R.dimen.shadow_elevation),
-                            shape = shapes.cardCorner,
-                            ambientColor = colors.shadowColor,
-                            spotColor = colors.shadowColor
+                            elevation = AppTheme.dimensions.shadowElevation,
+                            shape = AppTheme.shapes.cardCorner,
+                            ambientColor = AppTheme.colors.shadowColor,
+                            spotColor = AppTheme.colors.shadowColor
                         )
-                        .clip(shapes.cardCorner)
-                        .background(colors.cardBackground)
-                        .clickable(onClick = onTextClick),
+                        .clip(AppTheme.shapes.cardCorner)
+                        .background(AppTheme.colors.cardBackground)
+                        .clickable { router.navigateToText() },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_card))
+                        modifier = Modifier.padding(AppTheme.dimensions.cardPadding)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(dimensionResource(id = R.dimen.icon_size))
-                                .clip(shapes.iconRound)
-                                .background(colors.backgroundLight),
+                                .size(AppTheme.dimensions.iconSize)
+                                .clip(AppTheme.shapes.iconRound)
+                                .background(
+                                    brush = Brush.linearGradient(
+                                        colors = listOf(
+                                            AppTheme.colors.iconGradientSecondaryStart,
+                                            AppTheme.colors.iconGradientSecondaryEnd
+                                        )
+                                    )
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "📝", // тут аналогично
-                                fontSize = dimensionResource(id = R.dimen.icon_emoji_size).value.sp
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_document_icon),
+                                contentDescription = stringResource(id = R.string.cd_text_icon),
+                                tint = AppTheme.colors.white,
+                                modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
                             )
                         }
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                         Text(
                             text = stringResource(id = R.string.home_text_title),
-                            style = typography.cardTitle
+                            style = AppTheme.typography.cardTitle
                         )
 
-                        Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_xs)))
+                        Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
 
                         Text(
                             text = stringResource(id = R.string.home_text_subtitle),
-                            style = typography.cardSubtitle,
-                            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                            style = AppTheme.typography.cardSubtitle,
+                            modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                         )
                     }
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
 
                 Column(
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.container_width))
-                        .padding(horizontal = dimensionResource(id = R.dimen.padding_horizontal))
+                        .width(AppTheme.dimensions.containerWidth)
+                        .padding(horizontal = AppTheme.dimensions.paddingHorizontal)
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_recent_title),
-                        style = typography.sectionTitle
+                        style = AppTheme.typography.sectionTitle
                     )
 
-                    Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
-
+                    Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(dimensionResource(id = R.dimen.empty_state_height))
-                            .clip(shapes.cardCorner)
-                            .background(colors.cardBackground),
+                            .height(AppTheme.dimensions.emptyStateHeight)
+                            .clip(AppTheme.shapes.cardCorner)
+                            .background(AppTheme.colors.cardBackground),
                         contentAlignment = Alignment.Center
                     ) {
                         Column(
@@ -204,29 +208,31 @@ fun HomeScreen(
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(dimensionResource(id = R.dimen.icon_empty_size))
-                                    .clip(shapes.iconRound)
-                                    .background(colors.backgroundLight),
+                                    .size(AppTheme.dimensions.iconEmptySize)
+                                    .clip(AppTheme.shapes.iconRound)
+                                    .background(AppTheme.colors.backgroundLight),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = "📚", // тут аналогично
-                                    fontSize = dimensionResource(id = R.dimen.icon_emoji_size_large).value.sp
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_book_icon),
+                                    contentDescription = stringResource(id = R.string.cd_book_icon),
+                                    tint = AppTheme.colors.textSecondary,
+                                    modifier = Modifier.size(AppTheme.dimensions.iconSizeLarge)
                                 )
                             }
 
-                            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_md)))
+                            Spacer(Modifier.height(AppTheme.dimensions.spacingMd))
 
                             Text(
                                 text = stringResource(id = R.string.home_empty_state),
-                                style = typography.emptyStateText
+                                style = AppTheme.typography.emptyStateText
                             )
                         }
                     }
 
                 }
 
-                Spacer(Modifier.height(dimensionResource(id = R.dimen.spacing_lg)))
+                Spacer(Modifier.height(AppTheme.dimensions.spacingLg))
             }
         }
     }

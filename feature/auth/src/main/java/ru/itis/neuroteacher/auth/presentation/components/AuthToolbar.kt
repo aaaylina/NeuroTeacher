@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
 @Composable
@@ -23,8 +22,8 @@ fun AuthToolbar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+            .padding(top = AppTheme.dimensions.spacingMd),
+        horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingXs),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
