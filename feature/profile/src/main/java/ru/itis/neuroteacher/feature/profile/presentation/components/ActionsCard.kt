@@ -8,6 +8,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +27,9 @@ fun ActionsCard(
     onClearData: () -> Unit,
     onLogout: () -> Unit
 ) {
+    var showClearDialog by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
+
     Card(
         colors = CardDefaults.cardColors(containerColor = AppTheme.colors.cardBackground),
         shape = AppTheme.shapes.cardCorner,
@@ -34,16 +41,67 @@ fun ActionsCard(
                 icon = Icons.Default.Delete,
                 iconColor = colors.deleteIconColor,
                 divider = true,
-                onClick = onClearData
+                onClick = {showClearDialog = true}
             )
             ActionItem(
                 text = stringResource(R.string.profile_logout),
                 icon = Icons.AutoMirrored.Filled.Logout,
                 iconColor = AppTheme.colors.textOnCard,
                 divider = false,
-                onClick = onLogout
+                onClick = {showLogoutDialog = true}
             )
         }
+    }
+    if (showClearDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearDialog = false },
+            title = { Text(stringResource(R.string.profile_clear_data_confirm_title)) },
+            text = { Text(stringResource(R.string.profile_clear_data_confirm_text)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showClearDialog = false
+                        onClearData()
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = AppTheme.colors.error)
+                ) {
+                    Text(stringResource(R.string.profile_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearDialog = false }) {
+                    Text(stringResource(R.string.profile_cancel))
+                }
+            },
+            containerColor = AppTheme.colors.cardBackground,
+            titleContentColor = AppTheme.colors.textOnCard,
+            textContentColor = AppTheme.colors.textSecondary
+        )
+    }
+    if (showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            title = { Text(stringResource(R.string.profile_logout_confirm_title)) },
+            text = { Text(stringResource(R.string.profile_logout_confirm_text)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showLogoutDialog = false
+                        onLogout()
+                    }
+                ) {
+                    Text(stringResource(R.string.profile_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showLogoutDialog = false }) {
+                    Text(stringResource(R.string.profile_cancel))
+                }
+            },
+            containerColor = AppTheme.colors.cardBackground,
+            titleContentColor = AppTheme.colors.textOnCard,
+            textContentColor = AppTheme.colors.textSecondary
+        )
     }
 }
 

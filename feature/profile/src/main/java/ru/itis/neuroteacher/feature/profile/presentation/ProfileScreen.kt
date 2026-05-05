@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
@@ -18,6 +19,19 @@ fun ProfileScreen(
     onNavigateToLogin: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            viewModel.clearError()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.refreshStatistics()
+    }
 
     Box(
         modifier = Modifier
@@ -55,9 +69,13 @@ fun ProfileScreen(
             )
             Spacer(modifier = Modifier.height(AppTheme.dimensions.statsRowSpacing))
             ActionsCard(
-                onClearData = viewModel::onClearData,
-                onLogout = viewModel::onLogout
+                onClearData = { viewModel.onClearData(onSuccess = {}) },
+                onLogout = { viewModel.onLogout(onSuccess = onNavigateToLogin) }
             )
         }
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }

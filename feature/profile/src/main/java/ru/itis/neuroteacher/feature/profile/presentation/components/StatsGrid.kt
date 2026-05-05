@@ -57,7 +57,7 @@ fun StatsGrid(uiState: ProfileUiState) {
             )
             StatCard(
                 title = stringResource(R.string.profile_completed),
-                value = "10",
+                value = uiState.completedTests.toString(),
                 icon = Icons.Default.CheckCircle,
                 iconColor = AppTheme.colors.iconCheckStroke,
                 height = AppTheme.dimensions.statsCardHeightLarge,

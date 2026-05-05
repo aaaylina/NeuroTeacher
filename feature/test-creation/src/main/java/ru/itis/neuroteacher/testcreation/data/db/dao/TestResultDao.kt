@@ -38,4 +38,7 @@ interface TestResultDao {
 
     @Query("SELECT * FROM test_results WHERE testId = :testId ORDER BY dateCompleted DESC")
     fun getResultsByTestIdFlowSortedByDateDesc(testId: Long): Flow<List<TestResultEntity>>
+
+    @Query("DELETE FROM test_results")
+    suspend fun deleteAllResults()
 }

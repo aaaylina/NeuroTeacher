@@ -42,9 +42,12 @@ dependencies {
     
     implementation(project(":feature:auth"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:profile"))
     implementation(project(":feature:test-creation"))
     implementation(project(":feature:test-taking"))
     implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":core:settings"))
     
     
     implementation(libs.firebase.analytics)

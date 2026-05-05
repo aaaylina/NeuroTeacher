@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_welcome">Welcome!</string>
+
+    <!-- Camera Card -->
+    <string name="home_camera_title">Create Test from Notes</string>
+    <string name="home_camera_subtitle">Take a photo of your notes and get a ready-made test</string>
+
+    <!-- Text Card -->
+    <string name="home_text_title">Create from Text</string>
+    <string name="home_text_subtitle">Paste or enter lecture text</string>
+
+    <!-- Recent Tests Section -->
+    <string name="home_recent_title">Recent Tests</string>
+    <string name="home_empty_state">You don\'t have any tests yet</string>
+
+    <!-- Bottom Bar -->
+    <string name="bottom_home">Home</string>
+    <string name="bottom_history">History</string>
+    <string name="bottom_profile">Profile</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_camera_icon">Camera icon</string>
+    <string name="cd_text_icon">Text icon</string>
+    <string name="cd_book_icon">Book icon</string>
+</resources>

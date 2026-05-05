@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_title">Profile</string>
+    <string name="profile_total_tests">Total tests</string>
+    <string name="profile_avg_score">Average score</string>
+    <string name="profile_best_result">Best result</string>
+    <string name="profile_completed">Completed</string>
+    <string name="profile_theme_title">Theme</string>
+    <string name="profile_theme_light">Light</string>
+    <string name="profile_theme_dark">Dark</string>
+    <string name="profile_theme_system">System</string>
+    <string name="profile_language_title">Language</string>
+    <string name="profile_language_russian">Русский</string>
+    <string name="profile_language_english">English</string>
+    <string name="profile_clear_data">Clear all data</string>
+    <string name="profile_logout">Log out</string>
+    <string name="profile_cd_avatar">User avatar</string>
+    <string name="profile_clear_data_confirm_title">Clear data?</string>
+    <string name="profile_clear_data_confirm_text">All tests and results will be permanently deleted.</string>
+    <string name="profile_logout_confirm_title">Log out?</string>
+    <string name="profile_logout_confirm_text">You can sign in again anytime.</string>
+    <string name="profile_confirm">Confirm</string>
+    <string name="profile_cancel">Cancel</string>
+</resources>
