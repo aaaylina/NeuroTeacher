@@ -8,6 +8,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -76,7 +79,7 @@ internal fun CameraScreen(
 
     LaunchedEffect(cameraPermissionState.status.isGranted) {
         if (cameraPermissionState.status.isGranted) {
-            viewModel.startCamera(lifecycleOwner)
+            viewModel.startCamera()
         }
     }
 
@@ -109,27 +112,52 @@ internal fun CameraScreen(
                 )
             }
             uiState.isLoading -> {
-                androidx.compose.material3.CircularProgressIndicator(
+                CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = colors.primary
                 )
             }
             uiState.error != null -> {
-                Text(
-                    text = stringResource(R.string.camera_error, uiState.error ?: stringResource(R.string.camera_unknown_error)),
+                Column(
                     modifier = Modifier.align(Alignment.Center),
-                    style = typography.error
-                )
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.camera_error, uiState.error ?: stringResource(R.string.camera_unknown_error)),
+                        style = typography.error
+                    )
+                    Spacer(modifier = Modifier.height(dimensions.spacingMd))
+                    Button(onClick = { viewModel.startCamera() }) {
+                        Text("Повторить")
+                    }
+                }
             }
             else -> {
-                AndroidView(
-                    factory = { ctx ->
-                        PreviewView(ctx).apply {
-                            viewModel.setupPreview(this, lifecycleOwner)
+                if (uiState.isCameraReady) {
+                    AndroidView(
+                        factory = { ctx ->
+                            PreviewView(ctx).apply {
+                                viewModel.setupPreview(this, lifecycleOwner)
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            CircularProgressIndicator(color = colors.primary)
+                            Spacer(modifier = Modifier.height(dimensions.spacingMd))
+                            Text(
+                                text = "Инициализация камеры...",
+                                style = typography.subtitle,
+                                color = colors.textSecondary
+                            )
                         }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
+                    }
+                }
 
                 Row(
                     modifier = Modifier

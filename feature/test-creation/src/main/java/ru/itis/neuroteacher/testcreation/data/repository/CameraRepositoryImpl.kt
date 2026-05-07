@@ -30,11 +30,15 @@ class CameraRepositoryImpl @Inject constructor(
 
     private var cameraProvider: ProcessCameraProvider? = null
     private var imageCapture: ImageCapture? = null
+    private var isReady = false
 
     private val cameraExecutor: ExecutorService by lazy { Executors.newSingleThreadExecutor() }
     private val mainExecutor = ContextCompat.getMainExecutor(appContext)
 
+    override fun isCameraReady(): Boolean = isReady
+
     override suspend fun startCamera() = suspendCancellableCoroutine<Unit> { continuation ->
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(appContext)
 
         cameraProviderFuture.addListener({
@@ -43,9 +47,11 @@ class CameraRepositoryImpl @Inject constructor(
                 imageCapture = ImageCapture.Builder()
                     .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                     .build()
+                isReady = true
             }.onSuccess {
                 continuation.resume(Unit)
             }.onFailure { e ->
+                isReady = false
                 continuation.resumeWithException(e)
             }
         }, mainExecutor)
@@ -56,6 +62,18 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     override fun setupPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner) {
+
+        val provider = cameraProvider
+        val capture = imageCapture
+
+        if (provider == null) {
+            return
+        }
+
+        if (capture == null) {
+            return
+        }
+
         val preview = Preview.Builder().build().apply {
             setSurfaceProvider(previewView.surfaceProvider)
         }
@@ -63,22 +81,22 @@ class CameraRepositoryImpl @Inject constructor(
         val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
         runCatching {
-            cameraProvider?.apply {
-                unbindAll()
-                bindToLifecycle(
-                    lifecycleOwner,
-                    cameraSelector,
-                    preview,
-                    imageCapture
-                )
-            }
-        }.onFailure { e ->
-            e.printStackTrace()
-        }
+            provider.unbindAll()
+            provider.bindToLifecycle(
+                lifecycleOwner,
+                cameraSelector,
+                preview,
+                capture
+            )
+        }.onFailure { it.printStackTrace() }
     }
 
     override suspend fun capturePhoto(): Result<Bitmap> = runCatching {
-        val capture = imageCapture ?: throw Exception("Камера не инициализирована")
+
+        val capture = imageCapture
+        if (capture == null) {
+            throw Exception("Камера не инициализирована")
+        }
 
         suspendCancellableCoroutine { continuation ->
             capture.takePicture(
@@ -130,6 +148,7 @@ class CameraRepositoryImpl @Inject constructor(
         }
         cameraProvider = null
         imageCapture = null
+        isReady = false
         cameraExecutor.shutdownNow()
     }
 }
