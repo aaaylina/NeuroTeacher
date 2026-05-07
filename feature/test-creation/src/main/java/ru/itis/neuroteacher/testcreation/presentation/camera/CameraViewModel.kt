@@ -6,7 +6,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,8 +21,7 @@ sealed class CameraNavigationEvent {
 
 data class CameraUiState(
     val isLoading: Boolean = false,
-    val error: String? = null,
-    val isCameraReady: Boolean = false
+    val error: String? = null
 )
 
 @HiltViewModel
@@ -37,39 +35,16 @@ class CameraViewModel @Inject constructor(
     private val _navigationEvents = MutableStateFlow<CameraNavigationEvent?>(null)
     val navigationEvents: StateFlow<CameraNavigationEvent?> = _navigationEvents.asStateFlow()
 
-    fun startCamera() {
+    fun startCamera(lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
-
-            cameraManager.startCamera().fold(
-                onSuccess = {
-                    _uiState.update { it.copy(isLoading = false, isCameraReady = true) }
-                },
-                onFailure = { e ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            error = e.message ?: "Не удалось запустить камеру",
-                            isCameraReady = false
-                        )
-                    }
-                }
-            )
+            cameraManager.startCamera().onFailure { e ->
+                handleError(e.message)
+            }
         }
     }
 
     fun setupPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner) {
-
-        if (cameraManager.isCameraReady()) {
-            cameraManager.setupPreview(previewView, lifecycleOwner)
-        } else {
-            viewModelScope.launch {
-                delay(500)
-                if (cameraManager.isCameraReady()) {
-                    cameraManager.setupPreview(previewView, lifecycleOwner)
-                }
-            }
-        }
+        cameraManager.setupPreview(previewView, lifecycleOwner)
     }
 
     fun capturePhoto() {
@@ -87,7 +62,7 @@ class CameraViewModel @Inject constructor(
                     }
                 },
                 onFailure = { exception ->
-                    handleError(exception.message ?: "Не удалось обработать фото")
+                    handleError(exception.message)
                 }
             )
         }
@@ -108,7 +83,7 @@ class CameraViewModel @Inject constructor(
                     }
                 },
                 onFailure = { exception ->
-                    handleError(exception.message ?: "Не удалось обработать изображение")
+                    handleError(exception.message)
                 }
             )
         }

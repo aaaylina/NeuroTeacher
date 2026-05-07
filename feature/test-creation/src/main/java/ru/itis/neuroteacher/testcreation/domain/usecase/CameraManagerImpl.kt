@@ -19,8 +19,6 @@ internal class CameraManagerImpl @Inject constructor(
     private val textRecognitionRepository: TextRecognitionRepository
 ) : CameraManager {
 
-    override fun isCameraReady(): Boolean = cameraRepository.isCameraReady()
-
     override suspend fun startCamera(): Result<Unit> = runCatching {
         cameraRepository.startCamera()
     }
