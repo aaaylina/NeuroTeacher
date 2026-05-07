@@ -11,4 +11,5 @@ interface CameraRepository {
     suspend fun capturePhoto(): Result<Bitmap>
     suspend fun saveBitmap(bitmap: Bitmap): Result<Uri>
     fun releaseCamera()
+    fun isCameraReady(): Boolean
 }
