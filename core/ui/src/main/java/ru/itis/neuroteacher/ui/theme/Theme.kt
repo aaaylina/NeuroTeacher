@@ -9,6 +9,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -72,6 +73,22 @@ data class AppColors(
     val photoDemoButtonBgUnselected: Color,
     val photoDemoGradientStart: Color,
     val photoDemoGradientEnd: Color,
+    val historyBgGradientStart: Color,
+    val historyBgGradientMid: Color,
+    val historyBgGradientEnd: Color,
+    val statusSuccess: Color,
+    val statusError: Color,
+    val recentTestTitleColor: Color,
+    val recentTestDateColor: Color,
+    val recentTestScoreColor: Color,
+    val viewAllButtonColor: Color,
+    val bottomBarSelectedColor: Color,
+    val bottomBarUnselectedColor: Color,
+    val emptyStateIconBg: Color,
+    val emptyStateSubtitleColor: Color,
+    val emptyStateButtonGradientStart: Color,
+    val emptyStateButtonGradientEnd: Color,
+    val authLinkColor: Color,
 )
 
 @Immutable
@@ -88,6 +105,9 @@ data class AppTypography(
     val sectionTitle: TextStyle,
     val emptyStateText: TextStyle,
     val profileTitle: TextStyle,
+    val historyEmptyStateTitle: TextStyle,
+    val historyEmptyStateSubtitle: TextStyle,
+    val authLinkStyle: TextStyle,
 )
 
 @Immutable
@@ -210,6 +230,32 @@ data class AppDimensions(
     val photoMainButtonHeight: Dp,
     val photoButtonsSpacing: Dp,
     val photoCardPadding: Dp,
+    val historyHeaderHeight: Dp,
+    val historySearchHeight: Dp,
+    val historyItemCardHeight: Dp,
+    val historyItemCornerRadius: Dp,
+    val historySearchCornerRadius: Dp,
+    val historyStatusDotSize: Dp,
+    val recentTestCardHeight: Dp,
+    val recentTestCardCornerRadius: Dp,
+    val recentTestTitleFontSize: TextUnit,
+    val recentTestDateFontSize: TextUnit,
+    val recentTestScoreFontSize: TextUnit,
+    val viewAllButtonFontSize: TextUnit,
+    val recentTestStatusDotSize: Dp,
+    val bottomBarHeight: Dp,
+    val bottomBarIconContainerSize: Dp,
+    val bottomBarIconSize: Dp,
+    val bottomBarTextSize: TextUnit,
+    val bottomBarIconTextGap: Dp,
+    val bottomBarVerticalPadding: Dp,
+    val historyEmptyStateHeight: Dp,
+    val historyEmptyStateCornerRadius: Dp,
+    val historyEmptyStateIconCircleSize: Dp,
+    val historyEmptyStateIconSize: Dp,
+    val historyEmptyStateButtonWidth: Dp,
+    val historyEmptyStateButtonHeight: Dp,
+    val historyEmptyStateButtonCornerRadius: Dp,
 
     )
 
@@ -235,7 +281,7 @@ val LocalAppDimensions = staticCompositionLocalOf {
 
         fontSizeHelper = 12.sp, fontSizeButton = 16.sp,
         fontSizeCardTitle = 16.sp, fontSizeTopBarTitle = 20.sp,
-        fontSizeQuestionText = 18.sp, fontSizeOptionText = 15.sp,
+        fontSizeQuestionText = 17.sp, fontSizeOptionText = 15.sp,
         fontSizeExplanationTitle = 14.sp, fontSizeExplanationText = 13.sp,
         fontSizeTopBarTitleTest = 18.sp,
 
@@ -300,7 +346,32 @@ val LocalAppDimensions = staticCompositionLocalOf {
         photoMainButtonHeight = 56.dp,
         photoButtonsSpacing = 8.dp,
         photoCardPadding = 24.dp,
-
+        historyHeaderHeight = 64.dp,
+        historySearchHeight = 50.dp,
+        historyItemCardHeight = 110.dp,
+        historyItemCornerRadius = 16.dp,
+        historySearchCornerRadius = 14.dp,
+        historyStatusDotSize = 12.dp,
+        recentTestCardHeight = 111.dp,
+        recentTestCardCornerRadius = 16.dp,
+        recentTestTitleFontSize = 18.sp,
+        recentTestDateFontSize = 14.sp,
+        recentTestScoreFontSize = 14.sp,
+        viewAllButtonFontSize = 14.sp,
+        recentTestStatusDotSize = 12.dp,
+        bottomBarHeight = 81.dp,
+        bottomBarIconContainerSize = 24.dp,
+        bottomBarIconSize = 20.dp,
+        bottomBarTextSize = 12.sp,
+        bottomBarIconTextGap = 4.dp,
+        bottomBarVerticalPadding = 8.dp,
+        historyEmptyStateHeight = 364.dp,
+        historyEmptyStateCornerRadius = 24.dp,
+        historyEmptyStateIconCircleSize = 96.dp,
+        historyEmptyStateIconSize = 40.dp,
+        historyEmptyStateButtonWidth = 137.dp,
+        historyEmptyStateButtonHeight = 48.dp,
+        historyEmptyStateButtonCornerRadius = 14.dp,
         )
 }
 
@@ -362,6 +433,22 @@ val LocalAppColors = staticCompositionLocalOf {
         photoDemoButtonBgUnselected = Color.Unspecified,
         photoDemoGradientStart = Color.Unspecified,
         photoDemoGradientEnd = Color.Unspecified,
+        historyBgGradientStart = Color.Unspecified,
+        historyBgGradientMid = Color.Unspecified,
+        historyBgGradientEnd = Color.Unspecified,
+        statusSuccess = Color.Unspecified,
+        statusError = Color.Unspecified,
+        recentTestTitleColor = RecentTestTitleColor,
+        recentTestDateColor = RecentTestDateColor,
+        recentTestScoreColor = RecentTestScoreColor,
+        viewAllButtonColor = ViewAllButtonColor,
+        bottomBarSelectedColor = BottomBarSelectedColor,
+        bottomBarUnselectedColor = BottomBarUnselectedColor,
+        emptyStateIconBg = EmptyStateIconBg,
+        emptyStateSubtitleColor = EmptyStateSubtitleColor,
+        emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
+        emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
+        authLinkColor = AuthLinkColor,
     )
 }
 
@@ -379,6 +466,9 @@ val LocalAppTypography = staticCompositionLocalOf {
         sectionTitle = TextStyle.Default,
         emptyStateText = TextStyle.Default,
         profileTitle = TextStyle.Default,
+        historyEmptyStateTitle = TextStyle.Default,
+        historyEmptyStateSubtitle = TextStyle.Default,
+        authLinkStyle = TextStyle.Default,
     )
 }
 
@@ -460,6 +550,22 @@ fun AppTheme(
             photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselectedDark,
             photoDemoGradientStart = PhotoDemoGradientStartDark,
             photoDemoGradientEnd = PhotoDemoGradientEndDark,
+            historyBgGradientStart = HistoryBackgroundGradientStart,
+            historyBgGradientMid = HistoryBackgroundGradientMid,
+            historyBgGradientEnd = HistoryBackgroundGradientEnd,
+            statusSuccess = StatusSuccessColor,
+            statusError = StatusErrorColor,
+            recentTestTitleColor = RecentTestTitleColor,
+            recentTestDateColor = RecentTestDateColor,
+            recentTestScoreColor = RecentTestScoreColor,
+            viewAllButtonColor = ViewAllButtonColor,
+            bottomBarSelectedColor = BottomBarSelectedColor,
+            bottomBarUnselectedColor = BottomBarUnselectedColor,
+            emptyStateIconBg = EmptyStateIconBg,
+            emptyStateSubtitleColor = EmptyStateSubtitleColor,
+            emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
+            emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
+            authLinkColor = AuthLinkColor,
         )
     } else {
         AppColors(
@@ -519,6 +625,22 @@ fun AppTheme(
             photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselected,
             photoDemoGradientStart = PhotoDemoGradientStart,
             photoDemoGradientEnd = PhotoDemoGradientEnd,
+            historyBgGradientStart = HistoryBackgroundGradientStart,
+            historyBgGradientMid = HistoryBackgroundGradientMid,
+            historyBgGradientEnd = HistoryBackgroundGradientEnd,
+            statusSuccess = StatusSuccessColor,
+            statusError = StatusErrorColor,
+            recentTestTitleColor = RecentTestTitleColor,
+            recentTestDateColor = RecentTestDateColor,
+            recentTestScoreColor = RecentTestScoreColor,
+            viewAllButtonColor = ViewAllButtonColor,
+            bottomBarSelectedColor = BottomBarSelectedColor,
+            bottomBarUnselectedColor = BottomBarUnselectedColor,
+            emptyStateIconBg = EmptyStateIconBg,
+            emptyStateSubtitleColor = EmptyStateSubtitleColor,
+            emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
+            emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
+            authLinkColor = AuthLinkColor
         )
     }
 
@@ -535,7 +657,10 @@ fun AppTheme(
         sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
         emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
         profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white),
-    )
+        historyEmptyStateTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, lineHeight = 28.sp, letterSpacing = (-0.45).sp, color = colors.textOnCard),
+        historyEmptyStateSubtitle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, lineHeight = 24.sp, letterSpacing = (-0.31).sp, color = colors.emptyStateSubtitleColor),
+        authLinkStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal, lineHeight = 24.sp, letterSpacing = 0.sp, textAlign = TextAlign.Center, color = colors.authLinkColor)
+        )
 
     val shapes = AppShapes(
         inputCorner = RoundedCornerShape(12.dp),

@@ -2,6 +2,7 @@ package ru.itis.neuroteacher.testcreation.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
+import ru.itis.neuroteacher.domain.model.RecentTestItem
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 import ru.itis.neuroteacher.testcreation.domain.model.TestStatistics
@@ -30,4 +31,6 @@ interface TestRepository {
     suspend fun clearAllData()
     suspend fun getAllTestResults(): List<TestResult>
     fun getTestResultsFlow(query: String): Flow<List<TestResult>>
+    suspend fun getAllTestsForHome(): List<RecentTestItem>
+
 }

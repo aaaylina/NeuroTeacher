@@ -1,5 +1,7 @@
 package ru.itis.neuroteacher.testcreation.presentation.textinput
 
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -71,6 +74,7 @@ internal fun TextInputScreen(
     val isGenerateEnabled = !uiState.isLoading && isTextValid
 
     val errorGenerationText = stringResource(R.string.common_error_generation)
+    val context = LocalContext.current
 
     LaunchedEffect(navEvent) {
         when (val event = navEvent) {
@@ -208,7 +212,26 @@ internal fun TextInputScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedButton(
-                    onClick = { /* TODO: вставка из буфера */ },
+                    onClick = {
+                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+                        if (clipboard.hasPrimaryClip() && clipboard.primaryClip?.itemCount ?: 0 > 0) {
+                            val pastedText = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
+
+                            text = if (pastedText.length > TestGenerationConstants.MAX_TEXT_LENGTH) {
+                                pastedText.take(TestGenerationConstants.MAX_TEXT_LENGTH)
+                            } else {
+                                pastedText
+                            }
+                        } else {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = "Буфер обмена пуст или не содержит текст",
+                                    withDismissAction = true
+                                )
+                            }
+                        }
+                    },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = AppTheme.colors.cardBackground,

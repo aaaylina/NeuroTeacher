@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import ru.itis.neuroteacher.feature.history.presentation.HistoryItem
 import ru.itis.neuroteacher.ui.theme.AppTheme
 
@@ -31,71 +30,65 @@ fun HistoryItemCard(
                 spotColor = AppTheme.colors.shadowColor
             )
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(AppTheme.dimensions.buttonCornerRadius),
+        shape = RoundedCornerShape(AppTheme.dimensions.historyItemCornerRadius),
         colors = CardDefaults.cardColors(containerColor = AppTheme.colors.cardBackground)
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(AppTheme.dimensions.historyItemCardHeight)
                 .padding(AppTheme.dimensions.spacingMd)
         ) {
-            Text(
-                text = item.testTitle,
-                style = AppTheme.typography.cardTitle.copy(
-                    fontSize = AppTheme.dimensions.fontSizeQuestionText,
-                    fontWeight = FontWeight.Medium
-                ),
-                color = AppTheme.colors.textPrimary,
-                maxLines = 2
-            )
-
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxWidth(0.7f)
             ) {
                 Text(
-                    text = item.date,
-                    style = AppTheme.typography.subtitle.copy(
-                        fontSize = AppTheme.dimensions.fontSizeButton,
-                        fontWeight = FontWeight.Medium
-                    ),
-                    color = AppTheme.colors.textSecondary
+                    text = item.testTitle,
+                    fontSize = AppTheme.dimensions.fontSizeQuestionText,
+                    fontWeight = FontWeight.Medium,
+                    color = AppTheme.colors.textPrimary,
+                    maxLines = 2
                 )
-                Text(
-                    text = "${item.totalQuestions} вопросов",
-                    style = AppTheme.typography.subtitle.copy(
+
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXs))
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingSm),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = item.date,
                         fontSize = AppTheme.dimensions.fontSizeButton,
-                        fontWeight = FontWeight.Medium
-                    ),
-                    color = AppTheme.colors.textSecondary
-                )
+                        fontWeight = FontWeight.Medium,
+                        color = AppTheme.colors.textSecondary
+                    )
+                    Text(
+                        text = "${item.totalQuestions} вопросов",
+                        fontSize = AppTheme.dimensions.fontSizeButton,
+                        fontWeight = FontWeight.Medium,
+                        color = AppTheme.colors.textSecondary
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
-
             Row(
-                modifier = Modifier.align(Alignment.End),
+                modifier = Modifier.align(Alignment.TopEnd),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
-                        .size(12.dp)
+                        .size(AppTheme.dimensions.historyStatusDotSize)
                         .background(
                             color = getScoreColor(item.scorePercentage),
                             shape = RoundedCornerShape(50)
                         )
                 )
-                Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingXs))
+                Spacer(modifier = Modifier.width(AppTheme.dimensions.spacingXxxs))
                 Text(
                     text = "${item.scorePercentage}%",
-                    style = AppTheme.typography.subtitle.copy(
-                        fontSize = AppTheme.dimensions.fontSizeButton,
-                        fontWeight = FontWeight.Medium
-                    ),
-                    color = AppTheme.colors.textSecondary
+                    fontSize = AppTheme.dimensions.fontSizeButton,
+                    fontWeight = FontWeight.Medium,
+                    color = AppTheme.colors.textPrimary
                 )
             }
         }

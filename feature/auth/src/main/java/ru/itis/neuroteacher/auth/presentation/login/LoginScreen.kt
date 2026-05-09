@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -63,7 +64,10 @@ fun LoginScreen(
     }
 
 
-    AppTheme {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.Transparent
+    ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -103,7 +107,9 @@ fun LoginScreen(
 
                 Text(
                     text = stringResource(id = R.string.login_welcome),
-                    style = AppTheme.typography.title
+                    style = AppTheme.typography.title,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
 
                 Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
@@ -133,7 +139,7 @@ fun LoginScreen(
                     label = stringResource(id = R.string.login_password_label),
                     placeholder = stringResource(id = R.string.login_password_placeholder),
                     leadingIcon = Icons.Default.Lock,
-                    trailingIcon = if (uiState.passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                    trailingIcon = if (uiState.passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                     onTrailingIconClick = viewModel::onPasswordVisibilityToggle,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -151,7 +157,6 @@ fun LoginScreen(
                 )
 
                 AuthToolbar(
-                    primaryText = stringResource(id = R.string.login_no_account),
                     secondaryText = stringResource(id = R.string.login_register_link),
                     onSecondaryClick = { router.navigateToRegister() }
                 )

@@ -23,4 +23,6 @@
     <string name="cd_camera_icon">Camera icon</string>
     <string name="cd_text_icon">Text icon</string>
     <string name="cd_book_icon">Book icon</string>
+
+    <string name="home_view_all">View all</string>
 </resources>
