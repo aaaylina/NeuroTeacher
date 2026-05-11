@@ -22,9 +22,9 @@ import javax.inject.Inject
 internal class TestRepositoryImpl @Inject constructor(
     private val dao: TestDao,
     private val testResultDao: TestResultDao,
-    private val mapper: TestMapper
+    private val mapper: TestMapper,
+    private val json: Json
 ) : TestRepository {
-    private val json = Json { ignoreUnknownKeys = true }
 
     override suspend fun saveTest(test: Test, sourceType: SourceType): Long {
         val entity = mapper.toEntity(test, sourceType)

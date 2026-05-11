@@ -1,7 +1,5 @@
 package ru.itis.neuroteacher.testcreation.presentation.textinput
 
-import android.content.ClipboardManager
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -67,7 +65,7 @@ internal fun TextInputScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var text by remember { mutableStateOf("") }
+    val text by viewModel.textInput.collectAsState()
     var selectedQuestions by remember { mutableStateOf(TestGenerationConstants.QUESTION_COUNT_OPTIONS.first()) }
 
     val isTextValid = text.length in TestGenerationConstants.MIN_TEXT_LENGTH..TestGenerationConstants.MAX_TEXT_LENGTH
@@ -121,9 +119,7 @@ internal fun TextInputScreen(
                 ) {
                     TextField(
                         value = text,
-                        onValueChange = {
-                            if (it.length <= TestGenerationConstants.MAX_TEXT_LENGTH) text = it
-                        },
+                        onValueChange = viewModel::onTextChange,
                         placeholder = {
                             Text(
                                 text = stringResource(R.string.text_input_placeholder),
@@ -212,35 +208,13 @@ internal fun TextInputScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedButton(
-                    onClick = {
-                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-                        if (clipboard.hasPrimaryClip() && clipboard.primaryClip?.itemCount ?: 0 > 0) {
-                            val pastedText = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
-
-                            text = if (pastedText.length > TestGenerationConstants.MAX_TEXT_LENGTH) {
-                                pastedText.take(TestGenerationConstants.MAX_TEXT_LENGTH)
-                            } else {
-                                pastedText
-                            }
-                        } else {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Буфер обмена пуст или не содержит текст",
-                                    withDismissAction = true
-                                )
-                            }
-                        }
-                    },
+                    onClick = { viewModel.pasteFromClipboard(context) },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = AppTheme.colors.cardBackground,
                         contentColor = AppTheme.colors.textPrimary
                     ),
-                    border = BorderStroke(
-                        1.dp,
-                        AppTheme.colors.borderDefault
-                    ),
+                    border = BorderStroke(1.dp, AppTheme.colors.borderDefault),
                     shape = AppTheme.shapes.buttonCorner,
                     enabled = !uiState.isLoading
                 ) {

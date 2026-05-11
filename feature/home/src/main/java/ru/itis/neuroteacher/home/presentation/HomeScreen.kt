@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.itis.neuroteacher.domain.model.RecentTestItem
 import ru.itis.neuroteacher.home.navigation.HomeRouter
@@ -113,7 +114,9 @@ fun HomeScreen(router: HomeRouter, viewModel: HomeViewModel = hiltViewModel()) {
 
                             Text(
                                 text = stringResource(id = R.string.home_camera_title),
-                                style = AppTheme.typography.cardTitle
+                                style = AppTheme.typography.cardTitle,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
 
                             Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
@@ -121,7 +124,11 @@ fun HomeScreen(router: HomeRouter, viewModel: HomeViewModel = hiltViewModel()) {
                             Text(
                                 text = stringResource(id = R.string.home_camera_subtitle),
                                 style = AppTheme.typography.cardSubtitle,
-                                modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = AppTheme.dimensions.paddingHorizontal),
+                                textAlign = TextAlign.Center
+
                             )
                         }
                     }
@@ -176,7 +183,9 @@ fun HomeScreen(router: HomeRouter, viewModel: HomeViewModel = hiltViewModel()) {
 
                             Text(
                                 text = stringResource(id = R.string.home_text_title),
-                                style = AppTheme.typography.cardTitle
+                                style = AppTheme.typography.cardTitle,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
 
                             Spacer(Modifier.height(AppTheme.dimensions.spacingXs))
@@ -184,7 +193,10 @@ fun HomeScreen(router: HomeRouter, viewModel: HomeViewModel = hiltViewModel()) {
                             Text(
                                 text = stringResource(id = R.string.home_text_subtitle),
                                 style = AppTheme.typography.cardSubtitle,
-                                modifier = Modifier.padding(horizontal = AppTheme.dimensions.paddingHorizontal)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = AppTheme.dimensions.paddingHorizontal),
+                                textAlign = TextAlign.Center
                             )
                         }
                     }

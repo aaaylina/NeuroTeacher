@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="history_title">История тестов</string>
-    <string name="history_search_placeholder">Поиск по названию</string>
+    <string name="history_search_placeholder">Поиск по названию...</string>
     <string name="history_cd_back">Назад</string>
     <string name="history_empty_state">У вас пока нет пройденных тестов</string>
     <string name="history_empty_title">У вас пока нет тестов</string>

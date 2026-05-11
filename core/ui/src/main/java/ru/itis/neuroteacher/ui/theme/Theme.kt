@@ -89,6 +89,8 @@ data class AppColors(
     val emptyStateButtonGradientStart: Color,
     val emptyStateButtonGradientEnd: Color,
     val authLinkColor: Color,
+    val avatarGradientStart: Color,
+    val avatarGradientEnd: Color,
 )
 
 @Immutable
@@ -346,7 +348,7 @@ val LocalAppDimensions = staticCompositionLocalOf {
         photoMainButtonHeight = 56.dp,
         photoButtonsSpacing = 8.dp,
         photoCardPadding = 24.dp,
-        historyHeaderHeight = 64.dp,
+        historyHeaderHeight = 75.dp,
         historySearchHeight = 50.dp,
         historyItemCardHeight = 110.dp,
         historyItemCornerRadius = 16.dp,
@@ -449,6 +451,8 @@ val LocalAppColors = staticCompositionLocalOf {
         emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
         emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
         authLinkColor = AuthLinkColor,
+        avatarGradientStart = Color.Unspecified,
+        avatarGradientEnd = Color.Unspecified,
     )
 }
 
@@ -509,10 +513,10 @@ fun AppTheme(
             disabled = DisabledDark,
             backgroundGradient = BackgroundGradientDark,
             backgroundGradientMain = BackgroundGradientMainDark,
-            iconGradientStart = IconGradientStartDark,
-            iconGradientEnd = IconGradientEndDark,
-            iconGradientSecondaryStart = IconGradientSecondaryStartDark,
-            iconGradientSecondaryEnd = IconGradientSecondaryEndDark,
+            iconGradientStart = IconGradientStart,
+            iconGradientEnd = IconGradientEnd,
+            iconGradientSecondaryStart = IconGradientSecondaryStart,
+            iconGradientSecondaryEnd = IconGradientSecondaryEnd,
             shadowColor = ShadowColorDark,
             bottomBarBorder = BottomBarBorderDark,
             textOnWhite = TextOnWhiteDark,
@@ -526,7 +530,7 @@ fun AppTheme(
             explanationText = ExplanationTextDark,
             progressBarTrack = ProgressBarTrackDark,
             white = Color.White,
-            cardSubtitleColor = Color(0xFF94A3B8),
+            cardSubtitleColor =  BottomBarUnselectedColor,
             textOnCard = TextPrimaryDark,
             logoBackgroundColor = LogoBackgroundColorDark,
             buttonUnselectedBackground = ButtonUnselectedBackgroundDark,
@@ -550,14 +554,14 @@ fun AppTheme(
             photoDemoButtonBgUnselected = PhotoDemoButtonBgUnselectedDark,
             photoDemoGradientStart = PhotoDemoGradientStartDark,
             photoDemoGradientEnd = PhotoDemoGradientEndDark,
-            historyBgGradientStart = HistoryBackgroundGradientStart,
-            historyBgGradientMid = HistoryBackgroundGradientMid,
-            historyBgGradientEnd = HistoryBackgroundGradientEnd,
+            historyBgGradientStart = TextOnWhite,
+            historyBgGradientMid = CardBackgroundDark,
+            historyBgGradientEnd = TextOnWhite,
             statusSuccess = StatusSuccessColor,
             statusError = StatusErrorColor,
-            recentTestTitleColor = RecentTestTitleColor,
-            recentTestDateColor = RecentTestDateColor,
-            recentTestScoreColor = RecentTestScoreColor,
+            recentTestTitleColor = Color.White,
+            recentTestDateColor = BottomBarUnselectedColor,
+            recentTestScoreColor = Color.White,
             viewAllButtonColor = ViewAllButtonColor,
             bottomBarSelectedColor = BottomBarSelectedColor,
             bottomBarUnselectedColor = BottomBarUnselectedColor,
@@ -566,6 +570,8 @@ fun AppTheme(
             emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
             emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
             authLinkColor = AuthLinkColor,
+            avatarGradientStart = AvatarGradientStartDark,
+            avatarGradientEnd = AvatarGradientEndDark,
         )
     } else {
         AppColors(
@@ -640,7 +646,9 @@ fun AppTheme(
             emptyStateSubtitleColor = EmptyStateSubtitleColor,
             emptyStateButtonGradientStart = EmptyStateButtonGradientStart,
             emptyStateButtonGradientEnd = EmptyStateButtonGradientEnd,
-            authLinkColor = AuthLinkColor
+            authLinkColor = AuthLinkColor,
+            avatarGradientStart = IconGradientStart,
+            avatarGradientEnd = IconGradientEnd
         )
     }
 
@@ -653,7 +661,7 @@ fun AppTheme(
         error = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal, color = colors.error),
         welcomeText = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
         cardTitle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
-        cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Color(0xFF4A5565)),
+        cardSubtitle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = colors.cardSubtitleColor),
         sectionTitle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold, color = Color.White),
         emptyStateText = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium, color = colors.textOnWhite),
         profileTitle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.SemiBold, lineHeight = 32.sp, letterSpacing = 0.07.sp, color = colors.white),

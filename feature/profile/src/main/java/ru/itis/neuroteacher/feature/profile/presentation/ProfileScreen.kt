@@ -65,7 +65,7 @@ fun ProfileScreen(
                 Text(
                     text = stringResource(R.string.profile_title),
                     style = AppTheme.typography.profileTitle,
-                    modifier = Modifier.padding(bottom = AppTheme.dimensions.profileHeaderBottomPadding)
+                    modifier = Modifier.padding(top = AppTheme.dimensions.spacingXl, bottom = AppTheme.dimensions.profileHeaderBottomPadding)
                 )
             }
 

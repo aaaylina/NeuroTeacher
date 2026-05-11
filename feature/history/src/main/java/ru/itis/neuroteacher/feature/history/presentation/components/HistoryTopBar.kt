@@ -52,5 +52,3 @@ fun HistoryTopBar(onBackClick: () -> Unit, modifier: Modifier = Modifier) {
         }
     }
 }
-
-

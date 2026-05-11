@@ -26,6 +26,15 @@ fun HistoryItemCard(
             .fillMaxWidth()
             .shadow(
                 elevation = AppTheme.dimensions.statsCardShadowElevation,
+                shape = RoundedCornerShape(AppTheme.dimensions.historyItemCornerRadius),
+                clip = false,
+                ambientColor = AppTheme.colors.shadowColor,
+                spotColor = AppTheme.colors.shadowColor
+            )
+            .shadow(
+                elevation = AppTheme.dimensions.statsCardShadowElevation,
+                shape = RoundedCornerShape(AppTheme.dimensions.historyItemCornerRadius),
+                clip = false,
                 ambientColor = AppTheme.colors.shadowColor,
                 spotColor = AppTheme.colors.shadowColor
             )
