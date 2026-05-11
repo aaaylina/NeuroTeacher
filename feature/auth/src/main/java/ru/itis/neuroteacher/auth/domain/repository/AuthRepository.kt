@@ -8,5 +8,4 @@ interface AuthRepository {
     suspend fun signOut(): Result<Unit>
     fun isUserLoggedIn(): Boolean
     fun getCurrentUserId(): User?
-    fun getCurrentUser(): User?
 }

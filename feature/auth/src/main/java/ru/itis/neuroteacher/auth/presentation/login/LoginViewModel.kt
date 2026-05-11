@@ -3,8 +3,10 @@ package ru.itis.neuroteacher.auth.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -13,6 +15,10 @@ import ru.itis.neuroteacher.auth.domain.usecase.GetCurrentUserUseCase
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCase
 import javax.inject.Inject
 
+
+sealed class LoginNavigationEvent {
+    object NavigateToMain : LoginNavigationEvent()
+}
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
@@ -22,8 +28,13 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-    private val _navigateToMain = MutableStateFlow(false)
-    val navigateToMain: StateFlow<Boolean> = _navigateToMain.asStateFlow()
+    private val _navigationEvent = MutableSharedFlow<LoginNavigationEvent>(
+        replay = 1,
+        extraBufferCapacity = 0
+    )
+    val navigationEvent = _navigationEvent.asSharedFlow()
+
+
 
     init {
         checkAutoLogin()
@@ -33,7 +44,7 @@ class LoginViewModel @Inject constructor(
         val currentUser = getCurrentUserUseCase()
         if (currentUser != null) {
             viewModelScope.launch {
-                _navigateToMain.value = true
+                _navigationEvent.emit(LoginNavigationEvent.NavigateToMain)
             }
         }
     }
@@ -67,10 +78,6 @@ class LoginViewModel @Inject constructor(
                 }
             )
         }
-    }
-
-    fun onNavigationConsumed() {
-        _navigateToMain.value = false
     }
 
     fun clearError() {

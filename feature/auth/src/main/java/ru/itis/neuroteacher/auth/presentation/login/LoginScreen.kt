@@ -51,16 +51,17 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val navigateToMain by viewModel.navigateToMain.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(navigateToMain) {
-        if (navigateToMain) {
-            router.navigateToMain()
-            viewModel.onNavigationConsumed()
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                is LoginNavigationEvent.NavigateToMain -> {
+                    router.navigateToMain()
+                }
+            }
         }
     }
-
 
     LaunchedEffect(uiState.errorMessage) {
         uiState.errorMessage?.let {

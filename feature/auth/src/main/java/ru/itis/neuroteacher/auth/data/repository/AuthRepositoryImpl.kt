@@ -104,10 +104,5 @@ internal class AuthRepositoryImpl @Inject constructor(
         return userMapper.toDomain(entity)
     }
 
-    override fun getCurrentUser(): User? {
-        val firebaseUser = auth.currentUser ?: return null
-        val entity = userMapper.toEntity(firebaseUser)
-        return userMapper.toDomain(entity)
-    }
 
 }
