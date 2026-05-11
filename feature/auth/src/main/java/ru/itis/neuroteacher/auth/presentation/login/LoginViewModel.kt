@@ -9,16 +9,34 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.auth.domain.model.User
+import ru.itis.neuroteacher.auth.domain.usecase.GetCurrentUserUseCase
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
+
+    private val _navigateToMain = MutableStateFlow(false)
+    val navigateToMain: StateFlow<Boolean> = _navigateToMain.asStateFlow()
+
+    init {
+        checkAutoLogin()
+    }
+
+    private fun checkAutoLogin() {
+        val currentUser = getCurrentUserUseCase()
+        if (currentUser != null) {
+            viewModelScope.launch {
+                _navigateToMain.value = true
+            }
+        }
+    }
 
     fun onEmailChange(email: String) {
         _uiState.update { it.copy(email = email, errorMessage = null) }
@@ -49,6 +67,10 @@ class LoginViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    fun onNavigationConsumed() {
+        _navigateToMain.value = false
     }
 
     fun clearError() {
