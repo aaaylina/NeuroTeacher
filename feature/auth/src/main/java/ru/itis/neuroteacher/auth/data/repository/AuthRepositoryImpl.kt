@@ -30,7 +30,6 @@ internal class AuthRepositoryImpl @Inject constructor(
             val entity = userMapper.toEntity(firebaseUser)
             val user = userMapper.toDomain(entity)
 
-            // Обновляем время последнего входа
             val updates = hashMapOf<String, Any>(
                 UsersFields.LAST_ACTIVE to Date()
             )
@@ -58,7 +57,6 @@ internal class AuthRepositoryImpl @Inject constructor(
             val entity = userMapper.toEntity(firebaseUser)
             val user = userMapper.toDomain(entity)
 
-            // Создаем пользователя в Firestore
             val userDto = UserDto(
                 userId = user.id,
                 email = user.email,
@@ -100,9 +98,11 @@ internal class AuthRepositoryImpl @Inject constructor(
         return auth.currentUser != null
     }
 
-    override fun getCurrentUserId(): User? {
+    override fun getCurrentUser(): User? {
         val firebaseUser = auth.currentUser ?: return null
         val entity = userMapper.toEntity(firebaseUser)
         return userMapper.toDomain(entity)
     }
+
+
 }
