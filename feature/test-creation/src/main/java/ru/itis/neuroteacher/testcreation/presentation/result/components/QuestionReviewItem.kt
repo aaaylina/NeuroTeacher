@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -62,7 +61,8 @@ internal fun QuestionReviewItem(
                     horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spacingSm)
                 ) {
                     Icon(
-                        imageVector = if (questionResult.isCorrect) Icons.Filled.CheckCircle else Icons.Filled.Close,
+                        painter = painterResource(
+                            id = if (questionResult.isCorrect) R.drawable.ic_correct else R.drawable.ic_incorrect),
                         contentDescription = if (questionResult.isCorrect)
                             stringResource(R.string.test_result_correct)
                         else

@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -70,104 +71,108 @@ fun LoginScreen(
         }
     }
 
-
-    AppTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = AppTheme.colors.backgroundGradient
-                    )
-                )
-                .padding(AppTheme.dimensions.spacingLg),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
+    AppTheme(darkTheme = false) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = Color.Transparent
+        ) { padding ->
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(AppTheme.shapes.cardCorner)
-                    .background(AppTheme.colors.cardBackground)
-                    .padding(AppTheme.dimensions.cardPadding)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxSize()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = AppTheme.colors.backgroundGradient
+                        )
+                    )
+                    .padding(AppTheme.dimensions.spacingLg),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .size(AppTheme.dimensions.logoContainerSize)
-                        .clip(AppTheme.shapes.iconRound)
-                        .background(AppTheme.colors.logoBackgroundColor),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .clip(AppTheme.shapes.cardCorner)
+                        .background(AppTheme.colors.cardBackground)
+                        .padding(AppTheme.dimensions.cardPadding)
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_logo_icon),
-                        contentDescription = stringResource(id = R.string.logo_description),
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
+                    Box(
+                        modifier = Modifier
+                            .size(AppTheme.dimensions.logoContainerSize)
+                            .clip(AppTheme.shapes.iconRound)
+                            .background(AppTheme.colors.logoBackgroundColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_logo_icon),
+                            contentDescription = stringResource(id = R.string.logo_description),
+                            tint = Color.Unspecified,
+                            modifier = Modifier.size(AppTheme.dimensions.iconSizeDefault)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
+
+                    Text(
+                        text = stringResource(id = R.string.login_welcome),
+                        style = AppTheme.typography.title,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
+
+                    Text(
+                        text = stringResource(id = R.string.login_subtitle),
+                        style = AppTheme.typography.subtitle
+                    )
+
+                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
+
+                    AuthTextField(
+                        value = uiState.email,
+                        onValueChange = viewModel::onEmailChange,
+                        label = stringResource(id = R.string.login_email_label),
+                        placeholder = stringResource(id = R.string.login_email_placeholder),
+                        leadingIcon = Icons.Default.Email,
+                        isError = uiState.isEmailError
+                    )
+
+                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
+
+                    AuthTextField(
+                        value = uiState.password,
+                        onValueChange = viewModel::onPasswordChange,
+                        label = stringResource(id = R.string.login_password_label),
+                        placeholder = stringResource(id = R.string.login_password_placeholder),
+                        leadingIcon = Icons.Default.Lock,
+                        trailingIcon = if (uiState.passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        onTrailingIconClick = viewModel::onPasswordVisibilityToggle,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+                    )
+
+                    Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
+
+                    AuthButton(
+                        text = stringResource(id = R.string.login_button),
+                        onClick = {
+                            viewModel.onLoginClick { router.navigateToMain() }
+                        },
+                        enabled = uiState.email.isNotBlank() && uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH,
+                        isLoading = uiState.isLoading
+                    )
+
+                    AuthToolbar(
+                        secondaryText = stringResource(id = R.string.login_register_link),
+                        onSecondaryClick = { router.navigateToRegister() }
                     )
                 }
-
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingLg))
-
-                Text(
-                    text = stringResource(id = R.string.login_welcome),
-                    style = AppTheme.typography.title
-                )
-
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingSm))
-
-                Text(
-                    text = stringResource(id = R.string.login_subtitle),
-                    style = AppTheme.typography.subtitle
-                )
-
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
-
-                AuthTextField(
-                    value = uiState.email,
-                    onValueChange = viewModel::onEmailChange,
-                    label = stringResource(id = R.string.login_email_label),
-                    placeholder = stringResource(id = R.string.login_email_placeholder),
-                    leadingIcon = Icons.Default.Email,
-                    isError = uiState.errorMessage?.contains("email", ignoreCase = true) == true
-
-                )
-
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
-
-                AuthTextField(
-                    value = uiState.password,
-                    onValueChange = viewModel::onPasswordChange,
-                    label = stringResource(id = R.string.login_password_label),
-                    placeholder = stringResource(id = R.string.login_password_placeholder),
-                    leadingIcon = Icons.Default.Lock,
-                    trailingIcon = if (uiState.passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                    onTrailingIconClick = viewModel::onPasswordVisibilityToggle,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
-                )
-
-                Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingXl))
-
-                AuthButton(
-                    text = stringResource(id = R.string.login_button),
-                    onClick = {
-                        viewModel.onLoginClick { router.navigateToMain() }
-                    },
-                    enabled = uiState.email.isNotBlank() && uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH,
-                    isLoading = uiState.isLoading
-                )
-
-                AuthToolbar(
-                    primaryText = stringResource(id = R.string.login_no_account),
-                    secondaryText = stringResource(id = R.string.login_register_link),
-                    onSecondaryClick = { router.navigateToRegister() }
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }

@@ -3,7 +3,7 @@ package ru.itis.neuroteacher.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Primary = Color(0xFF4A6CF7)
+val Primary = Color(0xFF155DFC)
 val PrimaryVariant = Color(0xFF8B5CF6)
 val BackgroundLight = Color(0xFFEFF6FF)
 val CardBackground = Color(0xFFFFFFFF)
@@ -48,11 +48,11 @@ val IconCheckStroke = Color(0xFFC27AFF)
 
 
 
-val PrimaryDark = Color(0xFF6B8CFF)
+val PrimaryDark = Color(0xFF155DFC)
 val PrimaryVariantDark = Color(0xFFA78BFA)
 
 val BackgroundLightDark = Color(0xFF0F172A)
-val CardBackgroundDark = Color(0xFF1E293B)
+val CardBackgroundDark = Color(0xFF1E2939)
 
 val TextPrimaryDark = Color(0xFFF8FAFC)
 val TextSecondaryDark = Color(0xFF94A3B8)
@@ -68,10 +68,10 @@ val ErrorDark = Color(0xFFF87171)
 val DisabledDark = Color(0xFF475569)
 
 val BackgroundGradientDark = listOf(Color(0xFF6B8CFF), Color(0xFFA78BFA))
-val BackgroundGradientMainDark = listOf(Color(0xFF3B82F6), Color(0xFFA855F7), Color(0xFF9333EA))
+val BackgroundGradientMainDark = listOf(Color(0xFF101828), Color(0xFF1E2939), Color(0xFF101828))
 
-val IconGradientStartDark = Color(0xFF60A5FA)
-val IconGradientEndDark = Color(0xFFC084FC)
+val IconGradientStartDark = Color(0xFF4A515E)
+val IconGradientEndDark = Color(0xFF4A515E)
 
 val ShadowColorDark = Color(0x40000000)
 val BottomBarBorderDark = Color(0x1FFFFFFF)
@@ -130,5 +130,22 @@ val PhotoDemoButtonBgUnselectedDark = Color(0x33FFFFFF)
 val PhotoDemoGradientStartDark = Color(0xFF3B82F6)
 val PhotoDemoGradientEndDark = Color(0xFFA855F7)
 
-val IconGradientSecondaryStartDark = Color(0xFFC084FC)
-val IconGradientSecondaryEndDark = Color(0xFFF472B6)
+val HistoryBackgroundGradientStart = Color(0xFF155DFC)
+val HistoryBackgroundGradientMid = Color(0xFF9810FA)
+val HistoryBackgroundGradientEnd = Color(0xFF8200DB)
+
+val StatusSuccessColor = Color(0xFF22C55E)
+val StatusErrorColor = Color(0xFFEF4444)
+val RecentTestTitleColor = Color(0xFF101828)
+val RecentTestDateColor = Color(0xFF4A5565)
+val RecentTestScoreColor = Color(0xFF364153)
+val ViewAllButtonColor = Color(0xFFBEDBFF)
+val BottomBarSelectedColor = Color(0xFF6366F1)
+val BottomBarUnselectedColor = Color(0xFF99A1AF)
+val EmptyStateIconBg = Color(0xFFE5E7EB)
+val EmptyStateSubtitleColor = Color(0xFF4A5565)
+val EmptyStateButtonGradientStart = Color(0xFF155DFC)
+val EmptyStateButtonGradientEnd = Color(0xFF9810FA)
+val AuthLinkColor = Color(0xFF155DFC)
+val AvatarGradientStartDark = Color(0xFF4A515E)
+val AvatarGradientEndDark = Color(0xFF4A515E)

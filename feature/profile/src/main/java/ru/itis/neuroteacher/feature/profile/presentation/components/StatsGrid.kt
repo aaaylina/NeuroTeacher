@@ -1,17 +1,14 @@
 package ru.itis.neuroteacher.feature.profile.presentation.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.automirrored.filled.TrendingUp
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import ru.itis.neuroteacher.feature.profile.R
@@ -28,7 +25,7 @@ fun StatsGrid(uiState: ProfileUiState) {
             StatCard(
                 title = stringResource(R.string.profile_total_tests),
                 value = uiState.totalTests.toString(),
-                icon = Icons.AutoMirrored.Filled.MenuBook,
+                iconPainter = painterResource(id = R.drawable.ic_profile_book),
                 iconColor = AppTheme.colors.iconBookStroke,
                 height = AppTheme.dimensions.statsCardHeightSmall,
                 modifier = Modifier.weight(1f)
@@ -36,7 +33,7 @@ fun StatsGrid(uiState: ProfileUiState) {
             StatCard(
                 title = stringResource(R.string.profile_avg_score),
                 value = uiState.avgScore,
-                icon = Icons.AutoMirrored.Filled.TrendingUp,
+                iconPainter = painterResource(id = R.drawable.ic_profile_up),
                 iconColor = AppTheme.colors.iconArrowStroke,
                 height = AppTheme.dimensions.statsCardHeightSmall,
                 modifier = Modifier.weight(1f)
@@ -50,7 +47,7 @@ fun StatsGrid(uiState: ProfileUiState) {
             StatCard(
                 title = stringResource(R.string.profile_best_result),
                 value = uiState.bestScore,
-                icon = Icons.Default.EmojiEvents,
+                iconPainter = painterResource(id = R.drawable.ic_profile_prize),
                 iconColor = AppTheme.colors.iconTrophyStroke,
                 height = AppTheme.dimensions.statsCardHeightLarge,
                 modifier = Modifier.weight(1f)
@@ -58,7 +55,7 @@ fun StatsGrid(uiState: ProfileUiState) {
             StatCard(
                 title = stringResource(R.string.profile_completed),
                 value = uiState.completedTests.toString(),
-                icon = Icons.Default.CheckCircle,
+                iconPainter = painterResource(id = R.drawable.ic_profile_completed),
                 iconColor = AppTheme.colors.iconCheckStroke,
                 height = AppTheme.dimensions.statsCardHeightLarge,
                 modifier = Modifier.weight(1f)
@@ -71,7 +68,7 @@ fun StatsGrid(uiState: ProfileUiState) {
 private fun StatCard(
     title: String,
     value: String,
-    icon: ImageVector,
+    iconPainter: Painter,
     iconColor: Color,
     height: androidx.compose.ui.unit.Dp,
     modifier: Modifier = Modifier
@@ -95,7 +92,7 @@ private fun StatCard(
                 horizontalArrangement = Arrangement.spacedBy(AppTheme.dimensions.statsCardIconSpacing)
             ) {
                 Icon(
-                    imageVector = icon,
+                    painter = iconPainter,
                     contentDescription = null,
                     tint = iconColor,
                     modifier = Modifier.size(AppTheme.dimensions.statsCardIconSize)

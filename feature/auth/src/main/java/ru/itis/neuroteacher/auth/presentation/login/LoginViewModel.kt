@@ -87,4 +87,7 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val user: User? = null
-)
+) {
+    val isEmailError: Boolean
+        get() = errorMessage?.contains("email", ignoreCase = true) == true
+}
