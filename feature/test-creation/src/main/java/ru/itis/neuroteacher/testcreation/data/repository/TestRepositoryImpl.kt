@@ -7,16 +7,23 @@ import ru.itis.neuroteacher.testcreation.data.db.dao.TestDao
 import ru.itis.neuroteacher.testcreation.data.db.dao.TestResultDao
 import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.data.mapper.TestMapper
+import ru.itis.neuroteacher.domain.model.RecentTestItem
+import ru.itis.neuroteacher.testcreation.data.model.TestDataModel
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 import ru.itis.neuroteacher.testcreation.domain.model.TestStatistics
 import ru.itis.neuroteacher.testcreation.domain.repository.TestRepository
+import kotlinx.serialization.json.Json
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 internal class TestRepositoryImpl @Inject constructor(
     private val dao: TestDao,
     private val testResultDao: TestResultDao,
-    private val mapper: TestMapper
+    private val mapper: TestMapper,
+    private val json: Json
 ) : TestRepository {
 
     override suspend fun saveTest(test: Test, sourceType: SourceType): Long {
@@ -110,5 +117,22 @@ internal class TestRepositoryImpl @Inject constructor(
                 if (testEntity != null) mapper.toDomainResult(testEntity, resultEntity) else null
             }
         }
+    }
+    override suspend fun getAllTestsForHome(): List<RecentTestItem> {
+        val results = testResultDao.getAllResultsFlowSortedByDateDesc().first()
+
+        return results.mapNotNull { resultEntity ->
+            val testEntity = dao.getTestById(resultEntity.testId) ?: return@mapNotNull null
+            val testData = json.decodeFromString<TestDataModel>(testEntity.questionsJson)
+
+            RecentTestItem(
+                title = testData.title,
+                date = formatDate(resultEntity.dateCompleted),
+                scorePercentage = resultEntity.scorePercentage.toInt()
+            )
+        }
+    }
+    private fun formatDate(date: Date): String {
+        return SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
     }
 }

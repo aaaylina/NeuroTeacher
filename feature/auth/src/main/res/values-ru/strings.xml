@@ -9,7 +9,7 @@
     <string name="login_password_placeholder">••••••••</string>
     <string name="login_button">Войти</string>
     <string name="login_no_account">Нет аккаунта?</string>
-    <string name="login_register_link">Зарегистрироваться</string>
+    <string name="login_register_link">Нет аккаунта? Зарегистрироваться</string>
 
     <!-- Register Screen -->
     <string name="register_title">Создать аккаунт</string>
@@ -22,7 +22,7 @@
     <string name="register_confirm_password_placeholder">Повторите пароль</string>
     <string name="register_button">Зарегистрироваться</string>
     <string name="register_have_account">Уже есть аккаунт?</string>
-    <string name="register_login_link">Войти</string>
+    <string name="register_login_link">Уже есть аккаунт? Войти</string>
 
     <!-- Common -->
     <string name="logo_description">Logo</string>
