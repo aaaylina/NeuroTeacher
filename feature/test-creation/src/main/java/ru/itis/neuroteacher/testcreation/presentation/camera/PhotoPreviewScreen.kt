@@ -25,15 +25,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,20 +52,18 @@ fun PhotoPreviewScreen(
     viewModel: PhotoPreviewViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val typography = AppTheme.typography
     val colors = AppTheme.colors
     val dimensions = AppTheme.dimensions
     val shapes = AppTheme.shapes
 
-    LaunchedEffect(uiState.error) {
-        uiState.error?.let { errorMessage ->
-            snackbarHostState.showSnackbar(
-                message = errorMessage,
-                duration = SnackbarDuration.Long
-            )
-        }
-    }
+    val selectedGradient = Brush.linearGradient(
+        colors = listOf(colors.photoDemoGradientStart, colors.photoDemoGradientEnd)
+    )
+
+    val unselectedGradient = Brush.linearGradient(
+        colors = listOf(colors.photoDemoButtonBgUnselected, colors.photoDemoButtonBgUnselected)
+    )
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collectLatest { event ->
@@ -80,18 +74,9 @@ fun PhotoPreviewScreen(
         }
     }
 
-    val selectedGradient = Brush.linearGradient(
-        colors = listOf(colors.photoDemoGradientStart, colors.photoDemoGradientEnd)
-    )
-
-    val unselectedGradient = Brush.linearGradient(
-        colors = listOf(colors.photoDemoButtonBgUnselected, colors.photoDemoButtonBgUnselected)
-    )
-
     Scaffold(
         containerColor = colors.photoDemoBgBlack,
-        modifier = Modifier.fillMaxSize(),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        modifier = Modifier.fillMaxSize()
     ) { padding ->
         Column(
             modifier = Modifier
@@ -215,7 +200,7 @@ fun PhotoPreviewScreen(
                         .height(dimensions.photoMainButtonHeight)
                         .clip(shapes.photoButtonShape)
                         .background(selectedGradient)
-                        .clickable(enabled = !uiState.isGeneratingTest) {
+                        .clickable(enabled = !uiState.isGeneratingTest && uiState.recognizedText.isNotEmpty()) {
                             viewModel.generateTestFromText()
                         },
                     contentAlignment = Alignment.Center
