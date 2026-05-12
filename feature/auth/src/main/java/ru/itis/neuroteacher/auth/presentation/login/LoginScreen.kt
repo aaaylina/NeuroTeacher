@@ -125,8 +125,7 @@ fun LoginScreen(
                         label = stringResource(id = R.string.login_email_label),
                         placeholder = stringResource(id = R.string.login_email_placeholder),
                         leadingIcon = Icons.Default.Email,
-                        isError = uiState.errorMessage?.contains("email", ignoreCase = true) == true
-
+                        isError = uiState.isEmailError
                     )
 
                     Spacer(modifier = Modifier.height(AppTheme.dimensions.spacingMd))
