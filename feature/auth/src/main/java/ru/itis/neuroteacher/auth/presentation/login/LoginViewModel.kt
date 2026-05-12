@@ -14,11 +14,6 @@ import ru.itis.neuroteacher.auth.domain.model.User
 import ru.itis.neuroteacher.auth.domain.usecase.GetCurrentUserUseCase
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCase
 import javax.inject.Inject
-
-
-sealed class LoginNavigationEvent {
-    object NavigateToMain : LoginNavigationEvent()
-}
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,

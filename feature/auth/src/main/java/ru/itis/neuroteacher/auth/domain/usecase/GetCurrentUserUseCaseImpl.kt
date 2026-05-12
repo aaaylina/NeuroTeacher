@@ -8,6 +8,6 @@ internal class GetCurrentUserUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository
 ) : GetCurrentUserUseCase {
     override fun invoke(): User? {
-        return authRepository.getCurrentUserId()
+        return authRepository.getCurrentUser()
     }
 }
