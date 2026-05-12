@@ -48,18 +48,18 @@ internal fun QuestionCard(
             question.options.forEachIndexed { index, option ->
                 val isSelected = selectedOptionIndex == index
                 val isCorrect = index == question.correctIndex
-                val showResult = isSelected && !isEnabled
+                val showResult = !isEnabled
 
                 val backgroundColor = when {
                     showResult && isCorrect -> AppTheme.colors.successBackground
-                    showResult && !isCorrect -> AppTheme.colors.errorBackground
+                    showResult && isSelected && !isCorrect -> AppTheme.colors.errorBackground
                     isSelected -> AppTheme.colors.backgroundLight
                     else -> AppTheme.colors.cardBackground
                 }
 
                 val borderColor = when {
                     showResult && isCorrect -> AppTheme.colors.successBorder
-                    showResult && !isCorrect -> AppTheme.colors.errorBorder
+                    showResult && isSelected && !isCorrect -> AppTheme.colors.errorBorder
                     isSelected -> AppTheme.colors.primary
                     else -> AppTheme.colors.borderDefault
                 }
