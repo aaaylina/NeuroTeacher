@@ -41,6 +41,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -64,13 +65,14 @@ internal fun TextInputScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var text by remember { mutableStateOf("") }
+    val text by viewModel.textInput.collectAsState()
     var selectedQuestions by remember { mutableStateOf(TestGenerationConstants.QUESTION_COUNT_OPTIONS.first()) }
 
     val isTextValid = text.length in TestGenerationConstants.MIN_TEXT_LENGTH..TestGenerationConstants.MAX_TEXT_LENGTH
     val isGenerateEnabled = !uiState.isLoading && isTextValid
 
     val errorGenerationText = stringResource(R.string.common_error_generation)
+    val context = LocalContext.current
 
     LaunchedEffect(navEvent) {
         when (val event = navEvent) {
@@ -117,9 +119,7 @@ internal fun TextInputScreen(
                 ) {
                     TextField(
                         value = text,
-                        onValueChange = {
-                            if (it.length <= TestGenerationConstants.MAX_TEXT_LENGTH) text = it
-                        },
+                        onValueChange = viewModel::onTextChange,
                         placeholder = {
                             Text(
                                 text = stringResource(R.string.text_input_placeholder),
@@ -208,16 +208,13 @@ internal fun TextInputScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedButton(
-                    onClick = { /* TODO: вставка из буфера */ },
+                    onClick = { viewModel.pasteFromClipboard(context) },
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = AppTheme.colors.cardBackground,
                         contentColor = AppTheme.colors.textPrimary
                     ),
-                    border = BorderStroke(
-                        1.dp,
-                        AppTheme.colors.borderDefault
-                    ),
+                    border = BorderStroke(1.dp, AppTheme.colors.borderDefault),
                     shape = AppTheme.shapes.buttonCorner,
                     enabled = !uiState.isLoading
                 ) {

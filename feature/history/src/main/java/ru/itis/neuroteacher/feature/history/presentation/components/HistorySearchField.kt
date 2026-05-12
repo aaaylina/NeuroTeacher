@@ -39,8 +39,8 @@ fun HistorySearchField(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = AppTheme.colors.borderDefault,
-                modifier = Modifier.size(AppTheme.dimensions.iconSizeSmall)
+                tint = AppTheme.colors.bottomBarUnselectedColor,
+                modifier = Modifier.size(AppTheme.dimensions.iconSizeMedium)
             )
         },
         modifier = Modifier

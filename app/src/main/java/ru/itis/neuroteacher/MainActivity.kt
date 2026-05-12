@@ -46,6 +46,7 @@ import ru.itis.neuroteacher.testcreation.navigation.testResultNavGraph
 import ru.itis.neuroteacher.testcreation.navigation.textInputNavGraph
 import ru.itis.neuroteacher.ui.theme.AppTheme
 import ru.itis.neuroteacher.ui.theme.components.AppBottomBar
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -55,6 +56,8 @@ class MainActivity : ComponentActivity() {
     lateinit var settingsRepository: SettingsRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val savedLanguage = settingsRepository.getSavedLanguage()
+        applyLanguage(savedLanguage)
         setContent {
 
             val settings by settingsRepository.getSettingsFlow()
@@ -70,6 +73,7 @@ class MainActivity : ComponentActivity() {
                 AppCompatDelegate.setApplicationLocales(
                     LocaleListCompat.forLanguageTags(localeTag)
                 )
+                applyLanguage(appLanguage)
             }
 
             val isDarkTheme = when (settings.theme) {
@@ -151,5 +155,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    private fun applyLanguage(language: LanguageOption) {
+        val locale = when (language) {
+            LanguageOption.RUSSIAN -> Locale("ru")
+            LanguageOption.ENGLISH -> Locale("en")
+        }
+        Locale.setDefault(locale)
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }
