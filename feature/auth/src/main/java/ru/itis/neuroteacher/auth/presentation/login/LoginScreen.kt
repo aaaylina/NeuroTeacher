@@ -192,7 +192,7 @@ fun LoginScreen(
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
-                                text = "Синхронизация данных...",
+                                text = stringResource(id = R.string.sync_load),
                                 color = Color.White,
                                 style = AppTheme.typography.subtitle
                             )
