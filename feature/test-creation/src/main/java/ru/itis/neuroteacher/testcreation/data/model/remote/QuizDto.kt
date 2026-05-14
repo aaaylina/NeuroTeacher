@@ -2,40 +2,42 @@ package ru.itis.neuroteacher.testcreation.data.model.remote
 
 import com.google.firebase.firestore.PropertyName
 import java.util.Date
+class QuestionDto(
+    @get:PropertyName("text")
+    @set:PropertyName("text")
+    var text: String = "",
 
-object QuizzesFields {
-    const val TITLE = "title"
-    const val USER_ID = "userid"
-    const val CREATED_AT = "createdAt"
-    const val QUESTIONS = "questions"
-}
+    @get:PropertyName("answers")
+    @set:PropertyName("answers")
+    var answers: List<String> = emptyList(),
 
-data class QuestionDto(
-    @PropertyName("text")
-    val text: String,
+    @get:PropertyName("correctAnswer")
+    @set:PropertyName("correctAnswer")
+    var correctAnswer: Int = 0,
 
-    @PropertyName("answers")
-    val answers: List<String>,
-
-    @PropertyName("correctAnswer")
-    val correctAnswer: Int,
-
-    @PropertyName("explanation")
-    val explanation: String? = null
+    @get:PropertyName("explanation")
+    @set:PropertyName("explanation")
+    var explanation: String? = null
 )
 
-data class QuizDto(
-    @get:PropertyName(QuizzesFields.TITLE)
-    @set:PropertyName(QuizzesFields.TITLE)
+data class QuizDto @JvmOverloads constructor(
+    @get:PropertyName("title")
+    @set:PropertyName("title")
     var title: String = "",
 
-    @get:PropertyName(QuizzesFields.USER_ID)
-    @set:PropertyName(QuizzesFields.USER_ID)
+    @get:PropertyName("userId")
+    @set:PropertyName("userId")
     var userId: String = "",
 
-    @get:PropertyName(QuizzesFields.CREATED_AT)
-    @set:PropertyName(QuizzesFields.CREATED_AT)
+    @get:PropertyName("createdAt")
+    @set:PropertyName("createdAt")
     var createdAt: Date = Date(),
 
-    var questions: List<QuestionDto> = emptyList()
+    @get:PropertyName("questions")
+    @set:PropertyName("questions")
+    var questions: List<QuestionDto> = emptyList(),
+
+    @get:PropertyName("id")
+    @set:PropertyName("id")
+    var id: String = ""
 )

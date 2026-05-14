@@ -3,53 +3,50 @@ package ru.itis.neuroteacher.testcreation.data.model.remote
 import com.google.firebase.firestore.PropertyName
 import java.util.Date
 
-object QuizResultsFields {
-    const val USER_ID = "userid"
-    const val QUIZ_ID = "quizId"
-    const val COMPLETED_AT = "completedAt"
-    const val SCORE = "score"
-    const val TOTAL_QUESTIONS = "totalQuestions"
-    const val CORRECT_COUNT = "correctCount"
-    const val ANSWERS = "answers"
-}
+class AnswerDetailDto(
+    @get:PropertyName("questionIndex")
+    @set:PropertyName("questionIndex")
+    var questionIndex: Int = 0,
 
-data class AnswerDetailDto(
-    @PropertyName("questionIndex")
-    val questionIndex: Int = 0,
+    @get:PropertyName("selectedAnswer")
+    @set:PropertyName("selectedAnswer")
+    var selectedAnswer: Int = 0,
 
-    @PropertyName("selectedAnswer")
-    val selectedAnswer: Int = 0,
+    @get:PropertyName("correct")
+    @set:PropertyName("correct")
+    var correct: Boolean = false
+)
 
-    @PropertyName("isCorrect")
-    val isCorrect: Boolean = false
-){
-    constructor() : this(0, 0, false)
-}
-
-data class QuizResultDto(
-    @get:PropertyName(QuizResultsFields.USER_ID)
-    @set:PropertyName(QuizResultsFields.USER_ID)
-    var userId: String = "",
-
-    @get:PropertyName(QuizResultsFields.QUIZ_ID)
-    @set:PropertyName(QuizResultsFields.QUIZ_ID)
+data class QuizResultDto @JvmOverloads constructor(
+    @get:PropertyName("quizId")
+    @set:PropertyName("quizId")
     var quizId: String = "",
 
-    @get:PropertyName(QuizResultsFields.COMPLETED_AT)
-    @set:PropertyName(QuizResultsFields.COMPLETED_AT)
-    var completedAt: Date = Date(),
+    @get:PropertyName("userId")
+    @set:PropertyName("userId")
+    var userId: String = "",
 
-    @get:PropertyName(QuizResultsFields.SCORE)
-    @set:PropertyName(QuizResultsFields.SCORE)
+    @get:PropertyName("score")
+    @set:PropertyName("score")
     var score: Int = 0,
 
-    @get:PropertyName(QuizResultsFields.TOTAL_QUESTIONS)
-    @set:PropertyName(QuizResultsFields.TOTAL_QUESTIONS)
+    @get:PropertyName("totalQuestions")
+    @set:PropertyName("totalQuestions")
     var totalQuestions: Int = 0,
 
-    @get:PropertyName(QuizResultsFields.CORRECT_COUNT)
-    @set:PropertyName(QuizResultsFields.CORRECT_COUNT)
+    @get:PropertyName("correctCount")
+    @set:PropertyName("correctCount")
     var correctCount: Int = 0,
 
-    var answers: List<AnswerDetailDto> = emptyList()
+    @get:PropertyName("completedAt")
+    @set:PropertyName("completedAt")
+    var completedAt: Date = Date(),
+
+    @get:PropertyName("answers")
+    @set:PropertyName("answers")
+    var answers: List<AnswerDetailDto> = emptyList(),
+
+    @get:PropertyName("id")
+    @set:PropertyName("id")
+    var id: String = ""
 )

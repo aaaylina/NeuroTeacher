@@ -13,11 +13,13 @@ import kotlinx.coroutines.launch
 import ru.itis.neuroteacher.auth.domain.model.User
 import ru.itis.neuroteacher.auth.domain.usecase.GetCurrentUserUseCase
 import ru.itis.neuroteacher.auth.domain.usecase.SignInUseCase
+import ru.itis.neuroteacher.testcreation.data.sync.InitialSyncManager
 import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val syncManager: InitialSyncManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -39,6 +41,9 @@ class LoginViewModel @Inject constructor(
         val currentUser = getCurrentUserUseCase()
         if (currentUser != null) {
             viewModelScope.launch {
+                _uiState.update { it.copy(isSyncing = true) }
+                syncManager.syncAllData()
+                _uiState.update { it.copy(isSyncing = false) }
                 _navigationEvent.emit(LoginNavigationEvent.NavigateToMain)
             }
         }
@@ -66,7 +71,10 @@ class LoginViewModel @Inject constructor(
             ).fold(
                 onSuccess = { user ->
                     _uiState.update { it.copy(isLoading = false, user = user) }
-                    onSuccess()
+                    _uiState.update { it.copy(isSyncing = true) }
+                    syncManager.syncAllData()
+                    _uiState.update { it.copy(isSyncing = false) }
+                    _navigationEvent.emit(LoginNavigationEvent.NavigateToMain)
                 },
                 onFailure = { exception ->
                     _uiState.update { it.copy(isLoading = false, errorMessage = exception.message) }
@@ -85,6 +93,7 @@ data class LoginUiState(
     val password: String = "",
     val passwordVisible: Boolean = false,
     val isLoading: Boolean = false,
+    val isSyncing: Boolean = false,
     val errorMessage: String? = null,
     val user: User? = null
 ) {

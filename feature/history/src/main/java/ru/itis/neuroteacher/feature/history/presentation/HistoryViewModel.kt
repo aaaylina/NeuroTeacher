@@ -19,7 +19,9 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
     private val testRepository: TestRepository
 ) : ViewModel() {
+
     private val _searchQuery = MutableStateFlow("")
+
     val uiState: StateFlow<HistoryUiState> = combine(
         _searchQuery,
         _searchQuery.flatMapLatest { query ->
@@ -38,16 +40,23 @@ class HistoryViewModel @Inject constructor(
                     scorePercentage = result.scorePercentage.toInt()
                 )
             },
-            searchQuery = query
+            searchQuery = query,
+            isLoading = false
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = HistoryUiState()
+        initialValue = HistoryUiState(isLoading = true)
     )
+
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
     }
+
+    fun refresh() {
+        _searchQuery.value = _searchQuery.value
+    }
+
     private fun formatDate(date: Date): String {
         return SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
     }

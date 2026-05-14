@@ -1,5 +1,6 @@
 package ru.itis.neuroteacher.testcreation.presentation.test
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -104,6 +105,9 @@ internal class TestViewModel @Inject constructor(
                 val id = repository.saveTest(test, SourceType.TEXT)
                 _uiState.update { it.copy(savedTestId = id) }
                 TestCache.clear(cacheId)
+                repository.getOrCreateRemoteQuizId(id, test).onFailure { e ->
+                    Log.e("TestViewModel", "Не удалось сразу сохранить тест в облако", e)
+                }
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(error = "Ошибка сохранения теста: ${e.message}")
