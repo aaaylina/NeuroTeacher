@@ -10,7 +10,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.itis.neuroteacher.testcreation.data.repository.CameraRepositoryImpl
 import ru.itis.neuroteacher.testcreation.data.repository.TestRecognitionRepositoryImpl
-import ru.itis.neuroteacher.testcreation.data.usecase.SyncTestToFirebaseUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.repository.CameraRepository
 import ru.itis.neuroteacher.testcreation.domain.repository.TextRecognitionRepository
 import ru.itis.neuroteacher.testcreation.domain.usecase.CameraManager
@@ -19,7 +18,6 @@ import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.LoadBitmapUseCaseImpl
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCase
 import ru.itis.neuroteacher.testcreation.domain.usecase.RecognizeTextUseCaseImpl
-import ru.itis.neuroteacher.testcreation.domain.usecase.SyncTestToFirebaseUseCase
 import javax.inject.Singleton
 
 @Module
@@ -51,11 +49,6 @@ internal abstract class CameraModule {
     abstract fun bindLoadBitmapUseCase(
         impl: LoadBitmapUseCaseImpl
     ): LoadBitmapUseCase
-
-    @Binds
-    abstract fun bindSyncTestToFirebaseUseCase(
-        impl: SyncTestToFirebaseUseCaseImpl
-    ): SyncTestToFirebaseUseCase
 
     companion object {
         @Provides

@@ -16,7 +16,9 @@ data class TestEntity(
     val sourceType: SourceType,
     val questionsJson: String,
     val totalQuestions: Int,
-    val resultId: Long? = null
+    val resultId: Long? = null,
+    val firestoreId: String? = null,
+    val isSynced: Boolean = false
 )
 
 enum class SourceType {

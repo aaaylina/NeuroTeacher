@@ -24,6 +24,7 @@ object TestDatabaseModule {
             TestTakingDatabase::class.java,
             "neuro_teacher_db"
         )
+            .addMigrations(TestTakingDatabase.MIGRATION_1_2)
             .fallbackToDestructiveMigration(false)
             .build()
     }

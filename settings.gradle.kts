@@ -33,7 +33,6 @@ include(":core:ui")
 
 // Feature modules
 include(":feature:test-creation")
-include(":feature:test-taking")
 include(":feature:home")
 
 

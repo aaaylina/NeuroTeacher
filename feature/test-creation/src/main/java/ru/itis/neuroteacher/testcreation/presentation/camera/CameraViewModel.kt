@@ -36,10 +36,14 @@ class CameraViewModel @Inject constructor(
     val navigationEvents: StateFlow<CameraNavigationEvent?> = _navigationEvents.asStateFlow()
 
     fun startCamera(lifecycleOwner: LifecycleOwner) {
+        _uiState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
-            cameraManager.startCamera().onFailure { e ->
-                handleError(e.message)
-            }
+            cameraManager.startCamera().fold(
+                onSuccess = {
+                    _uiState.update { it.copy(isLoading = false) }
+                },
+                onFailure = { e -> handleError(e.message) }
+            )
         }
     }
 

@@ -26,4 +26,6 @@
 
     <!-- Common -->
     <string name="logo_description">Logo</string>
+
+    <string name="sync_load">"Синхронизация данных..."</string>
 </resources>

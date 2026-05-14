@@ -1,14 +1,17 @@
 package ru.itis.neuroteacher.testcreation.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.domain.model.RecentTestItem
+import ru.itis.neuroteacher.testcreation.data.db.model.SourceType
 import ru.itis.neuroteacher.testcreation.domain.model.Test
 import ru.itis.neuroteacher.testcreation.domain.model.TestResult
 import ru.itis.neuroteacher.testcreation.domain.model.TestStatistics
 
 interface TestRepository {
     suspend fun saveTest(test: Test, sourceType: SourceType): Long
+
+    suspend fun getOrCreateRemoteQuizId(localTestId: Long, test: Test): Result<String>
+
     suspend fun getTestById(id: Long): Test?
     suspend fun getAllTests(): List<Test>
 
@@ -32,5 +35,10 @@ interface TestRepository {
     suspend fun getAllTestResults(): List<TestResult>
     fun getTestResultsFlow(query: String): Flow<List<TestResult>>
     suspend fun getAllTestsForHome(): List<RecentTestItem>
+
+    suspend fun loadRemoteTests(): Result<Unit>
+    suspend fun loadRemoteResults(): Result<Unit>
+    suspend fun getRemoteTestStatistics(): Result<TestStatistics>
+    fun observeRemoteStatistics(): Flow<TestStatistics>
 
 }

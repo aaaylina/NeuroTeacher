@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -37,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.itis.neuroteacher.auth.R
 import ru.itis.neuroteacher.auth.navigation.AuthRouter
@@ -157,7 +159,7 @@ fun LoginScreen(
                     AuthButton(
                         text = stringResource(id = R.string.login_button),
                         onClick = {
-                            viewModel.onLoginClick { router.navigateToMain() }
+                            viewModel.onLoginClick { }
                         },
                         enabled = uiState.email.isNotBlank() && uiState.password.length >= AuthConstants.MIN_PASSWORD_LENGTH,
                         isLoading = uiState.isLoading
@@ -172,6 +174,31 @@ fun LoginScreen(
                     hostState = snackbarHostState,
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
+
+                if (uiState.isSyncing) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.7f))
+                            .align(Alignment.Center),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                color = Color.White,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = stringResource(id = R.string.sync_load),
+                                color = Color.White,
+                                style = AppTheme.typography.subtitle
+                            )
+                        }
+                    }
+                }
             }
         }
     }

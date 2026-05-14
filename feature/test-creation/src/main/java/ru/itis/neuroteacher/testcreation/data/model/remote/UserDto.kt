@@ -4,7 +4,7 @@ import com.google.firebase.firestore.PropertyName
 import java.util.Date
 
 object UsersFields {
-    const val USER_ID = "userid"
+    const val USER_ID = "userId"
     const val EMAIL = "email"
     const val CREATED_AT = "createdAt"
     const val LAST_ACTIVE = "lastActive"
@@ -14,7 +14,7 @@ object UsersFields {
     const val BEST_SCORE = "bestScore"
 }
 
-data class UserDto(
+data class UserDto @JvmOverloads constructor(
     @get:PropertyName(UsersFields.USER_ID)
     @set:PropertyName(UsersFields.USER_ID)
     var userId: String = "",

@@ -130,6 +130,5 @@ class CameraRepositoryImpl @Inject constructor(
         }
         cameraProvider = null
         imageCapture = null
-        cameraExecutor.shutdownNow()
     }
 }
